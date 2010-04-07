@@ -1,1 +1,13 @@
-My GitHub Pages
+---
+layout: default
+title: Online Writing
+---
+<h2 id="subtitle">Ramblings from the keyboard of novemberkilo</h2>
+{% for post in site.posts limit:5 %}
+  <div class="post">
+  {{ post.content }}
+  <p class="signoff">
+    &mdash;<a href="{{ post.url }}">{{ post.date | date: "%b %d, %Y" }}</a>
+  </p>
+  </div>
+{% endfor %}

@@ -1,0 +1,41 @@
+---
+layout: default
+title: About
+---
+<h2 id="intro">About the author and this site.</h2>
+
+<div class="post">
+h1. The Author
+
+My name is Navin.  I live in Sydney, Australia.  
+
+I am a recent ruby enthusiast and I am happily curious about where this might take me.  I have been around the block a few times, and lived a few very different lives.  These include:
+* C Programmer 
+* Research mathematician and teacher
+* Bioinformatics groupie
+* PKI, Identity and Trust afficionado
+* Information security architect and consultant
+* Senior manager at a consulting firm and at a financial institution
+
+I like to learn - really a lot.  
+
+h1. The Site
+
+I write here.  Topics include information and opinion relevant to my adventures as a technologist. I will not publish anything here of a personal nature.
+
+As a result of my recent forays into development, I decided to build this site using ruby and other open-source tools.  I conciously decided not to use tumblr or posterous or similar ... and to see whether I can get to a point where I don't notice any productivity blocks resulting from "blogging like a hacker."  
+
+So, I have chosen to have this site hosted on "GitHub":http://github.com using their "Pages":http://github.com/blog/272-github-pages feature.  The site is created using "Tom Perston-Werner's":http://tom.preston-werner.com/ excellent "Jekyll":http://jekyllrb.com static site generator. I get to write in textile or markdown, learn about design as I tweak the layout of the site, and store everything in Git, a version control system that I am getting to know well.  I've used "Alex Payne's":http://al3x.net site as a starting point - I like the simplicity of its structure, style and appearance.
+
+h1. Elsewhere
+
+You can find me on a variety of social web sites; my username is usually "novemberkilo". Alphabetically:
+
+* "Flickr":http://www.flickr.com/photos/navink/ -- my photography.
+* "GitHub":http://github.com/novemberkilo -- code, waiting for you to improve it.
+* "Twitter":http://twitter.com/novemberkilo -- telegraphic updates and observations.
+
+h1. Contact
+
+Feel free to email me. <a href="mailto:navin@novemberkilo.com">navin@novemberkilo.com</a>. 
+</div>
