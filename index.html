@@ -4,10 +4,16 @@ title: Online Writing
 ---
 <h2 id="subtitle">Ramblings from the keyboard of novemberkilo</h2>
 {% for post in site.posts limit:5 %}
-  <div class="post">
+<div class='post'>
+    <h1><a href='{{site.posts.first.url}}'>{{site.posts.first.title}}</a></h1>
+    <div class='body'>{{ site.posts.first.content }}</div>
+  </div>
+<!--
+<div class="post">
   {{ post.content }}
   <p class="signoff">
     &mdash;<a href="{{ post.url }}">{{ post.date | date: "%b %d, %Y" }}</a>
   </p>
   </div>
+-->
 {% endfor %}

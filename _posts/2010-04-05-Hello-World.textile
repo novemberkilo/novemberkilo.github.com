@@ -3,7 +3,6 @@ layout: post
 title: "Hello World"
 ---
 
-h1. {{ page.title }}
 
 Hello and welcome to my first post in a long while.  For the very few of you who have read previous incarnations of the iNK blot, things are likely to look and feel a little different around here.  
 
