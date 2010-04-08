@@ -41,7 +41,7 @@ code {
   font-size: 12pt;
 }
 
-h1, h2, h3, #footer {
+h1, h2, h3, h4, #footer {
   font-family: 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;
   font-weight: bolder;
   letter-spacing: 0.5px;
@@ -61,6 +61,11 @@ h2 {
 
 h3 {
   font-size: 18px;
+  line-height: 22px;
+}
+
+h4 {
+  font-size: 12px;
   line-height: 22px;
 }
 
@@ -111,6 +116,16 @@ header, footer, nav, article { display: block; }
 
 #footer {
   font-size: 14pt;
+}
+
+#cclicense {
+  float: right;
+  margin: 20px 0px 0 0px;
+  font-family: 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;
+  font-size: 8pt;
+  text-align: center;
+  line-height: 15px;
+  width: 200px;
 }
 
 #fusionad {
