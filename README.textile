@@ -1,13 +1,9 @@
 h1. About
 
-"My weblog":http://novemberkilo.com, now hosted on GitHub. Uses
-"Jekyll":http://github.com/mojombo/jekyll/tree/master for static site
-generation.
+"My weblog":http://novemberkilo.com, now hosted on GitHub. Uses "Jekyll":http://github.com/mojombo/jekyll/tree/master for static site generation.
 
-Elements of this site pertaining to layout and structure were drawn
-from and inspired by "Alex Payne's":http://al3x.net weblog.
+Elements of this site, mainly pertaining to layout and structure, were drawn from and inspired by "Alex Payne's":http://al3x.net weblog.
 
 h1. License
 
-All original textual content is licensed under the "Creative Commons
-Attribution-Noncommercial-No Derivative Works 2.5 Australia License":http://creativecommons.org/licenses/by-nc-nd/2.5/au/.
+All original textual content is licensed under the "Creative Commons Attribution-Noncommercial-No Derivative Works 2.5 Australia License":http://creativecommons.org/licenses/by-nc-nd/2.5/au/.
