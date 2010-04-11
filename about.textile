@@ -7,7 +7,7 @@ title: About
 <div class="post">
 h1. The Author
 
-My name is Navin.  I live in Sydney, Australia.  I am a recent ruby enthusiast and am happily curious about where this might take me. 
+My name is Navin.  I live in Sydney, Australia.  I am a recent ruby enthusiast and am happily curious about where this might take me.  I studied Computer Science when Z-80s and 6502s were the microprocessors of the day and the university lab splurged on a bunch of NeXT workstations (don't know what these are? Then read some "history)":http://en.wikipedia.org/wiki/History_of_Mac_OS_X. My Operating Systems class involved group readings of the Unix kernel source. Some mathematicians on campus were nice to me once and 10 years later I found myself with a PhD in pure mathematics and a couple of publications to my name.   
 
 I have been around the block a few times, and live(d) a few very different lives.  These include:
 * C Programmer 
@@ -27,7 +27,7 @@ As a result of my recent forays into development, I decided to build this site u
 
 So, I have chosen to have this site hosted on "GitHub":http://github.com using their "Pages":http://github.com/blog/272-github-pages feature.  The site is created using "Tom Preston-Werner's":http://tom.preston-werner.com/ excellent "Jekyll":http://jekyllrb.com static site generator. I get to write in textile or markdown, learn about design as I tweak the layout of the site, and, store everything in Git, a version control system that I am getting to know well.  I will (if I haven't already) write about how I set up this site, and what services and tools play here.  So far, I've got a font I like from "Typekit":http://typekit.com and I am going to use "Disqus":http://disqus.com if I decide to enable comments. 
 
-I used "Alex Payne's":http://al3x.net site as a starting point - I like the simplicity of its structure, style and appearance.  I have also borrowed ideas (and had a peek at how these were implemented) from various other jekyll powered sites on Github pages.
+I used "Alex Payne's":http://al3x.net site as a starting point - I like the simplicity of its structure, style and appearance.  I have also borrowed ideas (and had a peek at how these were implemented) from various other Jekyll powered sites on Github pages.
 
 h3. License
 
@@ -39,7 +39,7 @@ You can find me on a variety of social web sites; my username is usually "novemb
 
 * "Flickr":http://www.flickr.com/photos/navink/ -- my photography.
 * "GitHub":http://github.com/novemberkilo -- code, waiting for you to improve it.
-* "Twitter":http://twitter.com/novemberkilo -- telegraphic updates and observations.
+* "Twitter":http://twitter.com/novemberkilo -- telegraphic updates, observations and occasional invective.
 
 h1. Contact
 

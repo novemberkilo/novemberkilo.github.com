@@ -30,7 +30,7 @@ a img { border-width: 0; }
 blockquote {
   border-left: 1px solid #222;
   line-height: 18px;
-  font-size: 11pt;
+  font-size: 10pt;
   font-style: italic;
   margin: 20px;
   padding-left: 10px;
@@ -62,6 +62,7 @@ h2 {
 h3 {
   font-size: 18px;
   line-height: 22px;
+  margin-bottom: 15px;
 }
 
 h4 {
@@ -99,7 +100,7 @@ header, footer, nav, article { display: block; }
 }
 
 .post p {
-  font-size: 13pt;
+  font-size: 12pt;
   line-height: 26px;
 }
 
