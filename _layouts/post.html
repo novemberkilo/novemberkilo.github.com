@@ -6,9 +6,26 @@ layout: default
 <article class="post">
 <h1><a href='{{page.url}}'>{{page.title}}</a></h1>
 {{ content }}
-<time class="signoff" datetime="{{ page.date | date: "%Y-%m-%d" }}">
+<div class="meta">
+  <span class="author"><a href="http://novemberkilo.com/about.html">novemberkilo</a></span> &middot; 
+  <span class="date">
+    {{ page.date | date: "%e" | ordinalize }} {{ page.date | date: "%B"}} {{ page.date | date: "%Y"}}
+  </span>
+<!--
+  <span class="tags">
+  {% for tag in page.categories %} &middot; <a href="/tags/{{tag}}" rel="tag">{{tag}}</a>{% endfor %}
+  </span>
+-->
+  <span class="tags">
+  {% for tag in page.categories %} &middot; {{tag}} {% endfor %}
+  </span>
+  </div>
+<!--
+  <time class="signoff" datetime="{{ page.date | date: "%Y-%m-%d" }}">
   &mdash;{{ page.date | date: "%b %d, %Y" }}
-</time>
+  </time>
+-->
+  
 </article>
 <script type="text/javascript">
 	var disqus_developer = 1; 
