@@ -1,0 +1,40 @@
+#container {
+	width: 808px;
+	margin-left: 20px;
+	margin-right: 20px;
+}
+
+#content {
+	width: 95%;
+}
+
+.post code {
+	font-size: 0.8em;
+	font-family: monospace;
+}
+
+.highlight pre {
+	font-size: 0.8em;
+	font-family: monospace;
+}
+
+#header {
+	font-size: 2.0em;
+}
+
+#footer {
+	font-size: 2.0em;
+}
+
+#footer .contact {
+	padding-bottom: 2.0em;
+}
+#footer img {
+	width: 1.6em;
+	height: 1.6em;
+	padding-bottom: 4em;
+}
+
+#footer .copyright {
+	font-size: 1.2em;
+}

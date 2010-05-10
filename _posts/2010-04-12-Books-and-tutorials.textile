@@ -1,10 +1,11 @@
 ---
 layout: post
-title: Books, courses and tutorials
-categories: [newbie, ruby, books, tutorials] 
+title: Ruby reading material and courses
+subtitle: Part of the Ruby newbie series
+categories: [newbie, Ruby, books, tutorials]
 ---
 
-h2. Books and tutorials
+h1. Books and tutorials
 
 Owing to the popularity of Rails, there are an incredible number of books out there that promise introductions, expertise and Ruby super powers.  I haven't read most of them and obviously, am not in a position to comment on any beyond the few that I have.  Perhaps I missed a few gems (pun intended, sorry!) in my brief search and I make no claim that I found the best of the crop.  Anyway, what follows is a short description of the way in which I went about deciding on which books were right for me.  
 
@@ -25,13 +26,13 @@ Michael had written 4 chapters (there are a total of 11) when I worked through h
 
 bq. Ruby is a big language, but fortunately the subset needed to be productive as a Rails developer is relatively small. Moreover, this subset is different from the usual approaches to learning Ruby, which is why, if your goal is making dynamic web applications, I recommend learning Rails first, picking up bits of Ruby along the way. 
 
-Well, instictively this clashed with my need to connect with first principles.  I'm not suggesting that Michael is wrong - it's just that at that point in my journey, I felt I needed to shore up my foundations and spend some time with Ruby.  Michael makes some suggestions for further reading in the early part of his book and I just followed along and bought a copy of Peter Cooper's, ??Beginning Ruby, Second Edition.??
+Well, instictively this clashed with my need to connect with first principles.  I'm not suggesting that Michael is wrong - it's just that at that point in my journey, I felt I needed to shore up my foundations and spend some time with Ruby.  Michael makes some suggestions for further reading in the early part of his book and I just followed his recommendation and bought a copy of Peter Cooper's, ??Beginning Ruby, Second Edition.??
 
 Michael recommends Peter's book saying, 
 
 bq. I recommend that newer programmers read ??Beginning Ruby?? by Peter Cooper, which shares the same basic instructional philosophy as Rails Tutorial. After finishing ??Beginning Ruby,?? you’ll be ready for ??Agile Web Development with Rails?? by Dave Thomas and David Heinemeier Hansson and ??The Rails Way?? by Obie Fernandez.
 
-Peter's writing style is, in my opinion, really very good! He is funny, relaxed and conversational as he leads you through the basics of Ruby, using some excellent and non-trivial examples and exercises to help the reader get beyond the reading and into the doing.  His book is sub-titled, ??From Novice to Professional?? and he achieves this by splitting the book into two parts.  The first half is focussed on foundational elements of the language and the second half covers topics like web application frameworks (Rails, Sinatra, etc.), desktop application development etc. This section also provides a whirlwind tour of some of ruby's main libraries. I find that I use the first half as a reference and when I want to learn about something new (e.g. Shoes), the second half provides for an excellent starting point.  There aren't any formal exercises in the book but he closes the first half with a chapter that builds a large application that pulls together individual facets of Ruby. Peter is also the author of one of Ruby's chief sources of information on the web, "RubyInside":http://rubyinside.com and is quite active on "twitter":http://twitter.com/peterc 
+Peter's writing style is simply delightful! He is funny, relaxed and conversational as he leads you through the basics of Ruby.  Using some excellent and non-trivial examples and exercises he gets the reader beyond the reading and into the doing.  His book is sub-titled, ??From Novice to Professional?? and he achieves this by splitting the book into two parts.  The first half is focussed on foundational elements of the language and the second half covers topics like web application frameworks (Rails, Sinatra, etc.), desktop application development etc. This section also provides a whirlwind tour of some of ruby's main libraries. I find that I use the first half as a reference and when I want to learn about something new (e.g. Shoes), the second half provides for an excellent starting point.  There aren't any formal exercises in the book but he closes the first half with a chapter that builds a large application that pulls together individual facets of Ruby. Peter is also the author of one of Ruby's chief sources of information on the web, "RubyInside":http://rubyinside.com and is quite active on "twitter.":http://twitter.com/peterc 
 
 I've also acquired the pickaxe book or  "Agile Web Development with Rails.":http://pragprog.com/titles/rails3/agile-web-development-with-rails-third-edition I expect that I will spend more time with it as I get my hands dirty with a Rails project or two.  At this point in time the print version of this book covers Rails 2 and a beta version refactoring the book to Rails 3 is in progress.  I suggest holding off until this version is complete and/or picking up a second hand copy of the Rails 2 version.
 
@@ -46,4 +47,4 @@ I signed up for the Core Ruby course at "rubylearning.org":http://rubylearning.o
 
 I am excited about exploring "rubyproblems.com":http://rubyproblems.com and the dormant mathematician in me is very curious about checking out the goings on at "Project Euler.":http://projecteuler.net  I expect that I will write about any adventures I have with these sites.
 
-I hope that this article provides some useful points of reference for other newbies looking for books, tutorials and/or courses to help them on their way.  In my next post I will write about the role that virtual and physical networks play in my continuing journey as a Ruby and Rails newbie. 
+I hope that this article provides some useful points of reference for other newbies looking for books, tutorials and/or courses to help them on their way.  In my next post I will write about the role that virtual and physical networks play in my continuing journey with Ruby and Rails. 

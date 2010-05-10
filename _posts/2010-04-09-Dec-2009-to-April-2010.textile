@@ -1,6 +1,8 @@
 ---
 layout: post
 title: "Overview: Adventures of a Ruby newbie (12/'09 - 04/'10)"
+subtitle: The first in the Ruby newbie series
+categories: [newbie, Ruby, overview]
 ---
 
 When I was starting out on my project to learn Ruby and Rails, I found several anecdotes, snippets of information, and personal recommendations that helped me make some decisions about how to proceed.  In the hope that it will be of some value to other Ruby newbies, I am going to catalogue some of my experiences and put together information that I collected during these early months. This information will include lists of books, web sites, blogs, tutorials, and some tips for dos and donts (that worked for me anyway).

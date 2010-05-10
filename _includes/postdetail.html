@@ -1,0 +1,5 @@
+<div id="{{ post.id }}" class="post">
+<span class="title"><a href="{{ post.url }}">{{ post.title }}</a></span>
+{{ post.content }}
+<span class="summary">{{ post.date | date: "%b %d" }} &raquo; <a href="{{ post.url }}">permalink</a></span>
+</div>

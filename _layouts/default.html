@@ -1,88 +1,45 @@
-<!DOCTYPE html>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
-  <head>
-    <script type="text/javascript">var _sf_startpt=(new Date()).getTime()</script>
-    <meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
-    <meta content="en-us" http-equiv="Content-Language" />
-    <meta content="The _iNK blot" name="description" />
-    <link href="/favicon.ico" rel="shortcut icon" type="image/x-icon" />
-    <link href="/css/screen.css" media="screen, projection" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="http://use.typekit.com/wgr0kvl.js"></script>
+<script type="text/javascript">try{Typekit.load();}catch(e){}</script>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+	<title>the iNK blot &middot; {{ page.title }}</title>
+	<meta name="author" content="Navin Keswani">
+	<link href="atom.xml" rel="alternate" title="the iNK blot" type="application/atom+xml" />
+	<link rel="stylesheet" href="/css/site.css" type="text/css" media="screen, projection" />
+	<link rel="stylesheet" href="/css/syntax.css" type="text/css" />
+	<meta name="viewport" content="width=850" />
+	<link rel="stylesheet" media="screen and (max-device-width: 480px)" href="/css/iphone.css" type="text/css" />
+	<script type="text/javascript">
+	  var _gaq = _gaq || [];
+	  _gaq.push(['_setAccount', '{{ site.google_analytics_code }}']);
+	  _gaq.push(['_trackPageview']);
+	  (function() {
+	    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+	    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+	    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(ga);
+	  })();
+	</script>
+</head>
 
-<!--    <link rel="alternate" type="application/atom+xml" title="Alex
-Payne - Atom" href="http://feeds2.feedburner.com/al3x" /> -->
-<!--    <link href="http://www.clickpass.com/openid_server"
-rel="openid.server" /> -->
-<!--    <link href="http://clickpass.com/public/al3x"
-rel="openid.delegate" /> -->
-
-    <title>The iNK blot &mdash; {{ page.title }}</title>
-    <script type="text/javascript" src="http://use.typekit.com/wgr0kvl.js"></script>
-    <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
-  </head>
-  <body>
-    <header>
-      <h1 id="title">
-        <a href="/index.html" title="About">The iNK blot</a>
-      </h1>
-<!--      <h2 id="subtitle">
-        See also the <a href="/archive.html" title="Archive">archive</a>.
-      </h2> -->
-    </header>
-
-    <div id="wrapper">
-      {{ content }} 
-      <footer id="footer">
-        <a href="/" title="Home">Home</a> &bull;
-        <a href="/about.html" title="About the author and site">About</a> &bull;
-        <a href="/archive.html" title="Archived writing">Archive</a> &bull;
-        <a href="/atom.xml" title="Feed">Feed</a>
-      <div id="cclicense">
-        <a rel="license"
-      href="http://creativecommons.org/licenses/by-nc-nd/2.5/au/"><img
-      alt="Creative Commons License" style="border-width:0"
-      src="http://creativecommons.org/images/public/somerights20.png"
-      /></a><br />This work is licensed under a <a rel="license"
-      href="http://creativecommons.org/licenses/by-nc-nd/2.5/au/">Creative
-      Commons License</a>.
-      </div>
-<!--        <a href="/books_talks.html" title="Books and talks">Books -->
-      <!--        & Talks</a> -->
-<!-- Use of this code assumes agreement with the Google Custom Search Terms of Service. -->
-<!-- The terms of service are available at http://www.google.com/cse/docs/tos.html -->
-<!--      <form name="cse" id="searchbox_demo" action="http://www.google.com/cse">
-	<input type="hidden" name="cref" value="" />
-	<input type="hidden" name="ie" value="utf-8" />
-	<input type="hidden" name="hl" value="" />
-	<input name="q" type="text" size="40" />
-        <input type="submit" name="sa" value="Search" />
-      </form>
-      <script type="text/javascript"
-	src="http://www.google.com/cse/tools/onthefly?form=searchbox_demo&lang="></script>
-     
-      <form action="http://www.google.com/cse" id="cse-search-box">
-          <div>
-            <input type="hidden" name="cx" value="000652178004161548235:gnplrkdmhbu" />
-            <input type="hidden" name="ie" value="UTF-8" />
-            <input type="text" name="q" size="40" />
-            <input type="submit" name="sa" value="Search" />
-          </div>
-        </form> -->
-      </footer>
-    </div>
-<!--    {% include analytics.html %} -->
-    <script type="text/javascript">
-    //<![CDATA[
-    (function() {
-	var links = document.getElementsByTagName('a');
-	var query = '?';
-	for(var i = 0; i < links.length; i++) {
-	if(links[i].href.indexOf('#disqus_thread') >= 0) {
-		query += 'url' + i + '=' + encodeURIComponent(links[i].href) + '&';
-	}
-	}
-	document.write('<script charset="utf-8" type="text/javascript" src="http://disqus.com/forums/theinkblot/get_num_replies.js' + query + '"></' + 'script>');
-    })();
-    //]]>
-    </script>
-    </body>
+<body>
+<div id="container">
+	<div id="header">
+		{% include header.html %}
+	</div>
+	<div id="page">
+		<div id="content">
+		{{ content }}
+		</div>
+		<div id="sidebar">
+		{{% include sidebar.html %}}
+		</div>
+	</div>
+	<div id="footer">
+		{% include footer.html %}
+	</div>
+</div>
+</body>
 </html>

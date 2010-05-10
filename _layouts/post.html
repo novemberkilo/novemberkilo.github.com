@@ -1,32 +1,24 @@
 ---
 layout: default
 ---
-<h2 id="subtitle">An individual post follows</h2>
 
-<article class="post">
-<h1><a href='{{page.url}}'>{{page.title}}</a></h1>
-{{ content }}
-<div class="meta">
-  <span class="author"><a href="http://novemberkilo.com/about.html">novemberkilo</a></span> &middot; 
-  <span class="date">
-    {{ page.date | date: "%e" | ordinalize }} {{ page.date | date: "%B"}} {{ page.date | date: "%Y"}}
-  </span>
+<div id="post" class="post">
+	<span class="title">{{ page.title }}</span><br />
+	<span class="date">{{ page.date | date: "%b %d %Y" }}</span><br />
+	<span class="content">{{ content }}</span>
+</div>
+
 <!--
-  <span class="tags">
-  {% for tag in page.categories %} &middot; <a href="/tags/{{tag}}" rel="tag">{{tag}}</a>{% endfor %}
-  </span>
+<div id="related">
+  <h3>Related Posts</h3>
+  <ul class="posts">
+    {% for post in site.related_posts limit:3 %}
+      <li><span>{{ post.date | date: "%b %d %Y" }}</span> &raquo; <a href="{{ post.url }}">{{ post.title }}</a></li>
+    {% endfor %}
+  </ul>
+</div>
 -->
-  <span class="tags">
-  {% for tag in page.categories %} &middot; {{tag}} {% endfor %}
-  </span>
-  </div>
-<!--
-  <time class="signoff" datetime="{{ page.date | date: "%Y-%m-%d" }}">
-  &mdash;{{ page.date | date: "%b %d, %Y" }}
-  </time>
--->
-  
-</article>
+
 <script type="text/javascript">
 	var disqus_developer = 1; 
 </script>
@@ -43,4 +35,3 @@ layout: default
 </script>
 <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript=theinkblot">comments powered by Disqus.</a></noscript>
 <a href="http://disqus.com" class="dsq-brlink">blog comments powered by <span class="logo-disqus">Disqus</span></a>
-
