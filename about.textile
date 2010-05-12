@@ -13,7 +13,7 @@ I have been around the block a few times, and live(d) a few very different lives
 * C Programmer 
 * Research mathematician and teacher
 * Bioinformatics groupie
-* PKI, Identity and Trust afficionado
+* ==PKI==, Identity and Trust afficionado
 * Information security architect and consultant
 * Senior manager at a consulting firm and at a financial institution
 
