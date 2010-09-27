@@ -1,5 +1,7 @@
 .DS_Store
 .rvmrc
+.*.*
+*.swp
 _site/
 _drafts/
 server/
