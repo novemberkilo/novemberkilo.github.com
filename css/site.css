@@ -14,7 +14,7 @@
 body {
 	text-align: center;
 	margin: 0;
-	background-color: #ffffff;
+	background-color: #FFFFFF;
 	font-family: "droid-sans-1","droid-sans-2",sans-serif;
 	*font: normal 12px helvetica, arial, clean, sans-serif;
 	*font-size: small;
@@ -29,8 +29,13 @@ h1 {
 }
 
 h2 {
+	font-size: 1.2em;
+}
+
+h3 {
 	font-size: 1.0em;
 }
+
 
 p {
 	margin: 1em 0;
@@ -48,13 +53,17 @@ a:hover {
 }
 
 a:visited {
-	color: #a0a;
+	color: #c00;
 	font: normal;
 }
 
 table {
 	font-size: inherit;
 	font: 100%;
+}
+
+ol li {
+  padding-bottom: 1.5em;
 }
 
 ul {
@@ -83,7 +92,7 @@ ul span {
 	padding: 1em 2.5em;
 	margin: 2em auto 2em auto;
 	line-height: 1.5em;
-	width: 90%;
+	width: 60%;
 }
 
 /*--------------------------------------------------------------
@@ -142,7 +151,7 @@ ul span {
 
 #content {
 	float: left;
-	padding: 2em 1em;
+	padding: 0 1em 2em 1em;
 }
 
 /*--------------------------------------------------------------
@@ -212,7 +221,7 @@ ul span {
 }
 
 .post .title {
-	font-size: 1.5em;
+	font-size: 1.2em;
 	margin-bottom: 1.4em;
 	font-weight: bold;
 }
@@ -256,6 +265,13 @@ ul span {
 .post pre.terminal code {
 	background-color: #333;
 }
+
+.post .img {
+    margin: 15px;
+    padding: 10px;
+    border: 1px solid #DDD;
+}
+  
 
 .post .summary {
 	font-size: 0.8em;
