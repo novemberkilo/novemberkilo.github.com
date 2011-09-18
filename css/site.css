@@ -15,7 +15,7 @@ body {
 	text-align: center;
 	margin: 0;
 	background-color: #FFFFFF;
-	font-family: "droid-sans-1","droid-sans-2",sans-serif;
+	font-family: "inconsolata",sans-serif;
 	*font: normal 12px helvetica, arial, clean, sans-serif;
 	*font-size: small;
 }
@@ -118,7 +118,7 @@ ul span {
 #header .site {
 	float: left;
 /*	padding-right: 1.5em;*/
-	
+
 }
 
 #header .summary {
@@ -162,9 +162,9 @@ ul span {
 	float: right;
 	text-align: left;
 	width: 180px;
-	padding-left: 15px; 
+	padding-left: 15px;
 	border-left: 1px solid #ddd;
-} 
+}
 
 /*--------------------------------------------------------------
  Footer
@@ -228,7 +228,7 @@ ul span {
 
 .post .date {
 	color: #aaa;
-	font-size: 0.8em;	
+	font-size: 0.8em;
 }
 
 .post pre {
@@ -271,7 +271,7 @@ ul span {
     padding: 10px;
     border: 1px solid #DDD;
 }
-  
+
 
 .post .summary {
 	font-size: 0.8em;
