@@ -2,38 +2,36 @@
 layout: default
 title: About
 ---
-<h2 id="intro">About the author and this site</h2>
+h1. About the author and this site
+<br/>
 
-<div class="post">
-h1. The Author
+h3. The Author
 
-My name is Navin.  I live in Sydney, Australia.  I am a recent ruby and python enthusiast and am happily curious about where this might take me.  I studied Computer Science when Z-80s and 6502s were the microprocessors of the day and the university lab splurged on a bunch of NeXT workstations (don't know what these are? Then read some "history)":http://en.wikipedia.org/wiki/History_of_Mac_OS_X. My Operating Systems class involved group readings of the Unix kernel source. Some mathematicians on campus were nice to me once and 10 years later I found myself with a PhD in pure mathematics and a couple of publications to my name.   
+My name is Navin.  I live in Sydney, Australia.
+
+I'm a Rails developer and I work in the education sector.  I'm also a retreaded mathematician, bioinformatics groupie, big data curioso and erstwhile information security bod. Sometimes (quite often), I'm a philosophical pessimist (which might not mean what you think it means).
+
+I studied Computer Science when Z-80s and 6502s were the microprocessors of the day and the university lab splurged on a bunch of NeXT workstations (don't know what these are? Then read some "history)":http://en.wikipedia.org/wiki/History_of_Mac_OS_X. My Operating Systems class involved group readings of the Unix kernel source. Some mathematicians on campus were nice to me once and 10 years later I found myself with a PhD in pure mathematics and a couple of publications to my name.
 
 I have been around the block a few times, and live(d) a few very different lives.  These include:
-* C Programmer 
+* C Programmer
 * Research mathematician and teacher
-* Bioinformatics groupie
 * ==PKI==, Identity and Trust afficionado
 * Information security architect and consultant
 * Senior manager at a consulting firm and at a financial institution
 
-I like to learn - really a lot.  
+I like to learn - really a lot.
 
-h1. The Site
+h3. The Site
 
 I write here.  Topics include information and opinion relevant to my adventures as a technologist. I will not publish anything here of a personal nature.
 
-As a result of my recent forays into development, I decided to build this site using ruby and other open-source tools.  I conciously decided not to use tumblr or posterous or similar ... and to see whether I can get to a point where I don't notice any productivity blocks resulting from "blogging like a hacker."  
-
-So, I have chosen to have this site hosted on "GitHub":http://github.com using their "Pages":http://github.com/blog/272-github-pages feature.  The site is created using "Tom Preston-Werner's":http://tom.preston-werner.com/ excellent "Jekyll":http://jekyllrb.com static site generator. I get to write in textile or markdown, learn about design as I tweak the layout of the site, and, store everything in Git.  I will (if I haven't already) write about how I set up this site, and what services and tools play here.  
-
-I used "Alex Payne's":http://al3x.net site as a starting point - I like the simplicity of its structure, style and appearance.  I have since also borrowed HTML and CSS from "Andrew Carter's":http://ascarter.net/ blog.
+This site hosted on "GitHub":http://github.com using their "Pages":http://github.com/blog/272-github-pages feature.  It is created using "Tom Preston-Werner's":http://tom.preston-werner.com/ excellent "Jekyll":http://jekyllrb.com static site generator. I get to write in textile or markdown, learn about design as I tweak the layout of the site, and, store everything in Git.  I will (if I haven't already) write about how I set up this site, and what services and tools play here.
 
 h3. License
 
 All original textual content is licensed under the "Creative Commons Attribution-Share Alike 2.5 Australia License":http://creativecommons.org/licenses/by-sa/2.5/au/.
 
-h1. Contact
+h3. Contact
 
 Feel free to get in touch.  My email address is navin at novemberkilo.com
-</div>
