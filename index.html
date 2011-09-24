@@ -2,12 +2,11 @@
 layout: default
 title: nk's ramblings
 ---
-<h3 id="subtitle">Ramblings from the keyboard of novemberkilo</h3>
 {% for post in site.posts limit:5 %}
 <div class="post">
-    <h2><a href="{{ post.url }}">{{ post.title }}</a></h2> 
-    {{ post.content }}
-    <p class="signoff"> 
+    <h3><a href="{{ post.url }}">{{ post.title }}</a></h3>
+    {{ post.content | truncatewords: 100 }}
+    <p class="signoff">
       &mdash;<a href="{{ post.url }}">{{ post.date | date: "%d %b, %Y" }}</a>
     </p>
   </div>

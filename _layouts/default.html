@@ -7,7 +7,7 @@
 	<meta name="author" content="Navin Keswani">
 	<link href="atom.xml" rel="alternate" title="the iNK blot" type="application/atom+xml" />
   <link href='http://fonts.googleapis.com/css?family=Droid+Sans' rel='stylesheet' type='text/css'>
-	<link rel="stylesheet" href="/css/site.css" type="text/css" media="screen, projection" />
+	<link rel="stylesheet" href="/css/style.css" type="text/css" media="screen, projection" />
 	<link rel="stylesheet" href="/css/syntax.css" type="text/css" />
 	<meta name="viewport" content="width=850" />
 	<link rel="stylesheet" media="screen and (max-device-width: 480px)" href="/css/iphone.css" type="text/css" />
@@ -24,21 +24,27 @@
 </head>
 
 <body>
-<div id="container">
-	<div id="header">
-		{% include header.html %}
-	</div>
-	<div id="page">
-		<div id="content">
-		{{ content }}
-		</div>
-		<div id="sidebar">
-		{{% include sidebar.html %}}
-		</div>
-	</div>
-	<div id="footer">
-		{% include footer.html %}
-	</div>
-</div>
+  <div id="wrapper">
+    <div id="header-wrapper">
+      <div id="header">
+        {% include header.html %}
+      </div>
+    </div>
+    <div id="page">
+      <div id="content">
+        {{ content }}
+
+        <div style="clear: both;">&nbsp;</div>
+      </div>
+      <div id="sidebar">
+        {% include sidebar.html %}
+        <div style="clear: both;">&nbsp;</div>
+      </div>
+    <div style="clear: both;">&nbsp;</div>
+    </div>
+  </div>
+  <div id="footer">
+    {% include footer.html %}
+  </div>
 </body>
 </html>

@@ -3,7 +3,7 @@ layout: default
 ---
 
 <div id="post" class="post">
-	<span class="title">{{ page.title }}</span><br />
+  <h2 class="title">{{ page.title }}</h2><br />
         <span class="subtitle">{{ page.subtitle }}</span><br />
 	<span class="date">{{ page.date | date: "%b %d %Y" }}</span><br />
 	<span class="content">{{ content }}</span>
@@ -21,12 +21,12 @@ layout: default
 -->
 
 <script type="text/javascript">
-	var disqus_developer = 1; 
+	var disqus_developer = 1;
 </script>
 <div id="disqus_thread"></div>
 <script type="text/javascript">
   /**
-    * var disqus_identifier; [Optional but recommended: Define a unique identifier (e.g. post id or slug) for this thread] 
+    * var disqus_identifier; [Optional but recommended: Define a unique identifier (e.g. post id or slug) for this thread]
     */
   (function() {
    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
