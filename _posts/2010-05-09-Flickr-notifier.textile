@@ -2,18 +2,18 @@
 layout: post
 title: A Flickr notifier app
 subtitle: Using Ruby and Growl
-categories: [Ruby, Growl, Flickr, flickraw, project]
+tags: [ruby, flickr]
 ---
 
 I am a daily user of "Flickr,":http://www.flickr.com/novemberkilo owing mainly to my participation in a Project 365 (post a picture for everyday of 2010). Not having attained enlightment, I check my photostream several times a day for comments or view stats etc. It's obvious then that I set myself the task of using the Flickr API to make a nifty notifier of activity on a Flickr photostream. Here are some of the main things I learned from the experience.
 
 The following were the requirements that I set myself for this project:
-* Should notify the user of new comments  
+* Should notify the user of new comments
 * Provide a summary of activity on their photostream
 * Use "Growl":http://growl.info/ as the notification mechanism
 * Use Ruby
 
-Initially I thought I would need the Growl API in its full glory.  I had recently discovered "macruby":http://macruby.org and noticed a sample XCode project that showed macruby working with Growl.  So, I started out aiming to build the app using macruby.  Having seen macruby and Growl playing well together, I set about locating a ruby library that implemented Flickr API calls.  The Flickr API "documentation":http://www.flickr.com/services/api/ mentions @flickr-ruby@ @rflickr@ and @flickr.rb@ and so I set about checking these out.  
+Initially I thought I would need the Growl API in its full glory.  I had recently discovered "macruby":http://macruby.org and noticed a sample XCode project that showed macruby working with Growl.  So, I started out aiming to build the app using macruby.  Having seen macruby and Growl playing well together, I set about locating a ruby library that implemented Flickr API calls.  The Flickr API "documentation":http://www.flickr.com/services/api/ mentions @flickr-ruby@ @rflickr@ and @flickr.rb@ and so I set about checking these out.
 
 I spent most of my time with @flickr.rb@ and got very stuck with getting the "authentication workflow":http://www.flickr.com/services/api/auth.howto.desktop.html going.  The Flickr API uses an OAuth styled approach that never requires a username and password but does require some clever shunting back and forth of API keys, shared secrets and frobs before a token is issued.  Because my app needed to make authenticated API calls, I had to find a library whose authentication methods would be accessible to this newbie.  And this is how I found "flickraw.":http://github.com/hanklords/flickraw
 
@@ -33,7 +33,7 @@ Flickraw has excellent "documentation":http://hanklords.github.com/flickraw/ and
 recent_activity = flickr.activity.userPhotos(:timeframe => timeframe)
 
  recent_activity.each do |x|
-      message = ''      
+      message = ''
       x.activity.event.each do |z|
         case
         when z.type == "comment" then

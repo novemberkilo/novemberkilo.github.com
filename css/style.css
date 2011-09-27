@@ -10,7 +10,7 @@ body {
 	padding: 0;
 	background: #FFFFFF;
 	font-family: 'Droid-sans', sans-serif;
-	font-size: 14px;
+	font-size: 15px;
 	color: #3C3D3F;
 }
 
@@ -70,7 +70,7 @@ a:hover {
 
 #logo {
 	float: left;
-	/*width: 300px;*/
+	width: 420px;
 	margin: 0;
 	padding: 0;
 	color: #000000;

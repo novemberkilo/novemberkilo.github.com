@@ -2,12 +2,12 @@
 layout: post
 title: "Django, Grappelli and Piston!"
 subtitle: Lessons learned from my first Django project
-categories: [Python, Django]
+tags: [python, django]
 ---
 
 After learning Ruby and Rails for a few months, my first commercial gig involved building the server side components of an iPhone application using Python and Django.  In the words of Morpheus, __"Fate, it seems, is not without a sense of irony!"__ Luckily for me, a lot of what I had learned in Ruby land ported across to this project and my relative inexperience at this point helped - I didn't have a lot of Rails-muscle-memory to unlearn!
 
-For context, I was required to build a website that would be used for basic CRUD (Create, Read, Update, Delete) management of the assets that the iPhone application would present.  I also had to build an API that the iPhone application would call to update its assets. 
+For context, I was required to build a website that would be used for basic CRUD (Create, Read, Update, Delete) management of the assets that the iPhone application would present.  I also had to build an API that the iPhone application would call to update its assets.
 
 h3. The setup
 
@@ -22,14 +22,14 @@ Django generates admin pages by default and if all you need is basic CRUD mainte
 {% endhighlight %}
 h3. Tidy file paths
 
-One of the more interesting problems with this project was that I needed to save uploaded media files in a directory corresponding to the @id@ of the object to which they were associated.  This would allow the local filesystem to be replicated on the iPhone and, knowing the structure of file paths would  allow for efficient searching for media files.  The issue here is that an object does not have an @id@ until it has been saved.  
+One of the more interesting problems with this project was that I needed to save uploaded media files in a directory corresponding to the @id@ of the object to which they were associated.  This would allow the local filesystem to be replicated on the iPhone and, knowing the structure of file paths would  allow for efficient searching for media files.  The issue here is that an object does not have an @id@ until it has been saved.
 
 Our first approach was to overload the @save@ method by first calling the real save method, then redoing the file paths using the resulting @id@ and then saving again. This was very messy and caused for duplicate objects to be created when importing from a CSV.  However, this is a pattern that I found in a few places out there so here it is incase it is useful:
 
 {% highlight python %}
 
 def save(self, *args, **kwargs):
-	# Overload the save method so that we get the id of the parent object 
+	# Overload the save method so that we get the id of the parent object
 	# move media files from tmp to category_thumbnails/category_id/
     super(Tag, self).save(*args, **kwargs) # Call the "real" save() method.
     file_name = os.path.basename(self.thumbnail.path)
@@ -43,7 +43,7 @@ def save(self, *args, **kwargs):
     self.thumbnail.name = dest_path + file_name
     # Now update the database entry with the new filename
     super(Tag, self).save(*args, **kwargs)
-  
+
 {% endhighlight %}
 
 The solution that we ended up going with involved making a @guid@ and then using something like this to set up the file path:
@@ -53,18 +53,18 @@ The solution that we ended up going with involved making a @guid@ and then using
 def category_thumbnail_path(instance, filename):
 	return 'category/%s/%s' % (instance.guid, filename)
 	thumbnail = models.FileField(upload_to=category_thumbnail_path)
-    
+
 {% endhighlight %}
 
 h3. Importing from a CSV
 
 Import from CSV was frighteningly simple - the following two step process got me there:
-* Line up the fields and use @get_or_create@ to either create the object or identify duplicates 
+* Line up the fields and use @get_or_create@ to either create the object or identify duplicates
 * Once the object has been created, use @add@ to add in associated objects that are in a many-to-many relationship with the object
 
 {% highlight python %}
-		
-# First read in a line from the file and set fields of your object 
+
+# First read in a line from the file and set fields of your object
 for import_file in files:
     reader = csv.reader(open(import_file))
     # skip header line
@@ -74,7 +74,7 @@ for import_file in files:
       sub_title = row[4]
 # etc. ...
 
-# Next use get_or_create to create the object 
+# Next use get_or_create to create the object
 # Note that duplicates detected when both title and address match
 
 try:
@@ -85,7 +85,7 @@ try:
 			'publish':publish
 			# etc. ...
 			})
-				
+
 # And here is how you add associated objects that are in many-to-many relationships with your object
 
 print "Created=", created
@@ -112,7 +112,7 @@ class DBstate (models.Model):
 	# Counter that is incremented on every save to the database
 	# Used when calling the API to specify the state of the DB on the iPhone
 	save_count = models.IntegerField(default=0)
-	
+
 {% endhighlight %}
 
 Of course you will need to overload each object's @save@ method to implement this.
@@ -130,19 +130,19 @@ def save(self, *args, **kwargs):
 		counter = DBstate()
 		counter.save()
 		self.db_count = counter.save_count
-			
+
 {% endhighlight %}
 
 And this is definitely for fellow newbies - be very careful about the difference between using __functions__ and __return values__ when setting default values for fields. For instance,
 
 {% highlight python %}
-guid = models.CharField(max_length=35, default = uuid.uuid1().hex, editable=False, blank=True)  
+guid = models.CharField(max_length=35, default = uuid.uuid1().hex, editable=False, blank=True)
 {% endhighlight %}
 
 will result in @uuid.uuid1().hex@ being called once and its __return value__ being used as the default value for the @guid@ of all instances of the object.  On the other hand, if you use the __function__ only when specifying the default (note the missing parentheses):
 
 {% highlight python %}
-guid = models.CharField(max_length=35, default = uuid.uuid1.hex, editable=False, blank=True)  
+guid = models.CharField(max_length=35, default = uuid.uuid1.hex, editable=False, blank=True)
 {% endhighlight %}
 
 then it will be called every time a default value is needed and each object will have a different @guid@.
