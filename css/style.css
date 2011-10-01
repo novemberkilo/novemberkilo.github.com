@@ -35,7 +35,7 @@ h3 {
 
 p, ul, ol {
 	margin-top: 0;
-	line-height: 180%;
+	line-height: 150%;
 }
 
 ul, ol {
@@ -202,6 +202,11 @@ a:hover {
 
 #page-bgtop {
 }
+
+#page .title {
+  padding-bottom: 17px
+}
+
 /* Content */
 
 #content {
@@ -217,16 +222,15 @@ a:hover {
 }
 
 .post .title {
-	height: 41px;
-	padding: 0px 0px 0px 0px;
+	height: 25px;
+  padding-bottom: 0px;
 }
 
 .post .title a {
-	letter-spacing: -2px;
+	letter-spacing: -1px;
 	text-decoration: none;
 	text-transform: lowercase;
-	color: #414141;
-	border: none;
+  border: none;
 }
 
 .post .entry {
@@ -242,13 +246,14 @@ a:hover {
 }
 
 .post code {
-	border: 1px solid #ddd;
-	background-color: #eef;
+	/*border: 1px solid #ddd;*/
+	/*background-color: #eef;*/
 	font-size: 0.9em;
 	font-family: Menlo, Monaco, Consolas, monospace;
 	padding: 0 .2em;
 	white-space: pre-wrap;
 	word-wrap: break-word;
+  line-height: 150%;
 }
 /* Sidebar */
 

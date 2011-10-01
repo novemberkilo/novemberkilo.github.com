@@ -24,7 +24,7 @@ task :tags do
 layout: default
 title: Postings tagged "#{category}"
 ---
-    <h3>Posts tagged "#{category}"</h3>
+    <h3 class="title">Posts tagged "#{category}"</h3>
     HTML
 
     html << '<div class="post"><ul>'

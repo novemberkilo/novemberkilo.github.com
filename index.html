@@ -4,7 +4,7 @@ title: nk's ramblings
 ---
 {% for post in site.posts limit:5 %}
 <div class="post">
-    <h3><a href="{{ post.url }}">{{ post.title }}</a></h3>
+    <h3 class="title"><a href="{{ post.url }}">{{ post.title }}</a></h3>
     {{ post.content | truncatewords: 100 }}
     <br/>
     <span class="date">&mdash;<a href="{{ post.url }}">{{ post.date | date: "%e" | ordinalize }} {{post.date | date: "%B"}} {{post.date | date: "%Y"}}</a></span>

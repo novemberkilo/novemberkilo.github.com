@@ -5,3 +5,5 @@ server_port: 3000
 pygments: true
 google_analytics_code: UA-16831355-1
 lsi: false
+source: .
+destination: ./_site
