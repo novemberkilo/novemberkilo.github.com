@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>Scroller</title>
+    <!--[if IE]><script language="javascript" type="text/javascript" src="../excanvas.js"></script><![endif]-->
+
+    <!-- BEGIN: load jquery -->
+    <script language="javascript" type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js"></script>
+    <!-- END: load jquery -->
+  </head>
+  <body>
+    <section id="snippets", style="float: left; width: 475px; height: 130px;
+    position: relative; overflow: hidden; margin-top: 40px; margin-left: 40px;
+    border-width: 2px; border-style: solid; padding: 10px;">
+    <ul>
+      <li style="display: none; height: 130px">In as calm, but rapid a manner as possible, I gave her to understand the whole case</li>
+
+      <li style="display: none; height: 130px"> Unconsciously clapping the vinegar-cruet to one side of her nose, she ruminated for an instant; then exclaimed&mdash;"No! I haven't seen it since I put it there</li>
+
+      <li style="display: none; height: 130px">" Running to a little closet under the landing of the stairs, she glanced in, and returning, told me that Queequeg's harpoon was missing</li>
+
+      <li style="display: none; height: 130px"> "He's killed himself," she cried</li>
+
+      <li style="display: none; height: 130px"> "It's unfort'nate Stiggs done over again there goes another counterpane&mdash;God pity his poor mother!&mdash;it will be the ruin of my house</li>
+
+      <li style="display: none; height: 130px"> Has the poor lad a sister? Where's that girl?&mdash;there, Betty, go to Snarles the Painter, and tell him to paint me a sign, with&mdash;"no suicides permitted here, and no smoking in the parlor;"&mdash;might as well kill both birds at once</li>
+
+      <li style="display: none; height: 130px"> Kill? The Lord be merciful to his ghost! What's that noise there? You, young man, avast there!" And running up after me, she caught me as I was again trying to force open the door</li>
+
+      <li style="display: none; height: 130px"> "I don't allow it; I won't have my premises spoiled</li>
+
+      <li style="display: none; height: 130px"> Go for the locksmith, there's one about a mile from here</li>
+    </ul>
+    </section>
+    <script>
+      $().ready(function(){
+        var loopSnippets = function() {
+          var snippets = $("li", $("#snippets"));
+
+          snippets.each( function(index, element) {
+            $(element).delay( index*5000 ).fadeIn(100).delay(4500).fadeOut(200);
+            if (index == snippets.length-1) { setTimeout( loopSnippets, index*5000 + 5000 ) }
+          });
+        };
+        loopSnippets();
+      });
+    </script>
+  </body>
+</html>
