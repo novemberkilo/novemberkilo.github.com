@@ -44,3 +44,6 @@ _Actually, I'm not sure I'd recommend something like janus. The basic editor has
 I'll leave it up to you to figure out whether to pick up MacVim with janus and try out Vim ... or whether you should do penance with the editor itself before adopting the gui version and plugins.  I think it will depend a bit on whether you are the type that regards a solid understanding of a tool to be a pre-condition to using it, or, whether you are happy to get to the most productive environment as quickly as possible.  I've chosen a middle ground - I'm mainly using Rails.vim and basic editor commands and gradually picking up what the other plugins in _janus_ do.
 
 In any case, that's the story of how I ended up in smit with Vim. I hope you find some benefit from this post -- good luck with the process of selecting an editor and making it your own!
+
+<div class="update"> Update (Oct 2011):  Been using vim for a while now and am no longer using janus. My <a href="http://github.com/novemberkilo/.vim">.vim</a> is now on my github - forked from the remarkable Damien Le Berrigaud (vim superhero!), and updated with a few personal touches.
+</div>

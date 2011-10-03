@@ -207,6 +207,14 @@ a:hover {
   padding-bottom: 17px
 }
 
+#page .update {
+  border: 2px solid #c4c8cc;
+  -moz-border-radius: 15px;
+  -webkit-border-radius: 15px;
+  padding: 10px;
+  background-color: lightgreen;
+}
+
 /* Content */
 
 #content {
