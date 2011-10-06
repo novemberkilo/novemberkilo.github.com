@@ -1,0 +1,108 @@
+---
+layout: post
+title: A polar curve grapher
+tags: [javascript, math]
+---
+
+%p
+  Polar coordinates and polar functions are remarkably beautiful to people who get mathematics.
+  I think that their <a href=http://www.wolframalpha.com/input/?i=polar+curves>graphs</a> are beautiful to most people. Ever since I first met them,
+  I've tried to draw them on different platforms and using different languages. Wanting to know more about canvas and javascript,
+  I thought that it would be interesting to implement a polar curve grapher using these.
+
+%p
+  A quick reminder - the <a href=http://www.wolframalpha.com/input/?i=polar+coordinates>polar coordinates</a> <code>( r, &thetasym; )</code> of a point
+  are expressed in terms of the distance <code>r</code> of the point from the origin and the angle <code>&thetasym;</code>
+  that the line connecting the point to the origin makes with the <code>x</code>-axis. Also, the way you get from a set of polar coordinates <code>(r, &thetasym;)</code>
+  to cartesian coordinates <code>(x, y)</code> is:
+
+%pre
+  %code
+    :preserve
+          x = r * cos( &thetasym; ), y = r * sin( &thetasym; )
+
+%h4 Background
+
+%p
+  Earlier on this year I had asked Gabe Hollombe for advice on things I could do to become a better programmer.
+  Around the time of the conversation, I was particularly aware of my lack of knowledge of
+  javascript and so, we chose my polar-curve-grapher as a project for Gabe to mentor me through.
+
+%p
+  I started off by checking out the landscape of javascript based graphing tools and apps and came across the
+  following:
+  %ol
+    %li Kevin Mehall's <a href=http://kevinmehall.net/p/equationexplorer/>EquationExplorer</a>
+    %li aanthony's <a href=http://graph.tk>graph.tk</a>
+
+%p
+  Given my relative lack of experience with javascript, I found both apps difficult to understand.
+  So, I tried to figure out how to do it by myself.  I looked for javascript libraries I could use to simply plot a bunch of points
+  and found a lot of stuff for charts but relatively few that would just take an array of
+  points and plot them. Here are some that fit the bill:
+  %ol
+    %li <a href=http://www.jqplot.com/>jqplot</a>
+    %li Keith Lawler's <a href=https://github.com/lawler/raphael.graphing>library based on raphael</a>
+
+%p
+  I played around with jqplot and a hard-coded function <code>r = f(&thetasym;)</code> to get some quick results.  Essentially, I
+  created an array of points to be plotted using the following direct approach:
+
+%div{ :style => "display: inline-block" }
+  %code{ :style => "float: left" }
+    :preserve
+
+
+        points_to_be_plotted = []
+        for &thetasym; in (0 ... 6&pi;)
+        points_to_be_plotted.push [ f(&thetasym;)*cos(&thetasym;), f(&thetasym;)*sin(&thetasym;) ]
+
+        jqPlot( point_to_be_plotted )
+
+  %img{ :src => '/images/Polar function grapher - jqplot.jpg', :style => 'border: solid; border-color: gray; border-width: 1px; float: right; max-width: 34%' }
+
+%p
+  This gave me a quick proof of concept and, the project had a life! I now needed to figure out how to get user input, process it, and then plot it.
+
+%h4 Parsing user input
+
+%p
+  Getting user input turned out to be straightforward - use a form in the page with a submit button and respond
+  to the button click by picking up the input in javascript as a string (say) <code>"input_fn"</code>.  Use <code>eval("input_fn(t)")</code> to turn this into a javascript
+  function and follow the psuedocode above to generate an array of points to be plotted (see the source of the project for the detail - more on this below).
+
+%p
+  But what if you want the user to enter a function in
+  plain math (instead of the syntax required by javascript) - e.g. <code>2sin(x)</code> instead of <code>2 * Math.sin(x)</code>
+%p
+  Kevin's EquationExplorer did this so I set out to understand how.
+  And this lead me to the world of Top-Down-Operator-Precedence (TDOP) parsers.
+
+%p
+  I will write more about TDOP parsers in my next post but to complete the story on the polar curve grapher, these were the
+  ingredients that went into the grapher that is <a href="http://github.com/novemberkilo/polar-curve-grapher">now available on my github.</a>
+  %ol
+    %li Parsing: Kevin Mehall's <code>tdop_math.js</code> parser (that requires <code>tokens.js,</code> a lexer written by Douglas Crockford himself!)
+    %li Graphing: Keith Lawler's graphing library that is based on <code>raphael.js</code> and called, <a href='https://github.com/lawler/raphael.graphing'>raphael.graphing.js</a>
+
+%p
+  And thanks to GitHub pages, you can see it in action here: <a href='http://novemberkilo.com/polar-curve-grapher'>http://novemberkilo.com/polar-curve-grapher</a>
+%p
+  At the time of posting this I still needed to apply a coat or two of polish - I'm not doing any graceful error handling (so try not to divide by zero!) and I'm
+  only winding around the origin three times. You should be able to play around though and get some pretty graphs.
+%p
+  Try <code>r = cos(3t)</code> to get started with a propeller :)
+
+%h4 Acknowledgements
+
+%p
+  I had a lot of fun putting this project together and owe a debt of gratitude to Gabe Hollombe for encouraging me to take this on, and for answering questions
+  and providing guidance along the way.  Also, thanks to Keith Lawler and Kevin Mehall for doing the heavy lifting - this project turned out to mainly involve
+  stitching together their libraries.
+
+
+
+
+
+
+
