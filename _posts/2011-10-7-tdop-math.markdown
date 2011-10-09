@@ -1,6 +1,6 @@
 ---
 layout: post
-title: A Top Down Operator Parser for algebraic expressions
+title: A Top Down Operator Precedence parser for algebraic expressions
 tags: [javascript, ruby, math]
 ---
 
