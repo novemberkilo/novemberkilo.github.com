@@ -21,7 +21,7 @@ tags: [javascript, math]
 #### Background
 
 
-  Earlier on this year I had asked Gabe Hollombe for advice on things I could do to become a better programmer.
+  Earlier on this year I had asked [Gabe Hollombe](http://avantbard.com) for advice on things I could do to become a better programmer.
   Around the time of the conversation, I was particularly aware of my lack of knowledge of
   javascript and so, we chose my polar-curve-grapher as a project for Gabe to mentor me through.
 
@@ -89,7 +89,7 @@ And thanks to GitHub pages, you can see it in action here: <http://novemberkilo.
 #### Acknowledgements
 
 
-  I had a lot of fun putting this project together and owe a debt of gratitude to Gabe Hollombe for encouraging me to take this on, and for answering questions
+  I had a lot of fun putting this project together and owe a debt of gratitude to [Gabe Hollombe](http://avantbard.com) for encouraging me to take this on, and for answering questions
   and providing guidance along the way.  Also, thanks to Keith Lawler and Kevin Mehall for doing the heavy lifting - this project turned out to mainly involve
   stitching together their libraries.
 

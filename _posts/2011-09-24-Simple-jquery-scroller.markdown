@@ -65,4 +65,4 @@ operate on each element in sequence. Use `setTimeout` to repeat a
 function call at specific time intervals.
 
 Thanks go to **Josh Kunzmann** and **Damien Le Berrigaud** for collaborating
-on this and showing me how to use `delay` and `siteTimeout` creatively!
+on this and showing me how to use `delay` and `setTimeout` creatively!
