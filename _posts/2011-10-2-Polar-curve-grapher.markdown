@@ -75,7 +75,7 @@ And this is what jQplot did for me:
   I will write more about TDOP parsers in my next post but to complete the story on the polar curve grapher, these were the
   ingredients that went into the grapher that [you can find here.](http://github.com/novemberkilo/polar-curve-grapher)
 
-1. Parsing: Kevin Mehall's `tdop_math.js` parser (that requires `tokens.js,` a lexer written by Douglas Crockford himself!)
+1. Parsing: Kevin Mehall's `tdop_math.js` parser (that requires `tokens.js,` a lexer written by Douglas Crockford himself)
 1. Graphing: Keith Lawler's graphing library that is based on `raphael.js` and called, [raphael.graphing.js](https://github.com/lawler/raphael.graphing)
 
 
