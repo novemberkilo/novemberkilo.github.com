@@ -6,7 +6,7 @@ layout: default
   <h3 class="title">{{ page.title }}</h3>
   <span class="subtitle">{{ page.subtitle }}</span><br/>
   <span class="date">{{ page.date | date: "%e" | ordinalize }} {{ page.date | date: "%B"}} {{ page.date | date: "%Y"}}</span>
-  <span class="tags">{% for tag in page.tags %} &middot; <a href="tags/{{tag}}.html">{{tag}}</a>{% endfor %}</span>
+  <span class="tags">{% for tag in page.tags %} &middot; <a href="/tags/{{tag}}.html">{{tag}}</a>{% endfor %}</span>
   <br/><br/>
   <!--<span class="date">{{ page.date | date: "%b %d %Y" }}</span>{{ page.tags }}<br /><br/>-->
   <span class="content">{{ content }}</span>
