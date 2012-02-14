@@ -26,7 +26,7 @@ title: Postings tagged "#{category}"
     end
     html << '</ul>'
 
-    File.open("tags/#{category}.html", 'w+') do |file|
+    File.open("tags/#{category.downcase}.html", 'w+') do |file|
       file.puts html
     end
   end
