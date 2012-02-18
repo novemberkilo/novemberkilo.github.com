@@ -43,7 +43,7 @@ ul, ol {
 
 a {
 	text-decoration: none;
-	color: #EB1D1D;
+	color: black;
 }
 
 a:hover {
@@ -53,6 +53,12 @@ a:hover {
 #wrapper {
 	margin: 0 auto;
 	padding: 0;
+  display: block;
+}
+
+#header-wrapper {
+  background: Darkgray;
+  margin-top: 15px;
 }
 
 /* Header */
@@ -148,7 +154,7 @@ a:hover {
 	border: none;
 	background: none;
 	text-indent: -9999px;
-	color: #FFFFFF;
+	color: Darkgray;
 }
 
 /* Menu */
@@ -197,7 +203,6 @@ a:hover {
 	width: 960px;
 	margin: 0 auto;
 	padding: 40px 0px 0px 0px;
-	border-top: 1px solid #BBBBBB;
 }
 
 #page-bgtop {
@@ -218,7 +223,7 @@ a:hover {
 
 #content {
 	float: left;
-	width: 80%;
+	width: 700px;
 	padding: 0px 0px 0px 0px;
 	background: #FFFFFF;
 }
@@ -229,7 +234,7 @@ a:hover {
 }
 
 .post .title {
-	height: 25px;
+	height: auto;
   padding-bottom: 0px;
 }
 
@@ -266,7 +271,7 @@ a:hover {
 
 #sidebar {
 	float: right;
-	width: 20%;
+	width: 180px;
 	margin: 0px;
 	padding: 0px 0px 0px 0px;
 }
@@ -289,9 +294,8 @@ a:hover {
 
 #sidebar li li {
 	line-height: 35px;
-	border-bottom: 1px solid #BBBBBB;
 	border-left: none;
-	text-align: left;
+	text-align: right;
 }
 
 #sidebar li li span {
@@ -303,18 +307,16 @@ a:hover {
 }
 
 #sidebar li li a {
-	padding: 0px 0px 0px 20px;
 }
 
 #sidebar h2 {
 	height: 30px;
 	margin: 0px 0px 20px 0px;
-	padding: 4px 0px 0px 20px;
-	text-align: left;
+	text-align: right;
 	text-transform: capitalize;
 	letter-spacing: -2px;
 	font-size: 2em;
-	color: #414141;
+	color: #FF3000;
 }
 
 #sidebar p {
@@ -377,3 +379,72 @@ a:hover {
 #footer a {
 	color: #6B4A45;
 }
+
+@media screen and (max-width: 980px) {
+
+	#wrapper {
+		width: 95%;
+	}
+
+  #header {
+    width: 95%;
+  }
+
+  #logo {
+    width: auto;
+  }
+
+  #page {
+    width: 90%;
+  }
+
+	#content {
+		width: 80%;
+		padding: 3% 4%;
+	}
+
+	#sidebar {
+    width: 12%;
+	}
+
+
+  .post .title {
+    height: auto;
+  }
+}
+
+@media screen and (max-width: 560px) {
+
+	#content {
+		width: auto;
+		float: none;
+	}
+
+	#sidebar {
+		width: 100%;
+		float: none;
+	}
+
+}
+
+
+@media screen and (max-width: 480px) {
+
+	html {
+		-webkit-text-size-adjust: none;
+	}
+
+	#main-nav a {
+		font-size: 90%;
+		padding: 10px 8px;
+	}
+
+}
+
+img {
+	max-width: 100%;
+	height: auto;
+	width: auto\9; /* ie8 */
+}
+
+
