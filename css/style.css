@@ -41,10 +41,6 @@ p, ul, ol {
 ul, ol {
 }
 
-a {
-	text-decoration: none;
-	color: black;
-}
 
 a:hover {
 	text-decoration: none;
@@ -233,6 +229,11 @@ a:hover {
 	padding: 0px 0px;
 }
 
+.post a {
+  text-decoration: none;
+  color: blue;
+}
+
 .post .title {
 	height: auto;
   padding-bottom: 0px;
@@ -243,6 +244,7 @@ a:hover {
 	text-decoration: none;
 	text-transform: lowercase;
   border: none;
+  color: black;
 }
 
 .post .entry {
