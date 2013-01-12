@@ -21,9 +21,10 @@ body {
   display: block;
   padding-bottom: 10px; }
 
-/* line 49, screen.css.sass */
-.embiggened {
-  font-size: 120%; }
+/* line 50, screen.css.sass */
+ul.embiggened li {
+  font-size: 120%;
+  padding: 10px 0 10px 0; }
 
 /*
  * Bootstrap v2.2.2
