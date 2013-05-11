@@ -2,6 +2,5 @@
 .rvmrc
 .*.*
 *.swp
-_site/
-_drafts/
-server/
+.bundle/
+.sass-cache/

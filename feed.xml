@@ -18,7 +18,9 @@
     <author>
       <name>Navin Keswani</name>
     </author>
-    <summary type="html">&lt;p&gt;Yesterday I attended the &lt;a href='http://coderetreat.org/events/global-day-of-coderetreat-2011'&gt;&lt;em&gt;Global Day of Code Retreat, 2011&lt;/em&gt;&lt;/a&gt; in Sydney. We were incredibly privileged to have the creator of Code Retreat, &lt;a href='http://twitter.com/coreyhaines'&gt;Corey Haines&lt;/a&gt; facilitating.&lt;/p&gt;</summary>
+    <summary type="html">&lt;p&gt;Yesterday I attended the &lt;a href="http://coderetreat.org/events/global-day-of-coderetreat-2011"&gt;&lt;em&gt;Global Day of Code Retreat, 2011&lt;/em&gt;&lt;/a&gt; in Sydney. We were incredibly privileged to have the creator of Code Retreat, &lt;a href="http://twitter.com/coreyhaines"&gt;Corey Haines&lt;/a&gt; facilitating.&lt;/p&gt;
+
+&lt;p&gt;I found the experience to be really very profound and recommend it without reserve to...&lt;/p&gt;</summary>
     <content type="html">&lt;p&gt;Yesterday I attended the &lt;a href='http://coderetreat.org/events/global-day-of-coderetreat-2011'&gt;&lt;em&gt;Global Day of Code Retreat, 2011&lt;/em&gt;&lt;/a&gt; in Sydney. We were incredibly privileged to have the creator of Code Retreat, &lt;a href='http://twitter.com/coreyhaines'&gt;Corey Haines&lt;/a&gt; facilitating.&lt;/p&gt;
 
 &lt;p&gt;I found the experience to be really very profound and recommend it without reserve to developers of all levels.&lt;/p&gt;
@@ -56,7 +58,7 @@
     <author>
       <name>Navin Keswani</name>
     </author>
-    <summary type="html">&lt;p&gt;In my &lt;a href='/2011/10/02/polar-curve-grapher.html'&gt;previous post&lt;/a&gt; I wrote about a polar curve grapher and its use of Kevin Mehall&amp;#8217;s &lt;code&gt;tdop_math.js&lt;/code&gt; to parse a user input algebraic expression into a javascript eval(uable) string. I ended up spending some time with &lt;code&gt;tdop_math.js&lt;/code&gt; - you can find the source &lt;a href='https://github.com/kevinmehall/EquationExplorer/blob/master/tdop_math.js'&gt;here&lt;/a&gt; -&lt;/p&gt;</summary>
+    <summary type="html">&lt;p&gt;In my &lt;a href="/2011/10/02/polar-curve-grapher.html"&gt;previous post&lt;/a&gt; I wrote about a polar curve grapher and its use of Kevin Mehall&amp;#8217;s &lt;code&gt;tdop_math.js&lt;/code&gt; to parse a user input algebraic expression into a javascript eval(uable) string. I ended up spending some time with &lt;code&gt;tdop_math.js&lt;/code&gt; - you can find the source...&lt;/p&gt;</summary>
     <content type="html">&lt;p&gt;In my &lt;a href='/2011/10/02/polar-curve-grapher.html'&gt;previous post&lt;/a&gt; I wrote about a polar curve grapher and its use of Kevin Mehall&amp;#8217;s &lt;code&gt;tdop_math.js&lt;/code&gt; to parse a user input algebraic expression into a javascript eval(uable) string. I ended up spending some time with &lt;code&gt;tdop_math.js&lt;/code&gt; - you can find the source &lt;a href='https://github.com/kevinmehall/EquationExplorer/blob/master/tdop_math.js'&gt;here&lt;/a&gt; - and I fell into the magical rabbit hole of Top Down Operator Precedence (TDOP) parsers. This post describes how I ended up writing a TDOP parser for algebraic expressions in Ruby.&lt;/p&gt;
 
 &lt;p&gt;Some facts:&lt;/p&gt;
@@ -150,7 +152,7 @@ f = t.parse   ## f == &amp;quot;Baz::baz(Foo::foo(2 * a))&amp;quot;&lt;/code&gt;
     <author>
       <name>Navin Keswani</name>
     </author>
-    <summary type="html">&lt;p&gt;Polar coordinates and polar functions are remarkably beautiful to people who get mathematics. I think that their &lt;a href='http://www.wolframalpha.com/input/?i=polar+curves'&gt;graphs&lt;/a&gt; are beautiful to most people. Ever since I first met them, I&amp;#8217;ve tried to draw them on different platforms and using different languages. Wanting to know more about canvas and javascript,&lt;/p&gt;</summary>
+    <summary type="html">&lt;p&gt;Polar coordinates and polar functions are remarkably beautiful to people who get mathematics. I think that their &lt;a href="http://www.wolframalpha.com/input/?i=polar+curves"&gt;graphs&lt;/a&gt; are beautiful to most people. Ever since I first met them, I&amp;#8217;ve tried to draw them on different platforms and using different languages...&lt;/p&gt;</summary>
     <content type="html">&lt;p&gt;Polar coordinates and polar functions are remarkably beautiful to people who get mathematics. I think that their &lt;a href='http://www.wolframalpha.com/input/?i=polar+curves'&gt;graphs&lt;/a&gt; are beautiful to most people. Ever since I first met them, I&amp;#8217;ve tried to draw them on different platforms and using different languages. Wanting to know more about canvas and javascript, I thought that it would be interesting to implement a polar curve grapher using these.&lt;/p&gt;
 
 &lt;p&gt;A quick reminder - the &lt;a href='http://www.wolframalpha.com/input/?i=polar+coordinates'&gt;polar coordinates&lt;/a&gt; &lt;code&gt;( r, t )&lt;/code&gt; of a point are expressed in terms of the distance &lt;code&gt;r&lt;/code&gt; of the point from the origin and the angle &lt;code&gt;t&lt;/code&gt; that the line connecting the point to the origin makes with the &lt;code&gt;x&lt;/code&gt;-axis. Also, the way you get from a set of polar coordinates &lt;code&gt;(r, t)&lt;/code&gt; to cartesian coordinates &lt;code&gt;(x, y)&lt;/code&gt; is:&lt;/p&gt;
@@ -224,7 +226,7 @@ f = t.parse   ## f == &amp;quot;Baz::baz(Foo::foo(2 * a))&amp;quot;&lt;/code&gt;
     <author>
       <name>Navin Keswani</name>
     </author>
-    <summary type="html">&lt;p&gt;Recently we implemented a variation on a scroller. We needed to flash up a set of snippets, one by one, in the same text area of a page. Here&amp;#8217;s a &lt;a href='/examples/jquery_scroller.html'&gt;demo&lt;/a&gt; of it in action. You can view the source of the demo but here&amp;#8217;s a quick, plain-English explanation of how it works.&lt;/p&gt;</summary>
+    <summary type="html">&lt;p&gt;Recently we implemented a variation on a scroller. We needed to flash up a set of snippets, one by one, in the same text area of a page. Here&amp;#8217;s a &lt;a href="/examples/jquery_scroller.html"&gt;demo&lt;/a&gt; of it in action. You can view the source of the demo but here&amp;#8217;s a quick, plain-English explanation...&lt;/p&gt;</summary>
     <content type="html">&lt;p&gt;Recently we implemented a variation on a scroller. We needed to flash up a set of snippets, one by one, in the same text area of a page. Here&amp;#8217;s a &lt;a href='/examples/jquery_scroller.html'&gt;demo&lt;/a&gt; of it in action. You can view the source of the demo but here&amp;#8217;s a quick, plain-English explanation of how it works.&lt;/p&gt;
 
 &lt;h4 id='the_markup'&gt;The markup&lt;/h4&gt;
