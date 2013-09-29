@@ -5,10 +5,74 @@
   <id>http://novemberkilo.com/</id>
   <link href="http://novemberkilo.com/"/>
   <link href="http://novemberkilo.com/feed.xml" rel="self"/>
-  <updated>2013-09-12T00:00:00ZT00:00:00-08:00</updated>
+  <updated>2013-09-29T00:00:00ZT00:00:00-08:00</updated>
   <author>
     <name>Navin Keswani</name>
   </author>
+  <entry>
+    <title>Handy scopes for checking associations</title>
+    <link rel="alternate" href="/2013/09/29/scopes-for-finding-empty-relationships.html"/>
+    <id>/2013/09/29/scopes-for-finding-empty-relationships.html</id>
+    <published>2013-09-29T00:00:00ZT00:00:00-08:00</published>
+    <updated>2013-09-29T00:00:00ZT00:00:00-08:00</updated>
+    <author>
+      <name>Navin Keswani</name>
+    </author>
+    <summary type="html">&lt;p&gt;If your Rails project has a has-many association and you want a way of finding records that have no associated records, or,
+records that have at least one associated record, you might find this post useful.&lt;/p&gt;
+
+&lt;p&gt;Suppose you have classes &lt;code&gt;Person&lt;/code&gt; and &lt;code&gt;Friend&lt;/code&gt;&lt;/p&gt;</summary>
+    <content type="html">&lt;p&gt;If your Rails project has a has-many association and you want a way of finding records that have no associated records, or,
+records that have at least one associated record, you might find this post useful.&lt;/p&gt;
+
+&lt;p&gt;Suppose you have classes &lt;code&gt;Person&lt;/code&gt; and &lt;code&gt;Friend&lt;/code&gt; that are associated via a &lt;code&gt;has_many&lt;/code&gt; relationship:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;class Person &amp;lt; ActiveRecord::Base
+  has_many :friends
+end
+
+class Friend &amp;lt; ActiveRecord::Base
+  belongs_to :person
+end
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;How do you find &lt;code&gt;persons&lt;/code&gt; that have no &lt;code&gt;friends&lt;/code&gt;?&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;Person.includes(:friends).where("friends.person_id IS NULL")
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Or that have at least one &lt;code&gt;friend&lt;/code&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;Person.includes(:friends).where("friends.person_id IS NOT NULL")
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h4 id="using-arel"&gt;Using Arel&lt;/h4&gt;
+
+&lt;p&gt;To accomplish this with Arel 
+set up the following scopes on &lt;code&gt;Friend&lt;/code&gt; (thanks to &lt;a href="http://twitter.com/macfanatic"&gt;@macfanatic&lt;/a&gt; for the tip),&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;class Friend
+  belongs_to :person
+
+  scope :to_somebody, -&amp;gt;{ where arel_table[:person_id].not_eq(nil) }
+  scope :to_nobody,   -&amp;gt;{ where arel_table[:person_id].eq(nil) }
+end
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;And then, Persons who have at least one friend:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;Person.includes(:friends).merge(Friend.to_somebody)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;The friendless:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;Person.includes(:friends).merge(Friend.to_nobody)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;em&gt;Note:&lt;/em&gt; If you are on Rails 4 don’t forget to append &lt;code&gt;references(:friends)&lt;/code&gt; to these.&lt;/p&gt;
+
+</content>
+  </entry>
   <entry>
     <title>Contributing to Discourse</title>
     <link rel="alternate" href="/2013/09/12/contributing-to-oss.html"/>
@@ -18,38 +82,56 @@
     <author>
       <name>Navin Keswani</name>
     </author>
-    <summary type="html">&lt;p&gt;&lt;em&gt;Junior/Intermediate Ruby developers looking for an Open Source project to contribute to should consider practising clean coding techniques by refactoring the Discourse project.&lt;/em&gt;&lt;/p&gt;
+    <summary type="html">&lt;p&gt;&lt;em&gt;Junior/Intermediate Ruby developers looking for an Open Source project to contribute to 
+should consider practising clean coding techniques by refactoring the Discourse project.&lt;/em&gt;&lt;/p&gt;
 
 &lt;p&gt;Until around July this year, I had not contributed any code to an open...&lt;/p&gt;</summary>
-    <content type="html">&lt;p&gt;&lt;em&gt;Junior/Intermediate Ruby developers looking for an Open Source project to contribute to should consider practising clean coding techniques by refactoring the Discourse project.&lt;/em&gt;&lt;/p&gt;
+    <content type="html">&lt;p&gt;&lt;em&gt;Junior/Intermediate Ruby developers looking for an Open Source project to contribute to 
+should consider practising clean coding techniques by refactoring the Discourse project.&lt;/em&gt;&lt;/p&gt;
 
-&lt;p&gt;Until around July this year, I had not contributed any code to an open source project. I have just ticked over three years as a professional developer and I have had the mandatory &lt;em&gt;contribute to OSS&lt;/em&gt; on a to-do list for a while now. Until July this year I had submitted pull requests to a couple of projects that added to their documentation - I wanted to contribute code but despite the many posts out there on how-to-get-started-contributing-to-oss, I didn&amp;#8217;t have much success!&lt;/p&gt;
+&lt;p&gt;Until around July this year, I had not contributed any code to an open source project. I have just ticked over three years as a professional
+developer and I have had the mandatory &lt;em&gt;contribute to OSS&lt;/em&gt; on a to-do list for a while now. Until July this year I had submitted pull requests to 
+a couple of projects that added to their documentation - I wanted to contribute code but despite the many posts out there on 
+how-to-get-started-contributing-to-oss, I didn’t have much success! &lt;/p&gt;
 
 &lt;p&gt;Then a couple of things happened:&lt;/p&gt;
 
 &lt;ul&gt;
-&lt;li&gt;I realised that I too find refactoring to be therapeutic&lt;/li&gt;
-
-&lt;li&gt;I met Discourse&lt;/li&gt;
+  &lt;li&gt;I realised that I too find refactoring to be therapeutic&lt;/li&gt;
+  &lt;li&gt;I met Discourse&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;p&gt;To elaborate, Katrina Owen&amp;#8217;s (&lt;a href='http://twitter.com/kytrinyx'&gt;@kytrinyx&lt;/a&gt;) &lt;a href='http://www.youtube.com/watch?v=J4dlF0kcThQ'&gt;talk on Therapeutic Refactoring&lt;/a&gt; had a profound impact on me. A couple of days after watching it, I found in a state of almost post-meditative calm, staring at a pull request that cleaned up some complicated and unhappy code that I had written at work a few years ago. Code Climate showed me some nice shades of green, and I realised that I also find refactoring to be therapeutic!&lt;/p&gt;
+&lt;p&gt;To elaborate, Katrina Owen’s (&lt;a href="http://twitter.com/kytrinyx"&gt;@kytrinyx&lt;/a&gt;) &lt;a href="http://www.youtube.com/watch?v=J4dlF0kcThQ"&gt;talk on Therapeutic Refactoring&lt;/a&gt; had a profound impact on me.
+A couple of days after watching it, I found in a state of almost
+post-meditative calm, staring at a pull request that cleaned up some complicated and unhappy code that I had written at work a few years ago. Code Climate 
+showed me some nice shades of green, and I realised that I also find refactoring to be therapeutic! &lt;/p&gt;
 
-&lt;p&gt;&lt;a href='https://github.com/discourse/discourse'&gt;Discourse&lt;/a&gt; is an Ember and Rails project and so uses the technologies that I had spent a lot of time with at work. Its core team includes Jeff Atwood (&lt;a href='http://twitter.com/codinghorror'&gt;@codinghorror&lt;/a&gt;), Robin Ward (&lt;a href='http://twitter.com/eviltrout'&gt;@eviltrout&lt;/a&gt;) and Sam Saffron(&lt;a href='http://twitter.com/samsaffron'&gt;@samsaffron&lt;/a&gt;) of Stack Overflow fame, and its &lt;a href='http://www.codinghorror.com/blog/2013/02/civilized-discourse-construction-kit.html'&gt;pitch&lt;/a&gt; is pretty far reaching!&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://github.com/discourse/discourse"&gt;Discourse&lt;/a&gt; is an Ember and Rails project and so uses the technologies that I had spent a lot of time with at work. 
+Its core team includes Jeff Atwood (&lt;a href="http://twitter.com/codinghorror"&gt;@codinghorror&lt;/a&gt;), Robin Ward (&lt;a href="http://twitter.com/eviltrout"&gt;@eviltrout&lt;/a&gt;) and Sam Saffron(&lt;a href="http://twitter.com/samsaffron"&gt;@samsaffron&lt;/a&gt;) of Stack Overflow fame, 
+and its &lt;a href="http://www.codinghorror.com/blog/2013/02/civilized-discourse-construction-kit.html"&gt;pitch&lt;/a&gt; is pretty far reaching! &lt;/p&gt;
 
-&lt;p&gt;I had met Sam Saffron at a Ruby meetup in Sydney and was inspired by his talk on his &lt;a href='http://miniprofiler.com/'&gt;MiniProfiler&lt;/a&gt; project so when I first heard about (his involvement with) Discourse, I poked around a bit and ended up on &lt;a href='http://meta.discourse.org'&gt;meta.discourse.org&lt;/a&gt; - before long I found their post on &lt;a href='http://meta.discourse.org/t/so-you-want-to-help-out-with-discourse/3823'&gt;how to contribute to Discourse.&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;I had met Sam Saffron at a Ruby meetup in Sydney and was inspired by his talk on his &lt;a href="http://miniprofiler.com/"&gt;MiniProfiler&lt;/a&gt; project so when I first heard about (his involvement with) Discourse, 
+I poked around a bit and ended up on &lt;a href="http://meta.discourse.org"&gt;meta.discourse.org&lt;/a&gt; - before long I
+found their post on &lt;a href="http://meta.discourse.org/t/so-you-want-to-help-out-with-discourse/3823"&gt;how to contribute to Discourse.&lt;/a&gt; &lt;/p&gt;
 
-&lt;p&gt;I figured maybe I&amp;#8217;d use Discourse as an opportunity to practise refactoring and reinforce the coding principles I had been reading about in &lt;a href='http://www.amazon.com/Sandi-Metz/e/B0097WWH62'&gt;Sandi Metz&amp;#8217;s book&lt;/a&gt;, and on the &lt;a href='http://blog.codeclimate.com/'&gt;Code Climate blog&lt;/a&gt;, and submitted &lt;a href='https://github.com/discourse/discourse/pull/881'&gt;my first pull request.&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;I figured maybe I’d use Discourse as an opportunity to practise refactoring and reinforce the coding principles I had been reading about in &lt;a href="http://www.amazon.com/Sandi-Metz/e/B0097WWH62"&gt;Sandi Metz’s book&lt;/a&gt;,
+and on the &lt;a href="http://blog.codeclimate.com/"&gt;Code Climate blog&lt;/a&gt;, and submitted &lt;a href="https://github.com/discourse/discourse/pull/881"&gt;my first pull request.&lt;/a&gt; &lt;/p&gt;
 
-&lt;p&gt;Wondering how I knew where to start? By looking at the &lt;a href='https://codeclimate.com/github/discourse/discourse'&gt;Code Climate report of Discourse&lt;/a&gt; and picking a smell. Setting up the project for development wasn&amp;#8217;t so hard thanks to &lt;a href='https://github.com/discourse/discourse/blob/master/docs/DEVELOPER-ADVANCED.md'&gt;excellent documentation.&lt;/a&gt; I used &lt;a href='http://sadi.st/Ruby_Sadist.html'&gt;flog and flay&lt;/a&gt; locally to monitor the progress of my efforts until I discovered later that you can register your fork of Discourse with Code Climate. Once you have forked the project, try hitting &lt;em&gt;http://codeclimate.com/github/your-github-handle/discourse&lt;/em&gt; and Code Climate will help you through the rest.&lt;/p&gt;
+&lt;p&gt;Wondering how I knew where to start? By looking at the &lt;a href="https://codeclimate.com/github/discourse/discourse"&gt;Code Climate report of Discourse&lt;/a&gt; and picking a smell. Setting up the project 
+for development wasn’t so hard thanks to &lt;a href="https://github.com/discourse/discourse/blob/master/docs/DEVELOPER-ADVANCED.md"&gt;excellent documentation.&lt;/a&gt; I used &lt;a href="http://sadi.st/Ruby_Sadist.html"&gt;flog and flay&lt;/a&gt; 
+locally to monitor the progress of my efforts until I discovered later that you can register your fork of Discourse with Code Climate. Once you have forked the project, 
+try hitting &lt;em&gt;http://codeclimate.com/github/your-github-handle/discourse&lt;/em&gt; and Code Climate will help you through the rest. &lt;/p&gt;
 
-&lt;p&gt;I found Sam and Robin&amp;#8217;s feedback to be excellent and encouraging and was reminded how important it is to find a project that is maintained by folks who communicate well!&lt;/p&gt;
+&lt;p&gt;I found Sam and Robin’s feedback to be excellent and encouraging and was reminded how important it is to find a project that is maintained by folks who communicate well!&lt;/p&gt;
 
-&lt;p&gt;By the end of the summer (I&amp;#8217;m in the northern hemisphere at the moment), I had made several contributions to Discourse, learning a ton along the way. I even implemented a feature and helped a bit on their Rails4 upgrade. One of my &lt;a href='https://github.com/discourse/discourse/pull/1185#issuecomment-20971446'&gt;better refactoring pull requests&lt;/a&gt; was used in an interview to demonstrate my journey towards writing better code (I got the job!).&lt;/p&gt;
+&lt;p&gt;By the end of the summer (I’m in the northern hemisphere at the moment), I had made several contributions to Discourse, learning a ton along the way. I even implemented a feature and 
+helped a bit on their Rails4 upgrade. One of my &lt;a href="https://github.com/discourse/discourse/pull/1185#issuecomment-20971446"&gt;better refactoring pull requests&lt;/a&gt; was used in an interview to demonstrate my journey towards writing better code (I got the job!). &lt;/p&gt;
 
-&lt;p&gt;If you are in a similar stage in your journey as a developer, I encourage you to spend some time (therapeutically) refactoring your open source project of choice. As you can see, Discourse is a good candidate! Also, a word of advice - stay with the principle of having fun and playing to your strengths. I found contributing to the Rails side of Discourse to have a much better yield than the Ember side.&lt;/p&gt;
+&lt;p&gt;If you are in a similar stage in your journey as a developer, I encourage you to spend some time (therapeutically) refactoring your open source project of choice. As you can see, Discourse is a good candidate! Also, a word of advice - stay with the 
+principle of having fun and playing to your strengths. I found contributing to the Rails side of Discourse to have a much better yield than the Ember side. &lt;/p&gt;
 
-&lt;p&gt;Good luck!&lt;/p&gt;</content>
+&lt;p&gt;Good luck!&lt;/p&gt;
+</content>
   </entry>
   <entry>
     <title>Simple Design</title>
@@ -60,36 +142,40 @@
     <author>
       <name>Navin Keswani</name>
     </author>
-    <summary type="html">&lt;p&gt;Yesterday I attended the &lt;a href="http://coderetreat.org/events/global-day-of-coderetreat-2011"&gt;&lt;em&gt;Global Day of Code Retreat, 2011&lt;/em&gt;&lt;/a&gt; in Sydney. We were incredibly privileged to have the creator of Code Retreat, &lt;a href="http://twitter.com/coreyhaines"&gt;Corey Haines&lt;/a&gt; facilitating.&lt;/p&gt;
+    <summary type="html">&lt;p&gt;Yesterday I attended the &lt;a href="http://coderetreat.org/events/global-day-of-coderetreat-2011"&gt;&lt;em&gt;Global Day of Code Retreat, 2011&lt;/em&gt;&lt;/a&gt; in Sydney. We were incredibly
+privileged to have the creator of Code Retreat, &lt;a href="http://twitter.com/coreyhaines"&gt;Corey Haines&lt;/a&gt;
+facilitating.&lt;/p&gt;
 
 &lt;p&gt;I found the experience to be really very profound and recommend it without reserve to...&lt;/p&gt;</summary>
-    <content type="html">&lt;p&gt;Yesterday I attended the &lt;a href='http://coderetreat.org/events/global-day-of-coderetreat-2011'&gt;&lt;em&gt;Global Day of Code Retreat, 2011&lt;/em&gt;&lt;/a&gt; in Sydney. We were incredibly privileged to have the creator of Code Retreat, &lt;a href='http://twitter.com/coreyhaines'&gt;Corey Haines&lt;/a&gt; facilitating.&lt;/p&gt;
+    <content type="html">&lt;p&gt;Yesterday I attended the &lt;a href="http://coderetreat.org/events/global-day-of-coderetreat-2011"&gt;&lt;em&gt;Global Day of Code Retreat, 2011&lt;/em&gt;&lt;/a&gt; in Sydney. We were incredibly
+privileged to have the creator of Code Retreat, &lt;a href="http://twitter.com/coreyhaines"&gt;Corey Haines&lt;/a&gt;
+facilitating.&lt;/p&gt;
 
 &lt;p&gt;I found the experience to be really very profound and recommend it without reserve to developers of all levels.&lt;/p&gt;
 
 &lt;p&gt;Here are some of the things I took from the day:&lt;/p&gt;
 
 &lt;ul&gt;
-&lt;li&gt;My C++/RUP based thinking of OO really needs a makeover&lt;/li&gt;
-
-&lt;li&gt;I thought I was practising Test Driven Development (TDD) but I now see how narrow my understanding of TDD was. The &lt;em&gt;evil coder&lt;/em&gt; or &lt;em&gt;Mute with Find the Loophole&lt;/em&gt; session of the retreat was simultaneously hilarious, frustrating and enlightening on how well tests actually serve as a specification for code&lt;/li&gt;
-
-&lt;li&gt;The principles of &lt;em&gt;Simple Design&lt;/em&gt; (attributed to the best of my knowledge to Kent Beck and Ron Jeffries in the Extreme Programming book)&lt;/li&gt;
+  &lt;li&gt;My C++/RUP based thinking of OO really needs a makeover&lt;/li&gt;
+  &lt;li&gt;I thought I was practising Test Driven Development (TDD) but I now see how narrow my understanding of TDD was.
+The &lt;em&gt;evil coder&lt;/em&gt; or &lt;em&gt;Mute with Find the Loophole&lt;/em&gt; session of the retreat was simultaneously hilarious, frustrating and enlightening on how well tests actually serve as a specification for code&lt;/li&gt;
+  &lt;li&gt;The principles of &lt;em&gt;Simple Design&lt;/em&gt; (attributed to the best of my knowledge to Kent Beck and Ron Jeffries in the Extreme Programming book)&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;p&gt;I&amp;#8217;ve come across each of the 4 principles of simple design but when I heard Corey talk through them in sequence, it really made a difference to the way I understand them. I know that this understanding will change as I practice with them and I will not remember them as well when I am in the thick of the work day, so I&amp;#8217;m writing them down here as a note to self:&lt;/p&gt;
+&lt;p&gt;I’ve come across each of the 4 principles of simple design but when I heard Corey talk through them in sequence, it really made a difference
+to the way I understand them.  I know that this understanding will change as I practice with them and I will not remember them as well when I am in the thick of the work day,
+so I’m writing them down here as a note to self:&lt;/p&gt;
 
 &lt;ol&gt;
-&lt;li&gt;Runs all the tests&lt;/li&gt;
-
-&lt;li&gt;Expresses every idea that we need to express&lt;/li&gt;
-
-&lt;li&gt;Says everything once and only once&lt;/li&gt;
-
-&lt;li&gt;Has no superfluous parts&lt;/li&gt;
+  &lt;li&gt;Runs all the tests&lt;/li&gt;
+  &lt;li&gt;Expresses every idea that we need to express&lt;/li&gt;
+  &lt;li&gt;Says everything once and only once&lt;/li&gt;
+  &lt;li&gt;Has no superfluous parts&lt;/li&gt;
 &lt;/ol&gt;
 
-&lt;p&gt;I look forward to practicing the principles I learned at code retreat. I have no doubt that I have had a step change in my perspective as a programmer - more power to Corey&amp;#8217;s efforts at &lt;a href='http://coderetreat.org'&gt;coderetreat.org&lt;/a&gt; I say!&lt;/p&gt;</content>
+&lt;p&gt;I look forward to practicing the principles I learned at code retreat.  I have no doubt that I have had a step change in my perspective as a programmer - more power to
+Corey’s efforts at &lt;a href="http://coderetreat.org"&gt;coderetreat.org&lt;/a&gt; I say!&lt;/p&gt;
+</content>
   </entry>
   <entry>
     <title>A Top Down Operator Precedence parser for algebraic expressions</title>
@@ -100,90 +186,124 @@
     <author>
       <name>Navin Keswani</name>
     </author>
-    <summary type="html">&lt;p&gt;In my &lt;a href="/2011/10/02/polar-curve-grapher.html"&gt;previous post&lt;/a&gt; I wrote about a polar curve grapher and its use of Kevin Mehall&amp;#8217;s &lt;code&gt;tdop_math.js&lt;/code&gt; to parse a user input algebraic expression into a javascript eval(uable) string. I ended up spending some time with &lt;code&gt;tdop_math.js&lt;/code&gt; - you can find the source...&lt;/p&gt;</summary>
-    <content type="html">&lt;p&gt;In my &lt;a href='/2011/10/02/polar-curve-grapher.html'&gt;previous post&lt;/a&gt; I wrote about a polar curve grapher and its use of Kevin Mehall&amp;#8217;s &lt;code&gt;tdop_math.js&lt;/code&gt; to parse a user input algebraic expression into a javascript eval(uable) string. I ended up spending some time with &lt;code&gt;tdop_math.js&lt;/code&gt; - you can find the source &lt;a href='https://github.com/kevinmehall/EquationExplorer/blob/master/tdop_math.js'&gt;here&lt;/a&gt; - and I fell into the magical rabbit hole of Top Down Operator Precedence (TDOP) parsers. This post describes how I ended up writing a TDOP parser for algebraic expressions in Ruby.&lt;/p&gt;
+    <summary type="html">&lt;p&gt;In my &lt;a href="/2011/10/02/polar-curve-grapher.html"&gt;previous post&lt;/a&gt; I wrote about a polar curve grapher and its use of Kevin Mehall’s &lt;code&gt;tdop_math.js&lt;/code&gt; to parse a user input algebraic expression into a
+javascript eval(uable) string.  I ended up spending some time with &lt;code&gt;tdop_math.js&lt;/code&gt; - you can find the...&lt;/p&gt;</summary>
+    <content type="html">&lt;p&gt;In my &lt;a href="/2011/10/02/polar-curve-grapher.html"&gt;previous post&lt;/a&gt; I wrote about a polar curve grapher and its use of Kevin Mehall’s &lt;code&gt;tdop_math.js&lt;/code&gt; to parse a user input algebraic expression into a
+javascript eval(uable) string.  I ended up spending some time with &lt;code&gt;tdop_math.js&lt;/code&gt; - you can find the source &lt;a href="https://github.com/kevinmehall/EquationExplorer/blob/master/tdop_math.js"&gt;here&lt;/a&gt; -
+and I fell into the magical rabbit hole of Top Down Operator Precedence (TDOP) parsers. This post describes how I ended up writing a
+TDOP parser for algebraic expressions in Ruby.&lt;/p&gt;
 
-&lt;p&gt;Some facts:&lt;/p&gt;
+&lt;p&gt;Some facts:
+- Vaughan Pratt first wrote about Top Down Operator Precedence parsers in 1973
+- Douglas Crockford wrote about them in Beautiful Code, and in &lt;a href="http://javascript.crockford.com/tdop/tdop.html"&gt;an article&lt;/a&gt; that includes an implementation of a parser for a Simplified Javascript - he went on to
+use this in &lt;a href="http://jslint.com"&gt;JSlint&lt;/a&gt;&lt;/p&gt;
+
+&lt;h4 id="overview-of-tdop-parsers"&gt;Overview of TDOP parsers&lt;/h4&gt;
+
+&lt;p&gt;In a nutshell, Top Down Operator Precedence parsers are similar to &lt;a href="http://en.wikipedia.org/wiki/Recursive_descent_parser"&gt;Recursive Descent parsers,&lt;/a&gt; but, as claimed by Vaughan Pratt,
+simpler to understand, implement, and providing of better performance. Borrowing from &lt;a href="http://eli.thegreenplace.net/2010/01/02/top-down-operator-precedence-parsing/"&gt;this&lt;/a&gt;
+excellent article by Eli Bendersky, the main features of a TDOP parser are:&lt;/p&gt;
 
 &lt;ul&gt;
-&lt;li&gt;Vaughan Pratt first wrote about Top Down Operator Precedence parsers in 1973&lt;/li&gt;
-
-&lt;li&gt;Douglas Crockford wrote about them in Beautiful Code, and in &lt;a href='http://javascript.crockford.com/tdop/tdop.html'&gt;an article&lt;/a&gt; that includes an implementation of a parser for a Simplified Javascript - he went on to use this in &lt;a href='http://jslint.com'&gt;JSlint&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;A &lt;em&gt;binding power&lt;/em&gt; mechanism to handle precedence levels - e.g. the binding power of multiplication &lt;code&gt;'*'&lt;/code&gt; is higher than that of addition &lt;code&gt;'+'&lt;/code&gt; in arithmetic&lt;/li&gt;
+  &lt;li&gt;A means of implementing different functionality of tokens depending on their position relative to their neighbors: &lt;em&gt;prefix&lt;/em&gt; or &lt;em&gt;infix.&lt;/em&gt; For example, the
+minus &lt;code&gt;'-'&lt;/code&gt; operator is behaving as a prefix operator in &lt;code&gt;-2&lt;/code&gt; but in its infix form, it is subtraction &lt;code&gt;4 - 2.&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;As opposed to classic Recursive Descent, where semantic actions are associated with grammar rules (BNF), TDOP associates them with tokens. Tokens have
+a binding power, and know how to handle themselves in infix and/or in prefix situations. Expressions are then evaluated recursively by evaluating them at each
+‘precedence’ level and returning the result to its caller.&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;h4 id='overview_of_tdop_parsers'&gt;Overview of TDOP parsers&lt;/h4&gt;
+&lt;p&gt;Compilers are difficult to understand at the best of times and most articles I have come across on TDOP parsers are by very bright people finishing (or pausing) on their journey to
+get to know Pratt’s work. At my current stage of comfort with TDOP parsers, I cannot come close to explaining the parser any better than
+Eli Bendersky.&lt;/p&gt;
 
-&lt;p&gt;In a nutshell, Top Down Operator Precedence parsers are similar to &lt;a href='http://en.wikipedia.org/wiki/Recursive_descent_parser'&gt;Recursive Descent parsers,&lt;/a&gt; but, as claimed by Vaughan Pratt, simpler to understand, implement, and providing of better performance. Borrowing from &lt;a href='http://eli.thegreenplace.net/2010/01/02/top-down-operator-precedence-parsing/'&gt;this&lt;/a&gt; excellent article by Eli Bendersky, the main features of a TDOP parser are:&lt;/p&gt;
+&lt;p&gt;Eli’s &lt;a href="http://eli.thegreenplace.net/2010/01/02/top-down-operator-precedence-parsing/"&gt;article,&lt;/a&gt; elaborates on the features described above
+and explains the parser by setting one up to handle simple arithmetic. He then works through a simple example that illustrates it in
+action as it parses the expression &lt;code&gt;3 + 1 * 2 * 4 + 5.&lt;/code&gt;&lt;/p&gt;
 
-&lt;ul&gt;
-&lt;li&gt;A &lt;em&gt;binding power&lt;/em&gt; mechanism to handle precedence levels - e.g. the binding power of multiplication &lt;code&gt;&amp;#39;*&amp;#39;&lt;/code&gt; is higher than that of addition &lt;code&gt;&amp;#39;+&amp;#39;&lt;/code&gt; in arithmetic&lt;/li&gt;
+&lt;p&gt;For further detail on TDOP parsers, I refer the interested reader to this and Douglas Crockford’s article referenced above.&lt;/p&gt;
 
-&lt;li&gt;A means of implementing different functionality of tokens depending on their position relative to their neighbors: &lt;em&gt;prefix&lt;/em&gt; or &lt;em&gt;infix.&lt;/em&gt; For example, the minus &lt;code&gt;&amp;#39;-&amp;#39;&lt;/code&gt; operator is behaving as a prefix operator in &lt;code&gt;-2&lt;/code&gt; but in its infix form, it is subtraction &lt;code&gt;4 - 2.&lt;/code&gt;&lt;/li&gt;
+&lt;h3 id="tdop-and-ruby"&gt;TDOP and Ruby&lt;/h3&gt;
 
-&lt;li&gt;As opposed to classic Recursive Descent, where semantic actions are associated with grammar rules (BNF), TDOP associates them with tokens. Tokens have a binding power, and know how to handle themselves in infix and/or in prefix situations. Expressions are then evaluated recursively by evaluating them at each &amp;#8216;precedence&amp;#8217; level and returning the result to its caller.&lt;/li&gt;
-&lt;/ul&gt;
+&lt;p&gt;As I was working on the &lt;a href="2011/10/Polar-curve-grapher/"&gt;polar curve grapher&lt;/a&gt; I got curious about implementing &lt;code&gt;tdop_math.js&lt;/code&gt; in Ruby. I studied the
+source of &lt;code&gt;tdop_math.js,&lt;/code&gt; and its tokeniser &lt;code&gt;tokens.js,&lt;/code&gt; and felt that I had a decent understanding of its structure and operation (improving my Javascript skills
+along the way!). However, a like-for-like implementation in Ruby seemed out of the question. Well, it seemed like a hard proposition that would involve
+first developing new metaprogramming skills in Ruby!&lt;/p&gt;
 
-&lt;p&gt;Compilers are difficult to understand at the best of times and most articles I have come across on TDOP parsers are by very bright people finishing (or pausing) on their journey to get to know Pratt&amp;#8217;s work. At my current stage of comfort with TDOP parsers, I cannot come close to explaining the parser any better than Eli Bendersky.&lt;/p&gt;
+&lt;p&gt;And then I ran into Glen Vandenburg’s project &lt;code&gt;radish,&lt;/code&gt; which is now called &lt;a href="http://github.com/glv/smithereen"&gt;&lt;code&gt;smithereen&lt;/code&gt;.&lt;/a&gt;&lt;/p&gt;
 
-&lt;p&gt;Eli&amp;#8217;s &lt;a href='http://eli.thegreenplace.net/2010/01/02/top-down-operator-precedence-parsing/'&gt;article,&lt;/a&gt; elaborates on the features described above and explains the parser by setting one up to handle simple arithmetic. He then works through a simple example that illustrates it in action as it parses the expression &lt;code&gt;3 + 1 * 2 * 4 + 5.&lt;/code&gt;&lt;/p&gt;
+&lt;h4 id="smithereen"&gt;Smithereen&lt;/h4&gt;
 
-&lt;p&gt;For further detail on TDOP parsers, I refer the interested reader to this and Douglas Crockford&amp;#8217;s article referenced above.&lt;/p&gt;
+&lt;p&gt;Smithereen is a result of Glen Vandenburg’s meditation on TDOP parsers, during which he decided to write an implementation in Ruby.
+He has implemented a &lt;em&gt;library for building Top Down Operator Precedence parsers,&lt;/em&gt; using Ruby idioms that were completely unfamiliar to me, but
+that provided an excellent opportunity to learn. As Glen says, he has &lt;em&gt;tried to provide a well-factored set of tools to help with
+the core TDOP algorithm and several related problems,&lt;/em&gt; and so I decided to fork Smithereen with the intention of helping with its development, and,
+using it to implement &lt;code&gt;tdop_math&lt;/code&gt; in Ruby.&lt;/p&gt;
 
-&lt;h3 id='tdop_and_ruby'&gt;TDOP and Ruby&lt;/h3&gt;
-
-&lt;p&gt;As I was working on the &lt;a href='2011/10/Polar-curve-grapher/'&gt;polar curve grapher&lt;/a&gt; I got curious about implementing &lt;code&gt;tdop_math.js&lt;/code&gt; in Ruby. I studied the source of &lt;code&gt;tdop_math.js,&lt;/code&gt; and its tokeniser &lt;code&gt;tokens.js,&lt;/code&gt; and felt that I had a decent understanding of its structure and operation (improving my Javascript skills along the way!). However, a like-for-like implementation in Ruby seemed out of the question. Well, it seemed like a hard proposition that would involve first developing new metaprogramming skills in Ruby!&lt;/p&gt;
-
-&lt;p&gt;And then I ran into Glen Vandenburg&amp;#8217;s project &lt;code&gt;radish,&lt;/code&gt; which is now called &lt;a href='http://github.com/glv/smithereen'&gt;&lt;code&gt;smithereen&lt;/code&gt;.&lt;/a&gt;&lt;/p&gt;
-
-&lt;h4 id='smithereen'&gt;Smithereen&lt;/h4&gt;
-
-&lt;p&gt;Smithereen is a result of Glen Vandenburg&amp;#8217;s meditation on TDOP parsers, during which he decided to write an implementation in Ruby. He has implemented a &lt;em&gt;library for building Top Down Operator Precedence parsers,&lt;/em&gt; using Ruby idioms that were completely unfamiliar to me, but that provided an excellent opportunity to learn. As Glen says, he has &lt;em&gt;tried to provide a well-factored set of tools to help with the core TDOP algorithm and several related problems,&lt;/em&gt; and so I decided to fork Smithereen with the intention of helping with its development, and, using it to implement &lt;code&gt;tdop_math&lt;/code&gt; in Ruby.&lt;/p&gt;
-
-&lt;p&gt;Smithereen comes with two samples, an arithmetic parser, and the Simplified Javascript parser. I found it quite difficult to get started with Smithereen and asked Glen a question or two. To my delight, he helped me get started and I found this to be so inspiring that I made rapid progress towards implementing a simple scientific calculator. This is available on &lt;a href='http://github.com/novemberkilo/smithereen/tree/develop'&gt;my fork of Smithereen&lt;/a&gt; as &lt;a href='https://github.com/novemberkilo/smithereen/blob/develop/samples/equation_parser.rb'&gt;&lt;code&gt;equation_parser.rb&lt;/code&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Smithereen comes with two samples, an arithmetic parser, and the Simplified Javascript parser.  I found it quite difficult to get started with Smithereen
+and asked Glen a question or two. To my delight, he helped me get started and I found this to be so inspiring that I made rapid progress towards
+implementing a simple scientific calculator.  This is available on &lt;a href="http://github.com/novemberkilo/smithereen/tree/develop"&gt;my fork of Smithereen&lt;/a&gt;
+as &lt;a href="https://github.com/novemberkilo/smithereen/blob/develop/samples/equation_parser.rb"&gt;&lt;code&gt;equation_parser.rb&lt;/code&gt;&lt;/a&gt;&lt;/p&gt;
 
 &lt;p&gt;&lt;code&gt;equation_parser.rb&lt;/code&gt; will, for instance, take strings such as &lt;code&gt;sin(cos(2pi))&lt;/code&gt; and return &lt;code&gt;0.84147&lt;/code&gt;&lt;/p&gt;
 
-&lt;p&gt;By way of explanation, it has hardcoded hashes that declare functions and constants, and these are tokenised as &lt;code&gt;names&lt;/code&gt; and given a high binding power.&lt;/p&gt;
+&lt;p&gt;By way of explanation, it has hardcoded hashes that declare functions and constants, and these are tokenised as &lt;code&gt;names&lt;/code&gt; and given a high
+binding power.&lt;/p&gt;
 
 &lt;pre&gt;&lt;code&gt;fns = {
-  &amp;#39;sin&amp;#39;  =&amp;gt; Proc.new { |x| Math.sin(x) },
-  &amp;#39;cos&amp;#39;  =&amp;gt; Proc.new { |x| Math.cos(x) },
-  &amp;#39;tan&amp;#39;  =&amp;gt; Proc.new { |x| Math.tan(x) },
-  &amp;#39;sqrt&amp;#39; =&amp;gt; Proc.new { |x| Math.sqrt(x) },
-  &amp;#39;exp&amp;#39;  =&amp;gt; Proc.new { |x| Math.exp(x) }
+  'sin'  =&amp;gt; Proc.new { |x| Math.sin(x) },
+  'cos'  =&amp;gt; Proc.new { |x| Math.cos(x) },
+  'tan'  =&amp;gt; Proc.new { |x| Math.tan(x) },
+  'sqrt' =&amp;gt; Proc.new { |x| Math.sqrt(x) },
+  'exp'  =&amp;gt; Proc.new { |x| Math.exp(x) }
   }
 
 CONSTANTS = {
-  &amp;#39;pi&amp;#39; =&amp;gt; Math::PI,
-  &amp;#39;e&amp;#39;  =&amp;gt; Math::E
-  }&lt;/code&gt;&lt;/pre&gt;
+  'pi' =&amp;gt; Math::PI,
+  'e'  =&amp;gt; Math::E
+  }
+&lt;/code&gt;&lt;/pre&gt;
 
-&lt;p&gt;The &lt;code&gt;infix&lt;/code&gt; method on the token &lt;code&gt;(&lt;/code&gt; checks for the presence of a function or a constant (essentially a key in the above hashes), and looks up the corresponding value for the definition of the function. Smithereen takes care of the rest. Well, that is, after tokens for the usual arithmetic operators are defined, with infix and prefix methods as described above.&lt;/p&gt;
+&lt;p&gt;The &lt;code&gt;infix&lt;/code&gt; method on the token &lt;code&gt;(&lt;/code&gt; checks for the presence of a function or a constant (essentially a key in the above hashes),
+and looks up the corresponding value for the definition of the function. Smithereen takes care of the rest.  Well, that is, after tokens for
+the usual arithmetic operators are defined, with infix and prefix methods as described above.&lt;/p&gt;
 
-&lt;h4 id='tdop_mathrb'&gt;tdop_math.rb&lt;/h4&gt;
+&lt;h4 id="tdopmathrb"&gt;tdop_math.rb&lt;/h4&gt;
 
-&lt;p&gt;Completing my goal to create a Ruby equivalent to &lt;code&gt;tdop_math.js,&lt;/code&gt; I&amp;#8217;ve taken the work in the example &lt;code&gt;equation_parser.rb&lt;/code&gt; and used it to create a Ruby gem called &lt;code&gt;tdop_math.&lt;/code&gt; This takes an algebraic expression, parses it, and returns a string of Ruby that represents the expression.&lt;/p&gt;
+&lt;p&gt;Completing my goal to create a Ruby equivalent to &lt;code&gt;tdop_math.js,&lt;/code&gt; I’ve taken the work in the example &lt;code&gt;equation_parser.rb&lt;/code&gt;
+and used it to create a Ruby gem called &lt;code&gt;tdop_math.&lt;/code&gt; This takes an algebraic expression, parses it, and returns a string of Ruby that represents
+the expression.&lt;/p&gt;
 
 &lt;p&gt;Because the &lt;code&gt;tdop_math&lt;/code&gt; gem depends on &lt;code&gt;smithereen&lt;/code&gt; (which has yet to be released), it is not available as a built gem.&lt;/p&gt;
 
-&lt;p&gt;As far as I know, if you want to install this, you are going to need to pull down my &lt;a href='http://github.com/novemberkilo/tdop_math'&gt;repo&lt;/a&gt; and &lt;code&gt;include &amp;#39;&amp;lt;path-to-tdop_math.rb&amp;gt;&amp;#39;&lt;/code&gt; manually. Once you have, you use it as follows:&lt;/p&gt;
+&lt;p&gt;As far as I know, if you want to install this, you are going to need to pull down my &lt;a href="http://github.com/novemberkilo/tdop_math"&gt;repo&lt;/a&gt; and
+&lt;code&gt;include '&amp;lt;path-to-tdop_math.rb&amp;gt;'&lt;/code&gt; manually. Once you have, you use it as follows:&lt;/p&gt;
 
-&lt;pre&gt;&lt;code&gt;u = &amp;quot;sin(cos(2x))&amp;quot;  ## or some user input algebraic expression
+&lt;pre&gt;&lt;code&gt;u = "sin(cos(2x))"  ## or some user input algebraic expression
 t = TDOPMath::Parser.new(u)
-f = t.parse   ## f == &amp;quot;Math.sin(Math.cos(2 * x))&amp;quot;&lt;/code&gt;&lt;/pre&gt;
+f = t.parse   ## f == "Math.sin(Math.cos(2 * x))"
+&lt;/code&gt;&lt;/pre&gt;
 
-&lt;p&gt;&lt;code&gt;tdop_math&lt;/code&gt; reserves symbols &lt;code&gt;x&lt;/code&gt;,&lt;code&gt;y&lt;/code&gt; and &lt;code&gt;t&lt;/code&gt; as variables. It also provides a basic list of functions, namely, &lt;code&gt;sin&lt;/code&gt;, &lt;code&gt;cos&lt;/code&gt;, &lt;code&gt;tan&lt;/code&gt;, &lt;code&gt;sqrt&lt;/code&gt; and &lt;code&gt;exp&lt;/code&gt;. If you need to provide an alternate list of variables and functions, you can do so as follows:&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;tdop_math&lt;/code&gt; reserves symbols &lt;code&gt;x&lt;/code&gt;,&lt;code&gt;y&lt;/code&gt; and &lt;code&gt;t&lt;/code&gt; as variables.  It also
+provides a basic list of functions, namely, &lt;code&gt;sin&lt;/code&gt;, &lt;code&gt;cos&lt;/code&gt;, &lt;code&gt;tan&lt;/code&gt;, &lt;code&gt;sqrt&lt;/code&gt;
+and &lt;code&gt;exp&lt;/code&gt;.  If you need to provide an alternate list of variables and
+functions, you can do so as follows:&lt;/p&gt;
 
-&lt;pre&gt;&lt;code&gt;u = &amp;quot;baz(foo(2a))&amp;quot;  ## or some user input algrebraic expression
+&lt;pre&gt;&lt;code&gt;u = "baz(foo(2a))"  ## or some user input algrebraic expression
 t = TDOPMath::Parser.new(u,
-                         :vars =&amp;gt; [&amp;#39;a&amp;#39;],
+                         :vars =&amp;gt; ['a'],
                          :functions =&amp;gt; {
-                            &amp;#39;foo&amp;#39; =&amp;gt; &amp;#39;Foo::foo&amp;#39;,
-                            &amp;#39;baz&amp;#39; =&amp;gt; &amp;#39;Baz::baz&amp;#39;
+                            'foo' =&amp;gt; 'Foo::foo',
+                            'baz' =&amp;gt; 'Baz::baz'
                           })
-f = t.parse   ## f == &amp;quot;Baz::baz(Foo::foo(2 * a))&amp;quot;&lt;/code&gt;&lt;/pre&gt;
+f = t.parse   ## f == "Baz::baz(Foo::foo(2 * a))"
+&lt;/code&gt;&lt;/pre&gt;
 
-&lt;p&gt;You can use &lt;code&gt;tdop_math&lt;/code&gt; wherever you need a user to input an algebraic expression, comprising of a known set of functions and variables. This could find use in apps in maths education or science/data analytics. I hope the community finds it useful, although my motivation was mainly to build it as an exercise, along my path to becoming a better programmer. I&amp;#8217;ve made a gem!&lt;/p&gt;</content>
+&lt;p&gt;You can use &lt;code&gt;tdop_math&lt;/code&gt; wherever you need a user to input an algebraic expression, comprising of a known set of functions and variables. This
+could find use in apps in maths education or science/data analytics.  I hope the community finds it useful, although my motivation was mainly
+to build it as an exercise, along my path to becoming a better programmer.  I’ve made a gem!&lt;/p&gt;
+
+</content>
   </entry>
   <entry>
     <title>A polar curve grapher</title>
@@ -194,70 +314,97 @@ f = t.parse   ## f == &amp;quot;Baz::baz(Foo::foo(2 * a))&amp;quot;&lt;/code&gt;
     <author>
       <name>Navin Keswani</name>
     </author>
-    <summary type="html">&lt;p&gt;Polar coordinates and polar functions are remarkably beautiful to people who get mathematics. I think that their &lt;a href="http://www.wolframalpha.com/input/?i=polar+curves"&gt;graphs&lt;/a&gt; are beautiful to most people. Ever since I first met them, I&amp;#8217;ve tried to draw them on different platforms and using different languages...&lt;/p&gt;</summary>
-    <content type="html">&lt;p&gt;Polar coordinates and polar functions are remarkably beautiful to people who get mathematics. I think that their &lt;a href='http://www.wolframalpha.com/input/?i=polar+curves'&gt;graphs&lt;/a&gt; are beautiful to most people. Ever since I first met them, I&amp;#8217;ve tried to draw them on different platforms and using different languages. Wanting to know more about canvas and javascript, I thought that it would be interesting to implement a polar curve grapher using these.&lt;/p&gt;
+    <summary type="html">&lt;p&gt;Polar coordinates and polar functions are remarkably beautiful to people who get mathematics.
+  I think that their &lt;a href="http://www.wolframalpha.com/input/?i=polar+curves"&gt;graphs&lt;/a&gt; are beautiful to most people. Ever since I first met them,
+  I’ve tried to draw them on different platforms and using different...&lt;/p&gt;</summary>
+    <content type="html">&lt;p&gt;Polar coordinates and polar functions are remarkably beautiful to people who get mathematics.
+  I think that their &lt;a href="http://www.wolframalpha.com/input/?i=polar+curves"&gt;graphs&lt;/a&gt; are beautiful to most people. Ever since I first met them,
+  I’ve tried to draw them on different platforms and using different languages. Wanting to know more about canvas and javascript,
+  I thought that it would be interesting to implement a polar curve grapher using these.&lt;/p&gt;
 
-&lt;p&gt;A quick reminder - the &lt;a href='http://www.wolframalpha.com/input/?i=polar+coordinates'&gt;polar coordinates&lt;/a&gt; &lt;code&gt;( r, t )&lt;/code&gt; of a point are expressed in terms of the distance &lt;code&gt;r&lt;/code&gt; of the point from the origin and the angle &lt;code&gt;t&lt;/code&gt; that the line connecting the point to the origin makes with the &lt;code&gt;x&lt;/code&gt;-axis. Also, the way you get from a set of polar coordinates &lt;code&gt;(r, t)&lt;/code&gt; to cartesian coordinates &lt;code&gt;(x, y)&lt;/code&gt; is:&lt;/p&gt;
+&lt;p&gt;A quick reminder - the &lt;a href="http://www.wolframalpha.com/input/?i=polar+coordinates"&gt;polar coordinates&lt;/a&gt; &lt;code&gt;( r, t )&lt;/code&gt; of a point
+  are expressed in terms of the distance &lt;code&gt;r&lt;/code&gt; of the point from the origin and the angle &lt;code&gt;t&lt;/code&gt;
+  that the line connecting the point to the origin makes with the &lt;code&gt;x&lt;/code&gt;-axis. Also, the way you get from a set of polar coordinates &lt;code&gt;(r, t)&lt;/code&gt;
+  to cartesian coordinates &lt;code&gt;(x, y)&lt;/code&gt; is:&lt;/p&gt;
 
-&lt;pre&gt;&lt;code&gt;    x = r * cos(t), y = r * sin(t)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;    x = r * cos(t), y = r * sin(t)
+&lt;/code&gt;&lt;/pre&gt;
 
-&lt;h4 id='background'&gt;Background&lt;/h4&gt;
+&lt;h4 id="background"&gt;Background&lt;/h4&gt;
 
-&lt;p&gt;Earlier on this year I had asked &lt;a href='http://avantbard.com'&gt;Gabe Hollombe&lt;/a&gt; for advice on things I could do to become a better programmer. Around the time of the conversation, I was particularly aware of my lack of knowledge of javascript and so, we chose my polar-curve-grapher as a project for Gabe to mentor me through.&lt;/p&gt;
+&lt;p&gt;Earlier on this year I had asked &lt;a href="http://avantbard.com"&gt;Gabe Hollombe&lt;/a&gt; for advice on things I could do to become a better programmer.
+  Around the time of the conversation, I was particularly aware of my lack of knowledge of
+  javascript and so, we chose my polar-curve-grapher as a project for Gabe to mentor me through.&lt;/p&gt;
 
-&lt;p&gt;I started off by checking out the landscape of javascript based graphing tools and apps and came across the following:&lt;/p&gt;
+&lt;p&gt;I started off by checking out the landscape of javascript based graphing tools and apps and came across the
+  following:&lt;/p&gt;
 
 &lt;ol&gt;
-&lt;li&gt;Kevin Mehall&amp;#8217;s &lt;a href='http://kevinmehall.net/p/equationexplorer'&gt;EquationExplorer&lt;/a&gt;&lt;/li&gt;
-
-&lt;li&gt;aanthony&amp;#8217;s &lt;a href='http://graph.tk'&gt;graph.tk&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;Kevin Mehall’s &lt;a href="http://kevinmehall.net/p/equationexplorer"&gt;EquationExplorer&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;aanthony’s &lt;a href="http://graph.tk"&gt;graph.tk&lt;/a&gt;&lt;/li&gt;
 &lt;/ol&gt;
 
-&lt;p&gt;Given my relative lack of experience with javascript, I found both apps difficult to understand. So, I tried to figure out how to do it by myself. I looked for javascript libraries I could use to simply plot a bunch of points and found a lot of stuff for charts but relatively few that would just take an array of points and plot them. Here are some that fit the bill:&lt;/p&gt;
+&lt;p&gt;Given my relative lack of experience with javascript, I found both apps difficult to understand.
+  So, I tried to figure out how to do it by myself.  I looked for javascript libraries I could use to simply plot a bunch of points
+  and found a lot of stuff for charts but relatively few that would just take an array of
+  points and plot them. Here are some that fit the bill:&lt;/p&gt;
 
 &lt;ol&gt;
-&lt;li&gt;&lt;a href='http://www.jqplot.com/'&gt;jQplot&lt;/a&gt;&lt;/li&gt;
-
-&lt;li&gt;Keith Lawler&amp;#8217;s &lt;a href='https://github.com/lawler/raphael.graphing'&gt;raphael.graphing.js&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href="http://www.jqplot.com/"&gt;jQplot&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;Keith Lawler’s &lt;a href="https://github.com/lawler/raphael.graphing"&gt;raphael.graphing.js&lt;/a&gt;&lt;/li&gt;
 &lt;/ol&gt;
 
-&lt;p&gt;I played around with jqplot and a hard-coded function &lt;code&gt;r = f(t)&lt;/code&gt; to get some quick results. Essentially, I created an array of points to be plotted using the following direct approach:&lt;/p&gt;
+&lt;p&gt;I played around with jqplot and a hard-coded function &lt;code&gt;r = f(t)&lt;/code&gt; to get some quick results.  Essentially, I
+  created an array of points to be plotted using the following direct approach:&lt;/p&gt;
 
 &lt;pre&gt;&lt;code&gt;    points_to_be_plotted = []
     for t in (0 ... 6*PI)
     points_to_be_plotted.push [ f(t)*cos(t), f(t)*sin(t) ]
 
-    jqPlot( point_to_be_plotted )&lt;/code&gt;&lt;/pre&gt;
+    jqPlot( point_to_be_plotted )
+&lt;/code&gt;&lt;/pre&gt;
 
 &lt;p&gt;And this is what jQplot did for me:&lt;/p&gt;
-&lt;!--&lt;img src='/images/Polar_function_grapher-jqplot.jpg' style='border: solid; border-color: gray; border-width: 2px' /&gt;--&gt;&lt;img class='img-rounded img-center' src='/images/Polar_function_grapher-jqplot.jpg' /&gt;
+
+&lt;!--&lt;img src='/images/Polar_function_grapher-jqplot.jpg' style='border: solid; border-color: gray; border-width: 2px' /&gt;--&gt;
+&lt;p&gt;&lt;img src="/images/Polar_function_grapher-jqplot.jpg" class="img-rounded img-center" /&gt;&lt;/p&gt;
+
 &lt;p&gt;This gave me a quick proof of concept and, the project had a life! I now needed to figure out how to get user input, process it, and then plot it.&lt;/p&gt;
 
-&lt;h4 id='parsing_user_input'&gt;Parsing user input&lt;/h4&gt;
+&lt;h4 id="parsing-user-input"&gt;Parsing user input&lt;/h4&gt;
 
-&lt;p&gt;Getting user input turned out to be straightforward - use a form in the page with a submit button and respond to the button click by picking up the input in javascript as a string (say) &lt;code&gt;&amp;quot;input_fn&amp;quot;&lt;/code&gt;. Use &lt;code&gt;eval(&amp;quot;input_fn(t)&amp;quot;)&lt;/code&gt; to turn this into a javascript function and follow the psuedocode above to generate an array of points to be plotted (see the source of the project for the detail - more on this below).&lt;/p&gt;
+&lt;p&gt;Getting user input turned out to be straightforward - use a form in the page with a submit button and respond
+  to the button click by picking up the input in javascript as a string (say) &lt;code&gt;"input_fn"&lt;/code&gt;.  Use &lt;code&gt;eval("input_fn(t)")&lt;/code&gt; to turn this into a javascript
+  function and follow the psuedocode above to generate an array of points to be plotted (see the source of the project for the detail - more on this below).&lt;/p&gt;
 
-&lt;p&gt;But what if you want the user to enter a function in plain, pedestrian maths (instead of the syntax required by javascript) - e.g. &lt;code&gt;2sin(x)&lt;/code&gt; instead of &lt;code&gt;2 * Math.sin(x)&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;But what if you want the user to enter a function in
+  plain, pedestrian maths (instead of the syntax required by javascript) - e.g. &lt;code&gt;2sin(x)&lt;/code&gt; instead of &lt;code&gt;2 * Math.sin(x)&lt;/code&gt;&lt;/p&gt;
 
-&lt;p&gt;Kevin&amp;#8217;s EquationExplorer did this so I set out to understand how. And this lead me to the world of Top-Down-Operator-Precedence (TDOP) parsers.&lt;/p&gt;
+&lt;p&gt;Kevin’s EquationExplorer did this so I set out to understand how.
+  And this lead me to the world of Top-Down-Operator-Precedence (TDOP) parsers.&lt;/p&gt;
 
-&lt;p&gt;I will write more about TDOP parsers in my next post but to complete the story on the polar curve grapher, these were the ingredients that went into the grapher that &lt;a href='http://github.com/novemberkilo/polar-curve-grapher'&gt;you can find here.&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;I will write more about TDOP parsers in my next post but to complete the story on the polar curve grapher, these were the
+  ingredients that went into the grapher that &lt;a href="http://github.com/novemberkilo/polar-curve-grapher"&gt;you can find here.&lt;/a&gt;&lt;/p&gt;
 
 &lt;ol&gt;
-&lt;li&gt;Parsing: Kevin Mehall&amp;#8217;s &lt;code&gt;tdop_math.js&lt;/code&gt; parser (that requires &lt;code&gt;tokens.js,&lt;/code&gt; a lexer written by Douglas Crockford himself)&lt;/li&gt;
-
-&lt;li&gt;Graphing: Keith Lawler&amp;#8217;s graphing library that is based on &lt;code&gt;raphael.js&lt;/code&gt; and called, &lt;a href='https://github.com/lawler/raphael.graphing'&gt;raphael.graphing.js&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;Parsing: Kevin Mehall’s &lt;code&gt;tdop_math.js&lt;/code&gt; parser (that requires &lt;code&gt;tokens.js,&lt;/code&gt; a lexer written by Douglas Crockford himself)&lt;/li&gt;
+  &lt;li&gt;Graphing: Keith Lawler’s graphing library that is based on &lt;code&gt;raphael.js&lt;/code&gt; and called, &lt;a href="https://github.com/lawler/raphael.graphing"&gt;raphael.graphing.js&lt;/a&gt;&lt;/li&gt;
 &lt;/ol&gt;
 
-&lt;p&gt;And thanks to GitHub pages, you can see it in action here: &lt;a href='http://novemberkilo.com/polar-curve-grapher'&gt;http://novemberkilo.com/polar-curve-grapher&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;And thanks to GitHub pages, you can see it in action here: &lt;a href="http://novemberkilo.com/polar-curve-grapher"&gt;http://novemberkilo.com/polar-curve-grapher&lt;/a&gt;&lt;/p&gt;
 
-&lt;p&gt;At the time of posting this I still needed to apply a coat or two of polish - I&amp;#8217;m not doing any graceful error handling (so try not to divide by zero!) and I&amp;#8217;m only winding around the origin three times. You should be able to play around though and get some pretty graphs.&lt;/p&gt;
+&lt;p&gt;At the time of posting this I still needed to apply a coat or two of polish - I’m not doing any graceful error handling (so try not to divide by zero!) and I’m
+  only winding around the origin three times. You should be able to play around though and get some pretty graphs.&lt;/p&gt;
 
 &lt;p&gt;Try &lt;code&gt;r = sin(3t)&lt;/code&gt; to get started with a propeller :)&lt;/p&gt;
 
-&lt;h4 id='acknowledgements'&gt;Acknowledgements&lt;/h4&gt;
+&lt;h4 id="acknowledgements"&gt;Acknowledgements&lt;/h4&gt;
 
-&lt;p&gt;I had a lot of fun putting this project together and owe a debt of gratitude to &lt;a href='http://avantbard.com'&gt;Gabe Hollombe&lt;/a&gt; for encouraging me to take this on, and for answering questions and providing guidance along the way. Also, thanks to Keith Lawler and Kevin Mehall for doing the heavy lifting - this project turned out to mainly involve stitching together their libraries.&lt;/p&gt;</content>
+&lt;p&gt;I had a lot of fun putting this project together and owe a debt of gratitude to &lt;a href="http://avantbard.com"&gt;Gabe Hollombe&lt;/a&gt; for encouraging me to take this on, and for answering questions
+  and providing guidance along the way.  Also, thanks to Keith Lawler and Kevin Mehall for doing the heavy lifting - this project turned out to mainly involve
+  stitching together their libraries.&lt;/p&gt;
+
+</content>
   </entry>
   <entry>
     <title>A simple jquery scroller</title>
@@ -268,24 +415,27 @@ f = t.parse   ## f == &amp;quot;Baz::baz(Foo::foo(2 * a))&amp;quot;&lt;/code&gt;
     <author>
       <name>Navin Keswani</name>
     </author>
-    <summary type="html">&lt;p&gt;Recently we implemented a variation on a scroller. We needed to flash up a set of snippets, one by one, in the same text area of a page. Here&amp;#8217;s a &lt;a href="/examples/jquery_scroller.html"&gt;demo&lt;/a&gt; of it in action. You can view the source of the demo but here&amp;#8217;s a quick, plain-English explanation...&lt;/p&gt;</summary>
-    <content type="html">&lt;p&gt;Recently we implemented a variation on a scroller. We needed to flash up a set of snippets, one by one, in the same text area of a page. Here&amp;#8217;s a &lt;a href='/examples/jquery_scroller.html'&gt;demo&lt;/a&gt; of it in action. You can view the source of the demo but here&amp;#8217;s a quick, plain-English explanation of how it works.&lt;/p&gt;
+    <summary type="html">&lt;p&gt;Recently we implemented a variation on a scroller. We needed to flash up a set of snippets, one by one, in the same text area of a page. Here’s a &lt;a href="/examples/jquery_scroller.html"&gt;demo&lt;/a&gt; of it in action.  You can view the source of the demo but here’s a quick, plain-English explanation...&lt;/p&gt;</summary>
+    <content type="html">&lt;p&gt;Recently we implemented a variation on a scroller. We needed to flash up a set of snippets, one by one, in the same text area of a page. Here’s a &lt;a href="/examples/jquery_scroller.html"&gt;demo&lt;/a&gt; of it in action.  You can view the source of the demo but here’s a quick, plain-English explanation of how it works.&lt;/p&gt;
 
-&lt;h4 id='the_markup'&gt;The markup&lt;/h4&gt;
+&lt;h4 id="the-markup"&gt;The markup&lt;/h4&gt;
+&lt;p&gt;In the page, the snippets are list elements &lt;code&gt;li&lt;/code&gt; in a &lt;code&gt;section&lt;/code&gt;. You can make them definition elements or whatever you like. The section has an &lt;code&gt;id&lt;/code&gt; so we can find it from javascript - I’ve called it &lt;code&gt;snippets&lt;/code&gt; in the example.&lt;/p&gt;
 
-&lt;p&gt;In the page, the snippets are list elements &lt;code&gt;li&lt;/code&gt; in a &lt;code&gt;section&lt;/code&gt;. You can make them definition elements or whatever you like. The section has an &lt;code&gt;id&lt;/code&gt; so we can find it from javascript - I&amp;#8217;ve called it &lt;code&gt;snippets&lt;/code&gt; in the example.&lt;/p&gt;
+&lt;h4 id="the-css"&gt;The CSS&lt;/h4&gt;
+&lt;p&gt;Pretty much the only style elements that are important to the correct
+operation of the scroller is &lt;code&gt;display: none&lt;/code&gt; on the list elements.
+This ensures that all list elements start out being invisible.  Having
+&lt;code&gt;overflow: hidden&lt;/code&gt; on the &lt;code&gt;section&lt;/code&gt; makes it easier to deal with any
+stuttering in the javascript loop shown below.&lt;/p&gt;
 
-&lt;h4 id='the_css'&gt;The CSS&lt;/h4&gt;
+&lt;h4 id="the-javascript"&gt;The javascript&lt;/h4&gt;
 
-&lt;p&gt;Pretty much the only style elements that are important to the correct operation of the scroller is &lt;code&gt;display: none&lt;/code&gt; on the list elements. This ensures that all list elements start out being invisible. Having &lt;code&gt;overflow: hidden&lt;/code&gt; on the &lt;code&gt;section&lt;/code&gt; makes it easier to deal with any stuttering in the javascript loop shown below.&lt;/p&gt;
-
-&lt;h4 id='the_javascript'&gt;The javascript&lt;/h4&gt;
-
-&lt;p&gt;We&amp;#8217;re using jQuery so make sure you&amp;#8217;ve got that loaded. And here&amp;#8217;s the javascript:&lt;/p&gt;
+&lt;p&gt;We’re using jQuery so make sure you’ve got that loaded.  And here’s the
+javascript:&lt;/p&gt;
 
 &lt;pre&gt;&lt;code&gt;$().ready(function(){
   var loopSnippets = function() {
-    var snippets = $(&amp;quot;li&amp;quot;, $(&amp;quot;#snippets&amp;quot;));
+    var snippets = $("li", $("#snippets"));
 
     snippets.each( function(index, element) {
       $(element).delay( index*5000 ).fadeIn(100).delay(4500).fadeOut(200);
@@ -293,22 +443,38 @@ f = t.parse   ## f == &amp;quot;Baz::baz(Foo::foo(2 * a))&amp;quot;&lt;/code&gt;
     });
   };
   loopSnippets();
-});&lt;/code&gt;&lt;/pre&gt;
+});
+&lt;/code&gt;&lt;/pre&gt;
 
-&lt;p&gt;So this is where all the action is of course. The variable &lt;code&gt;snippets&lt;/code&gt; collects all the list items and then we iterate over this collection, showing each list item and then hiding them again (using &lt;code&gt;fadeIn&lt;/code&gt; and &lt;code&gt;fadeOut&lt;/code&gt;).&lt;/p&gt;
+&lt;p&gt;So this is where all the action is of course. The variable &lt;code&gt;snippets&lt;/code&gt;
+collects all the list items and then we iterate over this collection,
+showing each list item and then hiding them again (using &lt;code&gt;fadeIn&lt;/code&gt; and
+&lt;code&gt;fadeOut&lt;/code&gt;).&lt;/p&gt;
 
-&lt;p&gt;What you have to wrap your head around is that all of the code gets executed in one shot, so to get items to display in sequence and to loop around again, you have to show-and-hide each item at different times.&lt;/p&gt;
+&lt;p&gt;What you have to wrap your head around is that all of the code gets
+executed in one shot, so to get items to display in sequence and to loop
+around again, you have to show-and-hide each item at different times.&lt;/p&gt;
 
 &lt;p&gt;The trick is to use &lt;code&gt;delay&lt;/code&gt; and the index of the item in the array to calculate the amount of time we need to wait before kicking off the show-and-hide routine for the item.&lt;/p&gt;
 
-&lt;p&gt;Finally, to loop back and start over at the top, we use &lt;code&gt;setTimeout&lt;/code&gt; to kick off the &lt;code&gt;loopSnippets&lt;/code&gt; function again. Again, use the length of &lt;code&gt;snippets&lt;/code&gt; and the amount of time used up in showing and hiding each element to figure out how long you have to wait before setting off &lt;code&gt;loopSnippets&lt;/code&gt; again.&lt;/p&gt;
+&lt;p&gt;Finally, to loop back and start over at the top, we use &lt;code&gt;setTimeout&lt;/code&gt; to
+kick off the &lt;code&gt;loopSnippets&lt;/code&gt; function again. Again, use the length of
+&lt;code&gt;snippets&lt;/code&gt; and the amount of time used up in showing and hiding each
+element to figure out how long you have to wait before setting off
+&lt;code&gt;loopSnippets&lt;/code&gt; again.&lt;/p&gt;
 
-&lt;p&gt;Keep in mind that the above code works irrespective of the length of the list of snippets - which is of course what you want if the snippets are dynamically loaded.&lt;/p&gt;
+&lt;p&gt;Keep in mind that the above code works irrespective of the length of the
+list of snippets - which is of course what you want if the snippets are
+dynamically loaded.&lt;/p&gt;
 
-&lt;h4 id='in_summary'&gt;In summary&lt;/h4&gt;
+&lt;h4 id="in-summary"&gt;In summary&lt;/h4&gt;
 
-&lt;p&gt;Use &lt;code&gt;delay&lt;/code&gt; and the index of elements in an array if you want to operate on each element in sequence. Use &lt;code&gt;setTimeout&lt;/code&gt; to repeat a function call at specific time intervals.&lt;/p&gt;
+&lt;p&gt;Use &lt;code&gt;delay&lt;/code&gt; and the index of elements in an array if you want to
+operate on each element in sequence. Use &lt;code&gt;setTimeout&lt;/code&gt; to repeat a
+function call at specific time intervals.&lt;/p&gt;
 
-&lt;p&gt;Thanks go to &lt;em&gt;Josh Kunzmann&lt;/em&gt; and &lt;em&gt;Damien Le Berrigaud&lt;/em&gt; for collaborating on this and showing me how to use &lt;code&gt;delay&lt;/code&gt; and &lt;code&gt;setTimeout&lt;/code&gt; creatively!&lt;/p&gt;</content>
+&lt;p&gt;Thanks go to &lt;em&gt;Josh Kunzmann&lt;/em&gt; and &lt;em&gt;Damien Le Berrigaud&lt;/em&gt; for collaborating
+on this and showing me how to use &lt;code&gt;delay&lt;/code&gt; and &lt;code&gt;setTimeout&lt;/code&gt; creatively!&lt;/p&gt;
+</content>
   </entry>
 </feed>
