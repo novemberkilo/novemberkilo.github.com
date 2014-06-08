@@ -45,12 +45,12 @@
         based on their JSON attributes. This post covers the use of JSON functions
         available in Postgres v9.3 to achieve this.</p>
         
-        <p>Say you have an Order class that contains a JSON blob that describes
+        <p>Suppose you have an Order class, containing a JSON blob that describes
         the product that the order relates to:</p>
         
         <pre><code># == Schema Information&#x000A;#&#x000A;# Table name: orders&#x000A;#&#x000A;#  id                                    :integer  not null, primary key&#x000A;#  customer_id                           :integer&#x000A;#  product                               :json&#x000A;#  created_at                            :datetime&#x000A;#  updated_at                            :datetime&#x000A;&#x000A;class Order &lt; ActiveRecord::Base&#x000A;&#x000A;end&#x000A;</code></pre>
         
-        <p>Let&#39;s say <code>product</code> has the following structure:</p>
+        <p>Suppose <code>product</code> has the following structure:</p>
         
         <pre><code>{ &quot;name&quot;: &quot;Widget 01&quot;,&#x000A;  &quot;code&quot;: &quot;W001&quot;,&#x000A;  &quot;plan&quot;: {&#x000A;            &quot;name&quot;: &quot;Silver&quot;,&#x000A;            &quot;terms&quot;: &quot;12 months&quot;&#x000A;          },&#x000A;  &quot;created_at&quot;: &quot;2013-12-22 09:27:45 UTC&quot;,&#x000A;  &quot;updated_at&quot;: &quot;2014-10-21 10:30:40 UTC&quot;&#x000A;}&#x000A;</code></pre>
         
@@ -100,7 +100,6 @@
   <script src="/javascripts/bootstrap.js" type="text/javascript"></script>
   <link rel="stylesheet" href="http://yandex.st/highlightjs/8.0/styles/tomorrow-night.min.css">
   <script src="http://yandex.st/highlightjs/8.0/highlight.min.js"></script>
-  <link href="/stylesheets/solarized_light.css" media="screen" rel="stylesheet" type="text/css" />
   <script>hljs.initHighlightingOnLoad();</script>
   <script>
     var _gaq=[['_setAccount','UA-16831355-1'],['_trackPageview']];

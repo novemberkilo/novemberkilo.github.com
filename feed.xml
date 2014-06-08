@@ -22,12 +22,12 @@
 based on their JSON attributes. This post covers the use of JSON functions
 available in Postgres v9.3 to achieve this.&lt;/p&gt;
 
-&lt;p&gt;Say you have an Order class that contains a JSON blob that describes...&lt;/p&gt;</summary>
+&lt;p&gt;Suppose you have an Order class, containing a JSON blob that...&lt;/p&gt;</summary>
     <content type="html">&lt;p&gt;Say you are storing JSON in Postgres and need scopes to get records
 based on their JSON attributes. This post covers the use of JSON functions
 available in Postgres v9.3 to achieve this.&lt;/p&gt;
 
-&lt;p&gt;Say you have an Order class that contains a JSON blob that describes
+&lt;p&gt;Suppose you have an Order class, containing a JSON blob that describes
 the product that the order relates to:&lt;/p&gt;
 
 &lt;pre&gt;&lt;code&gt;# == Schema Information
@@ -45,7 +45,7 @@ class Order &amp;lt; ActiveRecord::Base
 end
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;p&gt;Let&amp;#39;s say &lt;code&gt;product&lt;/code&gt; has the following structure:&lt;/p&gt;
+&lt;p&gt;Suppose &lt;code&gt;product&lt;/code&gt; has the following structure:&lt;/p&gt;
 
 &lt;pre&gt;&lt;code&gt;{ &amp;quot;name&amp;quot;: &amp;quot;Widget 01&amp;quot;,
   &amp;quot;code&amp;quot;: &amp;quot;W001&amp;quot;,
