@@ -35,43 +35,44 @@
     </div>
     <div class='span8 offset2'>
       <article>
-        <h2>Handy scopes for associations</h2>
+        <h2>Postgres JSON Functions From Rails</h2>
         <h4></h4>
         <div class='pull-right'>
-          <time>Sep 29 2013</time>
+          <time>May 25 2014</time>
         </div>
         <br>
-        <p>If your Rails project has a has-many association and you want a way of finding records that have no associated records, or,
-        records that have at least one associated record, you might find this post useful.</p>
+        <p>Say you are storing JSON in Postgres and need scopes to get records
+        based on their JSON attributes. This post covers the use of JSON functions
+        available in Postgres v9.3 to achieve this.</p>
         
-        <p>Suppose you have classes <code>Person</code> and <code>Friend</code> that are associated via a <code>has_many</code> relationship:</p>
+        <p>Say you have an Order class that contains a JSON blob that describes
+        the product that the order relates to:</p>
         
-        <pre><code>class Person &lt; ActiveRecord::Base&#x000A;  has_many :friends&#x000A;end&#x000A;&#x000A;class Friend &lt; ActiveRecord::Base&#x000A;  belongs_to :person&#x000A;end&#x000A;</code></pre>
+        <pre><code># == Schema Information&#x000A;#&#x000A;# Table name: orders&#x000A;#&#x000A;#  id                                    :integer  not null, primary key&#x000A;#  customer_id                           :integer&#x000A;#  product                               :json&#x000A;#  created_at                            :datetime&#x000A;#  updated_at                            :datetime&#x000A;&#x000A;class Order &lt; ActiveRecord::Base&#x000A;&#x000A;end&#x000A;</code></pre>
         
-        <p>How do you find <code>persons</code> that have no <code>friends</code>?</p>
+        <p>Let&#39;s say <code>product</code> has the following structure:</p>
         
-        <pre><code>Person.includes(:friends).where(&quot;friends.person_id IS NULL&quot;)&#x000A;</code></pre>
+        <pre><code>{ &quot;name&quot;: &quot;Widget 01&quot;,&#x000A;  &quot;code&quot;: &quot;W001&quot;,&#x000A;  &quot;plan&quot;: {&#x000A;            &quot;name&quot;: &quot;Silver&quot;,&#x000A;            &quot;terms&quot;: &quot;12 months&quot;&#x000A;          },&#x000A;  &quot;created_at&quot;: &quot;2013-12-22 09:27:45 UTC&quot;,&#x000A;  &quot;updated_at&quot;: &quot;2014-10-21 10:30:40 UTC&quot;&#x000A;}&#x000A;</code></pre>
         
-        <p>Or that have at least one <code>friend</code></p>
+        <p>And you want a scope on <code>Order</code> to find all orders with a particular
+        code - something like <code>Order.with_code(&quot;W001&quot;)</code></p>
         
-        <pre><code>Person.includes(:friends).where(&quot;friends.person_id IS NOT NULL&quot;)&#x000A;</code></pre>
+        <p>If you are using version 9.3 of Postgres, you can get it to do the heavy
+        lifting for you using its <a href="http://www.postgresql.org/docs/9.3/static/functions-json.html">JSON functions</a>
+        like so:</p>
         
-        <h4>Using Arel</h4>
+        <pre><code>scope :with_code, -&gt;(code) { where(&quot;product -&gt;&gt; &#39;code&#39; = ?&quot;, code) }&#x000A;</code></pre>
         
-        <p>To accomplish this with Arel
-        set up the following scopes on <code>Friend</code> (thanks to <a href="http://twitter.com/macfanatic">@macfanatic</a> for the tip),</p>
+        <p>Getting to nested JSON attributes is a bit trickier. Say you want a
+        scope for all orders with a particular plan name - something like
+        <code>Order.with_plan_name(&quot;Silver&quot;)</code></p>
         
-        <pre><code>class Friend&#x000A;  belongs_to :person&#x000A;&#x000A;  scope :to_somebody, -&gt;{ where arel_table[:person_id].not_eq(nil) }&#x000A;  scope :to_nobody,   -&gt;{ where arel_table[:person_id].eq(nil) }&#x000A;end&#x000A;</code></pre>
+        <pre><code>scope :with_plan_name, -&gt;(plan_name) { where(&quot;product::json #&gt;&gt; &#39;{ plan,name }&#39; = ?&quot;, plan_name) }&#x000A;</code></pre>
         
-        <p>And then, Persons who have at least one friend:</p>
-        
-        <pre><code>Person.includes(:friends).merge(Friend.to_somebody)&#x000A;</code></pre>
-        
-        <p>The friendless:</p>
-        
-        <pre><code>Person.includes(:friends).merge(Friend.to_nobody)&#x000A;</code></pre>
-        
-        <p><em>Note:</em> If you are on Rails 4 don&#39;t forget to append <code>references(:friends)</code> to these.</p>
+        <p>I got to these by looking through Stack Overflow posts, grokking the Postgres
+        docs on JSON functions and <a href="http://devblog.avdi.org/2014/01/31/playing-with-json-in-postgres/">this post</a>
+        of Avdi Grimm&#39;s. As usual, you can&#39;t comment here but if you see an error or
+        want to offer a suggestion for improvement, please get in touch via email.</p>
       </article>
       <footer>
         <div id='contacts'>
