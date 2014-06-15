@@ -22,7 +22,7 @@
           <a class='brand' href='http://novemberkilo.com'>The iNK blot</a>
           <div class='nav-collapse collapse'>
             <ul class='nav'>
-              <li class='active'>
+              <li>
                 <a href="/">Home</a>
               </li>
               <li>
@@ -34,43 +34,33 @@
       </div>
     </div>
     <div class='span8 offset2'>
-      <section>
-        <h2>Recent Articles</h2>
-        <ul class='unstyled embiggened'>
-          <li>
-            <a href="/2014/06/14/asset-pipeline-note.html">Different fingerprints for same asset</a>
-            <time class='pull-right'>14 Jun 2014</time>
-          </li>
-          <li>
-            <a href="/2014/05/25/json-finders.html">Postgres JSON Functions From Rails</a>
-            <time class='pull-right'>25 May 2014</time>
-          </li>
-          <li>
-            <a href="/2013/09/29/scopes-for-finding-empty-relationships.html">Handy scopes for associations</a>
-            <time class='pull-right'>29 Sep 2013</time>
-          </li>
-          <li>
-            <a href="/2013/09/12/contributing-to-oss.html">Contributing to Discourse</a>
-            <time class='pull-right'>12 Sep 2013</time>
-          </li>
-          <li>
-            <a href="/2011/12/04/principle-of-simple-design.html">Simple Design</a>
-            <time class='pull-right'> 4 Dec 2011</time>
-          </li>
-          <li>
-            <a href="/2011/10/07/tdop-math.html">A Top Down Operator Precedence parser for algebraic expressions</a>
-            <time class='pull-right'> 7 Oct 2011</time>
-          </li>
-          <li>
-            <a href="/2011/10/02/polar-curve-grapher.html">A polar curve grapher</a>
-            <time class='pull-right'> 2 Oct 2011</time>
-          </li>
-          <li>
-            <a href="/2011/09/24/jquery-scroller.html">A simple jquery scroller</a>
-            <time class='pull-right'>24 Sep 2011</time>
-          </li>
+      <article>
+        <h2>Different fingerprints for same asset</h2>
+        <h4></h4>
+        <div class='pull-right'>
+          <time>Jun 14 2014</time>
+        </div>
+        <br>
+        <p>Documenting an issue that we ran into with the Rails asset pipeline
+        on a recent upgrade to Rails 4.1.0. Specifically <a href="https://github.com/rails/sprockets-rails/issues/138">this issue</a>
+        with sprockets-rails 2.1.3.</p>
+        
+        <h3>Symptoms</h3>
+        
+        <ul>
+        <li>Different nodes have different fingerprints for the same assets.
+        Thus assets don&#39;t load consistently and you end up with 404s.</li>
+        <li>Repeatedly running <code>rake assets:precompile</code> locally results in different
+        fingerprints for the same assets on each run.</li>
         </ul>
-      </section>
+        
+        <h3>The fix</h3>
+        
+        <p>If you are seeing these symptoms don&#39;t use sprockets-rails 2.1.3. The <a href="https://github.com/rails/sprockets-rails/issues/138">issue</a>
+        references a pull-request that fixes the problem - this is now on master and should be in the 2.1.4 release. We rolled back to
+        sprockets-rails 2.0.1 (simply because that&#39;s what was on our Rails 4.0 master branch)
+        but later versions of sprockets-rails might work as well.</p>
+      </article>
       <footer>
         <div id='contacts'>
           <a href="http://twitter.com/novemberkilo">Twitter</a>

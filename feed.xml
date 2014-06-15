@@ -5,10 +5,50 @@
   <id>http://novemberkilo.com/</id>
   <link href="http://novemberkilo.com/"/>
   <link href="http://novemberkilo.com/feed.xml" rel="self"/>
-  <updated>2014-05-25T02:03:00ZT00:00:00-08:00</updated>
+  <updated>2014-06-14T02:43:00ZT00:00:00-08:00</updated>
   <author>
     <name>Navin Keswani</name>
   </author>
+  <entry>
+    <title>Different fingerprints for same asset</title>
+    <link rel="alternate" href="/2014/06/14/asset-pipeline-note.html"/>
+    <id>/2014/06/14/asset-pipeline-note.html</id>
+    <published>2014-06-14T02:43:00ZT00:00:00-08:00</published>
+    <updated>2014-06-14T02:43:00ZT00:00:00-08:00</updated>
+    <author>
+      <name>Navin Keswani</name>
+    </author>
+    <summary type="html">&lt;p&gt;Documenting an issue that we ran into with the Rails asset pipeline
+on a recent upgrade to Rails 4.1.0. Specifically &lt;a href="https://github.com/rails/sprockets-rails/issues/138"&gt;this issue&lt;/a&gt;
+with sprockets-rails 2.1.3.&lt;/p&gt;
+
+&lt;h3&gt;Symptoms&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Different nodes have different fingerprints for the same assets.
+Thus assets don...&lt;/li&gt;
+&lt;/ul&gt;</summary>
+    <content type="html">&lt;p&gt;Documenting an issue that we ran into with the Rails asset pipeline
+on a recent upgrade to Rails 4.1.0. Specifically &lt;a href="https://github.com/rails/sprockets-rails/issues/138"&gt;this issue&lt;/a&gt;
+with sprockets-rails 2.1.3.&lt;/p&gt;
+
+&lt;h3&gt;Symptoms&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Different nodes have different fingerprints for the same assets.
+Thus assets don&amp;#39;t load consistently and you end up with 404s.&lt;/li&gt;
+&lt;li&gt;Repeatedly running &lt;code&gt;rake assets:precompile&lt;/code&gt; locally results in different
+fingerprints for the same assets on each run.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3&gt;The fix&lt;/h3&gt;
+
+&lt;p&gt;If you are seeing these symptoms don&amp;#39;t use sprockets-rails 2.1.3. The &lt;a href="https://github.com/rails/sprockets-rails/issues/138"&gt;issue&lt;/a&gt;
+references a pull-request that fixes the problem - this is now on master and should be in the 2.1.4 release. We rolled back to
+sprockets-rails 2.0.1 (simply because that&amp;#39;s what was on our Rails 4.0 master branch)
+but later versions of sprockets-rails might work as well.&lt;/p&gt;
+</content>
+  </entry>
   <entry>
     <title>Postgres JSON Functions From Rails</title>
     <link rel="alternate" href="/2014/05/25/json-finders.html"/>
