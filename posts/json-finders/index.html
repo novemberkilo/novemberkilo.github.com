@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  <meta itemprop="name" content="The iNK blot" />
+  <meta itemprop="description" content="" />
+
+  <link rel="apple-touch-icon" sizes="180x180" href="https:&#x2F;&#x2F;novemberkilo.com&#x2F;apple-touch-icon.png"/>
+  <link rel="icon" type="image/png" sizes="32x32" href="https:&#x2F;&#x2F;novemberkilo.com&#x2F;favicon-32x32.png" />
+  <link
+    rel="icon"
+    type="image/png"
+    sizes="16x16"
+    href="https:&#x2F;&#x2F;novemberkilo.com&#x2F;favicon-16x16.png"
+  />
+  <link
+    rel="shortcut icon"
+    href="https:&#x2F;&#x2F;novemberkilo.com&#x2F;favicon.ico"
+  />
+  <link rel="stylesheet" href="https:&#x2F;&#x2F;novemberkilo.com&#x2F;style.css"/>
+  <title>The iNK blot</title>
+
+  <body id="page">
+
+	
+<header id="site-header" class="animated slideInUp faster">
+  <div class="hdr-wrapper section-inner">
+    <div class="hdr-left">
+      <div class="site-branding">
+        <a href="https:&#x2F;&#x2F;novemberkilo.com">The iNK blot</a>
+      </div>
+      <nav class="site-nav hide-in-mobile">
+            
+        
+        <a href="https://novemberkilo.com/posts">Posts</a>
+        
+        <a href="https://novemberkilo.com/about">About</a>
+        
+      </nav>
+    </div>
+    <div class="hdr-right hdr-icons">
+      <span class="hdr-social hide-in-mobile">
+        
+
+<a href="https:&#x2F;&#x2F;twitter.com&#x2F;novemberkilo" target="_blank" rel="noopener me"
+   title="twitter">
+  
+  <svg xmlns="http://www.w3.org/2000/svg" class="feather" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path></svg>
+  
+</a>
+
+<a href="https:&#x2F;&#x2F;github.com&#x2F;novemberkilo" target="_blank" rel="noopener me"
+   title="github">
+  
+  <svg xmlns="http://www.w3.org/2000/svg" class="feather" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
+  
+</a>
+
+
+      </span>
+      <button id="menu-btn" class="hdr-btn" title="Menu">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          class="feather feather-menu"
+        >
+          <line x1="3" y1="12" x2="21" y2="12"></line>
+          <line x1="3" y1="6" x2="21" y2="6"></line>
+          <line x1="3" y1="18" x2="21" y2="18"></line>
+        </svg>
+      </button>
+    </div>
+  </div>
+</header>
+<div id="mobile-menu" class="animated fast">
+  <ul>
+    
+    <li><a href="https://novemberkilo.com/posts">Posts</a></li>
+    
+    <li><a href="https://novemberkilo.com/about">About</a></li>
+    
+  </ul>
+</div>
+
+	
+	
+
+		
+<main class="site-main section-inner animated fadeIn faster">
+  <article class="thin">
+	<header class="post-header">
+	  <div class="post-meta">
+		
+		<span>May 25, 2014</span>
+		<small> - 
+<span class="reading-time" title="Estimated read time">
+  
+  1 min read
+  
+</span>
+</small>
+		
+            
+	  </div>
+	  <h1>Postgres JSON Functions From Rails</h1>
+	</header>
+
+	<div class="content">
+        
+	  <p>Say you are storing JSON in Postgres and need scopes to get records
+based on their JSON attributes. This post covers the use of JSON functions
+available in Postgres v9.3 to achieve this.</p>
+<p>Suppose you have an Order class, containing a JSON blob that describes
+the product that the order relates to:</p>
+<pre style="background-color:#282828;">
+<span style="font-style:italic;color:#928374;"># == Schema Information
+#
+# Table name: orders
+#
+#  id                                    :integer  not null, primary key
+#  customer_id                           :integer
+#  product                               :json
+#  created_at                            :datetime
+#  updated_at                            :datetime
+
+</span><span style="color:#fa5c4b;">class </span><span style="color:#8ec07c;">Order </span><span style="color:#fdf4c1aa;">&lt; </span><span style="color:#fabd2f;">ActiveRecord</span><span style="color:#8ec07c;">::Base
+
+</span><span style="color:#fa5c4b;">end
+</span></pre>
+<p>Suppose <code>product</code> has the following structure:</p>
+<pre style="background-color:#282828;">
+<span style="color:#fdf4c1aa;">{
+  </span><span style="color:#b8bb26;">&quot;name&quot;</span><span style="color:#fdf4c1aa;">: </span><span style="color:#b8bb26;">&quot;Widget 01&quot;</span><span style="color:#fdf4c1aa;">,
+  </span><span style="color:#b8bb26;">&quot;code&quot;</span><span style="color:#fdf4c1aa;">: </span><span style="color:#b8bb26;">&quot;W001&quot;</span><span style="color:#fdf4c1aa;">,
+  </span><span style="color:#b8bb26;">&quot;plan&quot;</span><span style="color:#fdf4c1aa;">: {
+    </span><span style="color:#b8bb26;">&quot;name&quot;</span><span style="color:#fdf4c1aa;">: </span><span style="color:#b8bb26;">&quot;Silver&quot;</span><span style="color:#fdf4c1aa;">,
+     </span><span style="color:#b8bb26;">&quot;terms&quot;</span><span style="color:#fdf4c1aa;">: </span><span style="color:#b8bb26;">&quot;12 months&quot;
+   </span><span style="color:#fdf4c1aa;">},
+  </span><span style="color:#b8bb26;">&quot;created_at&quot;</span><span style="color:#fdf4c1aa;">: </span><span style="color:#b8bb26;">&quot;2013-12-22 09:27:45 UTC&quot;</span><span style="color:#fdf4c1aa;">,
+  </span><span style="color:#b8bb26;">&quot;updated_at&quot;</span><span style="color:#fdf4c1aa;">: </span><span style="color:#b8bb26;">&quot;2014-10-21 10:30:40 UTC&quot;
+</span><span style="color:#fdf4c1aa;">}
+</span></pre>
+<p>And you want a scope on <code>Order</code> to find all orders with a particular
+code - something like <code>Order.with_code(&quot;W001&quot;)</code></p>
+<p>If you are using version 9.3 of Postgres, you can get it to do the heavy
+lifting for you using its <a href="http://www.postgresql.org/docs/9.3/static/functions-json.html">JSON functions</a>
+like so:</p>
+<pre style="background-color:#282828;">
+<span style="color:#fdf4c1aa;">scope </span><span style="color:#fdf4c1;">:with_code</span><span style="color:#fdf4c1aa;">, </span><span style="color:#fe8019;">-&gt;</span><span style="color:#fdf4c1aa;">(code) { where(</span><span style="color:#b8bb26;">&quot;product -&gt;&gt; &#39;code&#39; = ?&quot;</span><span style="color:#fdf4c1aa;">, code) }
+</span></pre>
+<p>Getting to nested JSON attributes is a bit trickier. Say you want a
+scope for all orders with a particular plan name - something like
+<code>Order.with_plan_name(&quot;Silver&quot;)</code></p>
+<pre style="background-color:#282828;">
+<span style="color:#fdf4c1aa;">scope </span><span style="color:#fdf4c1;">:with_plan_name</span><span style="color:#fdf4c1aa;">, </span><span style="color:#fe8019;">-&gt;</span><span style="color:#fdf4c1aa;">(plan_name) { where(</span><span style="color:#b8bb26;">&quot;product::json #&gt;&gt; &#39;{ plan,name }&#39; = ?&quot;</span><span style="color:#fdf4c1aa;">, plan_name) }
+</span></pre>
+<p>I got to these by looking through Stack Overflow posts, grokking the Postgres
+docs on JSON functions and <a href="http://devblog.avdi.org/2014/01/31/playing-with-json-in-postgres/">this post</a>
+of Avdi Grimm's. As usual, you can't comment here but if you see an error or
+want to offer a suggestion for improvement, please get in touch via email.</p>
+
+	</div>
+	<hr class="post-end">
+	<footer class="post-info">
+	  <p>
+		<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-tag meta-icon"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7" y2="7"></line></svg>
+		
+	  </p>
+	  <p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-text"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>265 Words</p>
+	  <p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-calendar"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>2014-05-25</p>
+	</footer>
+  </article>
+    
+  
+  <div class="post-nav thin">
+	
+	<a class="next-post" href="https:&#x2F;&#x2F;novemberkilo.com&#x2F;posts&#x2F;refactoring-with-applicative&#x2F;">
+	  <span class="post-nav-label">
+		<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-left">
+		  <line x1="19" y1="12" x2="5" y2="12"></line>
+		  <polyline points="12 19 5 12 12 5"></polyline>
+		</svg>&nbsp;Newer</span><br>
+		<span>Refactoring with Applicative - a small example in Haskell</span>
+	</a>
+	
+	
+	<a class="prev-post" href="https:&#x2F;&#x2F;novemberkilo.com&#x2F;posts&#x2F;scopes-for-empty-relationships&#x2F;">
+	  <span class="post-nav-label">Older&nbsp;<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span><br>
+	  <span>Handy scopes for associations</span>
+	</a>
+	
+  </div>
+</main>
+
+	  </div>
+	  
+	  
+
+
+
+<footer id="site-footer" class="section-inner thin animated fadeIn faster">
+  <p>&copy; 2020 <a href="https:&#x2F;&#x2F;novemberkilo.com">novemberkilo</a> &#183; <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener">CC BY 4.0</a></p>
+  <p>Made with <a href="https://www.getzola.org" target="_blank" rel="noopener">Zola</a> &#183; Theme <a href="https://github.com/VersBinarii/hermit_zola" target="_blank" rel="noopener">Hermit_Zola</a>
+	
+	&#183; <a href="https://novemberkilo.com/rss.xml" target="_blank" title="rss"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-rss"><path d="M4 11a9 9 0 0 1 9 9"></path><path d="M4 4a16 16 0 0 1 16 16"></path><circle cx="5" cy="19" r="1"></circle></svg></a>
+	
+  </p>
+</footer>
+
+
+
+
+	</div>
+	
+	<script src="https:&#x2F;&#x2F;novemberkilo.com&#x2F;js&#x2F;main.js"></script>
+
+	<!-- Math rendering -->
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.css" integrity="sha384-zB1R0rpPzHqg7Kpt0Aljp8JPLqbXI3bhnPWROx27a9N0Ll6ZP/+DiW/UqRcLbRjq" crossorigin="anonymous">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.js" integrity="sha384-y23I5Q6l+B6vatafAwxRu/0oK/79VlbSz7Q9aiSZUvyWYIYsd+qj+o24G5ZU2zJz" crossorigin="anonymous"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/auto-render.min.js" integrity="sha384-kWPLUVMOks5AQFrykwIup5lo0m3iMkkHrD0uJ4H5cjeGihAutqP0yW0J6dpFiVkI" crossorigin="anonymous"
+        onload="renderMathInElement(document.body, { delimiters: [ {left: '$$', right: '$$', display: true}, {left: '$', right: '$', display: false}, {left: '\\[', right: '\\]', display: true}, {left: '\\(', right: '\\)', display: false}]});"></script>
+
+	
+  </body>
+</html>

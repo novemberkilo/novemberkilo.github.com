@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  <meta itemprop="name" content="The iNK blot" />
+  <meta itemprop="description" content="" />
+
+  <link rel="apple-touch-icon" sizes="180x180" href="https:&#x2F;&#x2F;novemberkilo.com&#x2F;apple-touch-icon.png"/>
+  <link rel="icon" type="image/png" sizes="32x32" href="https:&#x2F;&#x2F;novemberkilo.com&#x2F;favicon-32x32.png" />
+  <link
+    rel="icon"
+    type="image/png"
+    sizes="16x16"
+    href="https:&#x2F;&#x2F;novemberkilo.com&#x2F;favicon-16x16.png"
+  />
+  <link
+    rel="shortcut icon"
+    href="https:&#x2F;&#x2F;novemberkilo.com&#x2F;favicon.ico"
+  />
+  <link rel="stylesheet" href="https:&#x2F;&#x2F;novemberkilo.com&#x2F;style.css"/>
+  <title>The iNK blot</title>
+
+  <body id="page">
+
+	
+<header id="site-header" class="animated slideInUp faster">
+  <div class="hdr-wrapper section-inner">
+    <div class="hdr-left">
+      <div class="site-branding">
+        <a href="https:&#x2F;&#x2F;novemberkilo.com">The iNK blot</a>
+      </div>
+      <nav class="site-nav hide-in-mobile">
+            
+        
+        <a href="https://novemberkilo.com/posts">Posts</a>
+        
+        <a href="https://novemberkilo.com/about">About</a>
+        
+      </nav>
+    </div>
+    <div class="hdr-right hdr-icons">
+      <span class="hdr-social hide-in-mobile">
+        
+
+<a href="https:&#x2F;&#x2F;twitter.com&#x2F;novemberkilo" target="_blank" rel="noopener me"
+   title="twitter">
+  
+  <svg xmlns="http://www.w3.org/2000/svg" class="feather" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path></svg>
+  
+</a>
+
+<a href="https:&#x2F;&#x2F;github.com&#x2F;novemberkilo" target="_blank" rel="noopener me"
+   title="github">
+  
+  <svg xmlns="http://www.w3.org/2000/svg" class="feather" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
+  
+</a>
+
+
+      </span>
+      <button id="menu-btn" class="hdr-btn" title="Menu">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          class="feather feather-menu"
+        >
+          <line x1="3" y1="12" x2="21" y2="12"></line>
+          <line x1="3" y1="6" x2="21" y2="6"></line>
+          <line x1="3" y1="18" x2="21" y2="18"></line>
+        </svg>
+      </button>
+    </div>
+  </div>
+</header>
+<div id="mobile-menu" class="animated fast">
+  <ul>
+    
+    <li><a href="https://novemberkilo.com/posts">Posts</a></li>
+    
+    <li><a href="https://novemberkilo.com/about">About</a></li>
+    
+  </ul>
+</div>
+
+	
+	
+
+		
+<main class="site-main section-inner animated fadeIn faster">
+  <article class="thin">
+	<header class="post-header">
+	  <div class="post-meta">
+		
+		<span>May 25, 2020</span>
+		<small> - 
+<span class="reading-time" title="Estimated read time">
+  
+  2 min read
+  
+</span>
+</small>
+		
+            
+	  </div>
+	  <h1>Data Engineering Principles</h1>
+	</header>
+
+	<div class="content">
+        
+	  <p>Here are a set of principles that guide the design and development of systems responsible
+for transforming data. They come from experience with this general domain but they originated
+from my experience at Ambiata. I was taught these principles by Russell Aronson, Mark Hibberd and
+Nick Hibberd, and I am very grateful to them.</p>
+<p>Perhaps the fundamental principle is this first one.</p>
+<h4 id="expect-data-to-be-poor-quality">Expect data to be poor quality</h4>
+<p>Expect data to be poorly formed, to have errors, and work defensively to detect and correct this.
+Failure to adopt this principle is indicated by sporadic failures in data pipelines with diagnoses
+that point to unexpected data. These are usually accompanied by complaints, fingers pointed at 
+the source of the data, and judgement passed. The code base ends up with churny fixes that 
+patch the system to cope with these point problems - a whack-a-mole approach if you will.</p>
+<p>Here are some examples of poor data quality in a data feed that should be expected
+and accepted:</p>
+<ul>
+<li>date-formats that change over time</li>
+<li>schemas that change - columns disappear or appear</li>
+<li>file formats change (dos, unix)</li>
+<li>the size/amount varies suddenly (possibly indicating errors upstream to the system)</li>
+</ul>
+<p>The remainder of the principles are mostly in response to this fundamental principle.</p>
+<h4 id="measure-the-characteristics-of-the-data">Measure the characteristics of the data</h4>
+<p>If we expect the data to be poor quality, it behooves us to gather information about data so that
+we know what is being ingested and whether it should be processed. Here are some characteristics
+that are relatively straightforward to collect and store as metadata:</p>
+<ul>
+<li>Size</li>
+<li>Header</li>
+<li>Number of columns</li>
+<li>Number of rows</li>
+<li>Means, medians, quartiles of numeric data</li>
+<li>Uniqueness of entries in col x</li>
+<li>Type inference for column x (what primitive type does the column show up as - String, Int, Double or Bool)</li>
+</ul>
+<p>A corollary is that we need steps in the pipeline to act on these measurements. This is usually
+a stage of the pipeline that has operational responsibility - it typically occurs soon after
+ingestion/extraction and compares incoming data with measurements from similar events. It raises
+alerts and/or stops the pipeline from processing data that is deemed suspect.</p>
+<h4 id="normalise-and-enrich-the-data">Normalise and enrich the data</h4>
+<p>Have a transformation step to normalize the data to formats and schemas the pipeline can expect. The
+sorts of normalising transformations that fit this step include:</p>
+<ul>
+<li>Standardising file and character encodings (use command line tools like <code>file</code> and <code>iconv</code>)</li>
+<li>Transforming different date and time formats</li>
+<li>Standardising separators, padding etc. (this also allows for detection of mangled quoting in CSVs for example)</li>
+</ul>
+<h4 id="maintain-provenance-information">Maintain provenance information</h4>
+<p>Information pertaining to the provenance of data in the system enables the ability to trace
+or backtrack through transformations. It helps with diagnosing issues but also with definitively being able
+to answer questions about when and from where, data entered any stage of the pipeline. The next
+principle follows on quite naturally from this.</p>
+<h4 id="keep-the-data-immutable">Keep the data immutable</h4>
+<p>At every step in the pipeline, source data should always be available exactly as it was first encountered.
+This will address:</p>
+<ul>
+<li>concerns around processing corrupt or otherwise mangled data</li>
+<li>easier and faster debugging or troubleshooting</li>
+<li>the ability to re-run any component or stage of the pipeline in isolation</li>
+</ul>
+<p>This will mean storing multiple copies of data but the copies should have different contexts (typically
+corresponding to the stages of the pipeline).</p>
+<h4 id="monitor-information-loss">Monitor information loss</h4>
+<p>As data traverses the pipeline it can lose information. This should not be accidental.
+Consciously allow this to happen, or not.</p>
+<hr />
+<p>Hopefully these principles are thought provoking and help provide some structure. They are not a complete
+set by any means - please be in touch if you see errors or have suggestions for improvements. I recommend
+Mark Hibberd's <a href="http://mth.io/talks/data-quality/">Lake, Swamp or Puddle: Data Quality at Scale</a>
+for more on the topic.</p>
+
+	</div>
+	<hr class="post-end">
+	<footer class="post-info">
+	  <p>
+		<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-tag meta-icon"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7" y2="7"></line></svg>
+		
+	  </p>
+	  <p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-text"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>635 Words</p>
+	  <p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-calendar"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>2020-05-25</p>
+	</footer>
+  </article>
+    
+  
+  <div class="post-nav thin">
+	
+	
+	<a class="prev-post" href="https:&#x2F;&#x2F;novemberkilo.com&#x2F;posts&#x2F;refactoring-with-applicative&#x2F;">
+	  <span class="post-nav-label">Older&nbsp;<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span><br>
+	  <span>Refactoring with Applicative - a small example in Haskell</span>
+	</a>
+	
+  </div>
+</main>
+
+	  </div>
+	  
+	  
+
+
+
+<footer id="site-footer" class="section-inner thin animated fadeIn faster">
+  <p>&copy; 2020 <a href="https:&#x2F;&#x2F;novemberkilo.com">novemberkilo</a> &#183; <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener">CC BY 4.0</a></p>
+  <p>Made with <a href="https://www.getzola.org" target="_blank" rel="noopener">Zola</a> &#183; Theme <a href="https://github.com/VersBinarii/hermit_zola" target="_blank" rel="noopener">Hermit_Zola</a>
+	
+	&#183; <a href="https://novemberkilo.com/rss.xml" target="_blank" title="rss"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-rss"><path d="M4 11a9 9 0 0 1 9 9"></path><path d="M4 4a16 16 0 0 1 16 16"></path><circle cx="5" cy="19" r="1"></circle></svg></a>
+	
+  </p>
+</footer>
+
+
+
+
+	</div>
+	
+	<script src="https:&#x2F;&#x2F;novemberkilo.com&#x2F;js&#x2F;main.js"></script>
+
+	<!-- Math rendering -->
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.css" integrity="sha384-zB1R0rpPzHqg7Kpt0Aljp8JPLqbXI3bhnPWROx27a9N0Ll6ZP/+DiW/UqRcLbRjq" crossorigin="anonymous">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.js" integrity="sha384-y23I5Q6l+B6vatafAwxRu/0oK/79VlbSz7Q9aiSZUvyWYIYsd+qj+o24G5ZU2zJz" crossorigin="anonymous"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/auto-render.min.js" integrity="sha384-kWPLUVMOks5AQFrykwIup5lo0m3iMkkHrD0uJ4H5cjeGihAutqP0yW0J6dpFiVkI" crossorigin="anonymous"
+        onload="renderMathInElement(document.body, { delimiters: [ {left: '$$', right: '$$', display: true}, {left: '$', right: '$', display: false}, {left: '\\[', right: '\\]', display: true}, {left: '\\(', right: '\\)', display: false}]});"></script>
+
+	
+  </body>
+</html>

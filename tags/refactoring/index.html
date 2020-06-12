@@ -24,15 +24,23 @@
   <body id="page">
 
 	
-	
-	
-	
-	<div id="spotlight" class="animated fadeIn">
-	  <div id="home-center">
-		<h1 id="home-title">The iNK blot</h1>
-		<p id="home-subtitle"></p>
-		<div id="home-social">
-		  
+<header id="site-header" class="animated slideInUp faster">
+  <div class="hdr-wrapper section-inner">
+    <div class="hdr-left">
+      <div class="site-branding">
+        <a href="https:&#x2F;&#x2F;novemberkilo.com">The iNK blot</a>
+      </div>
+      <nav class="site-nav hide-in-mobile">
+        
+        <a href="&#x2F;posts">Posts</a>
+        
+        <a href="&#x2F;about">About</a>
+        
+      </nav>
+    </div>
+    <div class="hdr-right hdr-icons">
+      <span class="hdr-social hide-in-mobile">
+        
 
 <a href="https:&#x2F;&#x2F;twitter.com&#x2F;novemberkilo" target="_blank" rel="noopener me"
    title="twitter">
@@ -49,29 +57,78 @@
 </a>
 
 
-		</div>
+      </span>
+      <button id="menu-btn" class="hdr-btn" title="Menu">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          class="feather feather-menu"
+        >
+          <line x1="3" y1="12" x2="21" y2="12"></line>
+          <line x1="3" y1="6" x2="21" y2="6"></line>
+          <line x1="3" y1="18" x2="21" y2="18"></line>
+        </svg>
+      </button>
+    </div>
+  </div>
+</header>
+<div id="mobile-menu" class="animated fast">
+  <ul>
+    
+    <li><a href="&#x2F;posts">Posts</a></li>
+    
+    <li><a href="&#x2F;about">About</a></li>
+    
+  </ul>
+</div>
+
+	
+	 
 		
-		
-		<nav id="home-nav" class="site-nav">
-		  
-		  <a href="https://novemberkilo.com/posts">Posts</a>
-		  
-		  <a href="https://novemberkilo.com/about">About</a>
-		  
-		</nav>
-		
+
+<main class="site-main section-inner thin animated fadeIn faster">
+  <h1>refactoring</h1>
+  
+  <div class="posts-group">
+    <div class="post-year">2018</div>
+    <ul class="posts-list">
+      
+      <li class="post-item">
+        <a href="https:&#x2F;&#x2F;novemberkilo.com&#x2F;posts&#x2F;refactoring-with-applicative&#x2F;">
+          <span class="post-title">Refactoring with Applicative - a small example in Haskell</span>
+          <span class="post-day"
+            >Jan 27</span
+          >
+        </a>
+      </li>
+      
+    </ul>
+  </div>
+  
+</main>
+
+
 	  </div>
 	  
-	  
-	  <div id="home-footer">
-		<p>&copy; 2020
-		  <a href="https:&#x2F;&#x2F;novemberkilo.com">novemberkilo</a>
-		  &#183; <a href="https://novemberkilo.com/rss.xml" target="_blank" title="rss">
-			<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-rss"><path d="M4 11a9 9 0 0 1 9 9"></path><path d="M4 4a16 16 0 0 1 16 16"></path><circle cx="5" cy="19" r="1"></circle></svg>
-		  </a>
-		</p>
-	  </div>
-	  
+	   
+
+<footer id="site-footer" class="section-inner thin animated fadeIn faster">
+  <p>&copy; 2020 <a href="https:&#x2F;&#x2F;novemberkilo.com">novemberkilo</a> &#183; <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener">CC BY 4.0</a></p>
+  <p>Made with <a href="https://www.getzola.org" target="_blank" rel="noopener">Zola</a> &#183; Theme <a href="https://github.com/VersBinarii/hermit_zola" target="_blank" rel="noopener">Hermit_Zola</a>
+	
+	&#183; <a href="https://novemberkilo.com/rss.xml" target="_blank" title="rss"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-rss"><path d="M4 11a9 9 0 0 1 9 9"></path><path d="M4 4a16 16 0 0 1 16 16"></path><circle cx="5" cy="19" r="1"></circle></svg></a>
+	
+  </p>
+</footer>
+
+ 
 	</div>
 	
 	<script src="https:&#x2F;&#x2F;novemberkilo.com&#x2F;js&#x2F;main.js"></script>
