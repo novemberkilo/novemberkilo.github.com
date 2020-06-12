@@ -28,10 +28,10 @@ patch the system to cope with these point problems - a whack-a-mole approach if 
 &lt;p&gt;Here are some examples of poor data quality in a data feed that should be expected
 and accepted:&lt;&#x2F;p&gt;
 &lt;ul&gt;
-&lt;li&gt;date-formats that change over time&lt;&#x2F;li&gt;
-&lt;li&gt;schemas that change - columns disappear or appear&lt;&#x2F;li&gt;
-&lt;li&gt;file formats change (dos, unix)&lt;&#x2F;li&gt;
-&lt;li&gt;the size&#x2F;amount varies suddenly (possibly indicating errors upstream to the system)&lt;&#x2F;li&gt;
+&lt;li&gt;Date-formats that change over time&lt;&#x2F;li&gt;
+&lt;li&gt;Schemas that change - columns disappear or appear&lt;&#x2F;li&gt;
+&lt;li&gt;File formats change (dos, unix)&lt;&#x2F;li&gt;
+&lt;li&gt;The size&#x2F;amount varies suddenly (possibly indicating errors upstream to the system)&lt;&#x2F;li&gt;
 &lt;&#x2F;ul&gt;
 &lt;p&gt;The remainder of the principles are mostly in response to this fundamental principle.&lt;&#x2F;p&gt;
 &lt;h4 id=&quot;measure-the-characteristics-of-the-data&quot;&gt;Measure the characteristics of the data&lt;&#x2F;h4&gt;
@@ -68,9 +68,9 @@ principle follows on quite naturally from this.&lt;&#x2F;p&gt;
 &lt;p&gt;At every step in the pipeline, source data should always be available exactly as it was first encountered.
 This will address:&lt;&#x2F;p&gt;
 &lt;ul&gt;
-&lt;li&gt;concerns around processing corrupt or otherwise mangled data&lt;&#x2F;li&gt;
-&lt;li&gt;easier and faster debugging or troubleshooting&lt;&#x2F;li&gt;
-&lt;li&gt;the ability to re-run any component or stage of the pipeline in isolation&lt;&#x2F;li&gt;
+&lt;li&gt;Concerns around processing corrupt or otherwise mangled data&lt;&#x2F;li&gt;
+&lt;li&gt;Easier and faster debugging or troubleshooting&lt;&#x2F;li&gt;
+&lt;li&gt;The ability to re-run any component or stage of the pipeline in isolation&lt;&#x2F;li&gt;
 &lt;&#x2F;ul&gt;
 &lt;p&gt;This will mean storing multiple copies of data but the copies should have different contexts (typically
 corresponding to the stages of the pipeline).&lt;&#x2F;p&gt;

@@ -129,10 +129,10 @@ patch the system to cope with these point problems - a whack-a-mole approach if 
 <p>Here are some examples of poor data quality in a data feed that should be expected
 and accepted:</p>
 <ul>
-<li>date-formats that change over time</li>
-<li>schemas that change - columns disappear or appear</li>
-<li>file formats change (dos, unix)</li>
-<li>the size/amount varies suddenly (possibly indicating errors upstream to the system)</li>
+<li>Date-formats that change over time</li>
+<li>Schemas that change - columns disappear or appear</li>
+<li>File formats change (dos, unix)</li>
+<li>The size/amount varies suddenly (possibly indicating errors upstream to the system)</li>
 </ul>
 <p>The remainder of the principles are mostly in response to this fundamental principle.</p>
 <h4 id="measure-the-characteristics-of-the-data">Measure the characteristics of the data</h4>
@@ -169,9 +169,9 @@ principle follows on quite naturally from this.</p>
 <p>At every step in the pipeline, source data should always be available exactly as it was first encountered.
 This will address:</p>
 <ul>
-<li>concerns around processing corrupt or otherwise mangled data</li>
-<li>easier and faster debugging or troubleshooting</li>
-<li>the ability to re-run any component or stage of the pipeline in isolation</li>
+<li>Concerns around processing corrupt or otherwise mangled data</li>
+<li>Easier and faster debugging or troubleshooting</li>
+<li>The ability to re-run any component or stage of the pipeline in isolation</li>
 </ul>
 <p>This will mean storing multiple copies of data but the copies should have different contexts (typically
 corresponding to the stages of the pipeline).</p>
