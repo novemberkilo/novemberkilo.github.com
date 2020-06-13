@@ -19,11 +19,11 @@ for transforming data. They come from experience with this general domain but th
 from my experience at Ambiata. I was taught these principles by Russell Aronson, Mark Hibberd and
 Nick Hibberd, and I am very grateful to them.&lt;&#x2F;p&gt;
 &lt;p&gt;Perhaps the fundamental principle is this first one.&lt;&#x2F;p&gt;
-&lt;h4 id=&quot;expect-data-to-be-poor-quality&quot;&gt;Expect data to be poor quality&lt;&#x2F;h4&gt;
+&lt;h3 id=&quot;expect-data-to-be-poor-quality&quot;&gt;Expect data to be poor quality&lt;&#x2F;h3&gt;
 &lt;p&gt;Expect data to be poorly formed, to have errors, and work defensively to detect and correct this.
 Failure to adopt this principle is indicated by sporadic failures in data pipelines with diagnoses
-that point to unexpected data. These are usually accompanied by complaints, fingers pointed at 
-the source of the data, and judgement passed. The code base ends up with churny fixes that 
+that point to unexpected data. These are usually accompanied by complaints, fingers pointed at
+the source of the data, and judgement passed. The code base ends up with churny fixes that
 patch the system to cope with these point problems - a whack-a-mole approach if you will.&lt;&#x2F;p&gt;
 &lt;p&gt;Here are some examples of poor data quality in a data feed that should be expected
 and accepted:&lt;&#x2F;p&gt;
@@ -34,7 +34,7 @@ and accepted:&lt;&#x2F;p&gt;
 &lt;li&gt;The size&#x2F;amount varies suddenly (possibly indicating errors upstream to the system)&lt;&#x2F;li&gt;
 &lt;&#x2F;ul&gt;
 &lt;p&gt;The remainder of the principles are mostly in response to this fundamental principle.&lt;&#x2F;p&gt;
-&lt;h4 id=&quot;measure-the-characteristics-of-the-data&quot;&gt;Measure the characteristics of the data&lt;&#x2F;h4&gt;
+&lt;h3 id=&quot;measure-the-characteristics-of-the-data&quot;&gt;Measure the characteristics of the data&lt;&#x2F;h3&gt;
 &lt;p&gt;If we expect the data to be poor quality, it behooves us to gather information about data so that
 we know what is being ingested and whether it should be processed. Here are some characteristics
 that are relatively straightforward to collect and store as metadata:&lt;&#x2F;p&gt;
@@ -51,7 +51,7 @@ that are relatively straightforward to collect and store as metadata:&lt;&#x2F;p
 a stage of the pipeline that has operational responsibility - it typically occurs soon after
 ingestion&#x2F;extraction and compares incoming data with measurements from similar events. It raises
 alerts and&#x2F;or stops the pipeline from processing data that is deemed suspect.&lt;&#x2F;p&gt;
-&lt;h4 id=&quot;normalise-and-enrich-the-data&quot;&gt;Normalise and enrich the data&lt;&#x2F;h4&gt;
+&lt;h3 id=&quot;normalise-and-enrich-the-data&quot;&gt;Normalise and enrich the data&lt;&#x2F;h3&gt;
 &lt;p&gt;Have a transformation step to normalize the data to formats and schemas the pipeline can expect. The
 sorts of normalising transformations that fit this step include:&lt;&#x2F;p&gt;
 &lt;ul&gt;
@@ -59,12 +59,12 @@ sorts of normalising transformations that fit this step include:&lt;&#x2F;p&gt;
 &lt;li&gt;Transforming different date and time formats&lt;&#x2F;li&gt;
 &lt;li&gt;Standardising separators, padding etc. (this also allows for detection of mangled quoting in CSVs for example)&lt;&#x2F;li&gt;
 &lt;&#x2F;ul&gt;
-&lt;h4 id=&quot;maintain-provenance-information&quot;&gt;Maintain provenance information&lt;&#x2F;h4&gt;
+&lt;h3 id=&quot;maintain-provenance-information&quot;&gt;Maintain provenance information&lt;&#x2F;h3&gt;
 &lt;p&gt;Information pertaining to the provenance of data in the system enables the ability to trace
 or backtrack through transformations. It helps with diagnosing issues but also with definitively being able
 to answer questions about when and from where, data entered any stage of the pipeline. The next
 principle follows on quite naturally from this.&lt;&#x2F;p&gt;
-&lt;h4 id=&quot;keep-the-data-immutable&quot;&gt;Keep the data immutable&lt;&#x2F;h4&gt;
+&lt;h3 id=&quot;keep-the-data-immutable&quot;&gt;Keep the data immutable&lt;&#x2F;h3&gt;
 &lt;p&gt;At every step in the pipeline, source data should always be available exactly as it was first encountered.
 This will address:&lt;&#x2F;p&gt;
 &lt;ul&gt;
@@ -74,7 +74,7 @@ This will address:&lt;&#x2F;p&gt;
 &lt;&#x2F;ul&gt;
 &lt;p&gt;This will mean storing multiple copies of data but the copies should have different contexts (typically
 corresponding to the stages of the pipeline).&lt;&#x2F;p&gt;
-&lt;h4 id=&quot;monitor-information-loss&quot;&gt;Monitor information loss&lt;&#x2F;h4&gt;
+&lt;h3 id=&quot;monitor-information-loss&quot;&gt;Monitor information loss&lt;&#x2F;h3&gt;
 &lt;p&gt;As data traverses the pipeline it can lose information. This should not be accidental.
 Consciously allow this to happen, or not.&lt;&#x2F;p&gt;
 &lt;hr &#x2F;&gt;
