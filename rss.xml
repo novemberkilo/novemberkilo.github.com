@@ -1,20 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
     <channel>
-        <title>The iNK blot</title>
+      <title>The iNK blot</title>
         <link>https://novemberkilo.com</link>
         <description></description>
         <generator>Zola</generator>
         <language>en</language>
         <atom:link href="https://novemberkilo.com/rss.xml" rel="self" type="application/rss+xml"/>
         <lastBuildDate>Mon, 25 May 2020 00:00:00 +0000</lastBuildDate>
-        
-            <item>
-                <title>Data Engineering Principles</title>
-                <pubDate>Mon, 25 May 2020 00:00:00 +0000</pubDate>
-                <link>https://novemberkilo.com/posts/data-engineering-principles/</link>
-                <guid>https://novemberkilo.com/posts/data-engineering-principles/</guid>
-                <description>&lt;p&gt;Here are a set of principles that guide the design and development of systems responsible
+        <item>
+            <title>Data Engineering Principles</title>
+            <pubDate>Mon, 25 May 2020 00:00:00 +0000</pubDate>
+            <link>https://novemberkilo.com/posts/data-engineering-principles/</link>
+            <guid>https://novemberkilo.com/posts/data-engineering-principles/</guid>
+            <description>&lt;p&gt;Here are a set of principles that guide the design and development of systems responsible
 for transforming data. They come from experience with this general domain but they originated
 from my experience at Ambiata. I was taught these principles by Russell Aronson, Mark Hibberd and
 Nick Hibberd, and I am very grateful to them.&lt;&#x2F;p&gt;
@@ -83,14 +82,13 @@ set by any means - please be in touch if you see errors or have suggestions for 
 Mark Hibberd&#x27;s &lt;a href=&quot;http:&#x2F;&#x2F;mth.io&#x2F;talks&#x2F;data-quality&#x2F;&quot;&gt;Lake, Swamp or Puddle: Data Quality at Scale&lt;&#x2F;a&gt;
 for more on the topic.&lt;&#x2F;p&gt;
 </description>
-            </item>
-        
-            <item>
-                <title>Refactoring with Applicative - a small example in Haskell</title>
-                <pubDate>Sun, 27 May 2018 00:00:00 +0000</pubDate>
-                <link>https://novemberkilo.com/posts/refactoring-with-applicative/</link>
-                <guid>https://novemberkilo.com/posts/refactoring-with-applicative/</guid>
-                <description>&lt;p&gt;Recently I came across a neat little refactoring example that I thought
+        </item>
+        <item>
+            <title>Refactoring with Applicative - a small example in Haskell</title>
+            <pubDate>Sun, 27 May 2018 00:00:00 +0000</pubDate>
+            <link>https://novemberkilo.com/posts/refactoring-with-applicative/</link>
+            <guid>https://novemberkilo.com/posts/refactoring-with-applicative/</guid>
+            <description>&lt;p&gt;Recently I came across a neat little refactoring example that I thought
 might prove useful, particularly to those starting out with Haskell.&lt;&#x2F;p&gt;
 &lt;h4 id=&quot;setting-the-scene&quot;&gt;Setting the scene&lt;&#x2F;h4&gt;
 &lt;p&gt;Say you have a file of comma-separated data, where each row is meant
@@ -98,114 +96,105 @@ to represent the length, breadth and height of a box. Our task is to calculate
 the volume of each box. Simple, right? Well, like in real life, the data is not
 complete and sometimes values are missing. We want to handle these cases by
 simply not calculating a volume if any of the dimensions of the box are missing.&lt;&#x2F;p&gt;
-&lt;pre style=&quot;background-color:#282828;&quot;&gt;
-l,b,h (inputs)      v (our output)
+&lt;pre&gt;&lt;code&gt;l,b,h (inputs)      v (our output)
 ---------------------------------
 4,5,1               20
 1,,                 -
 3,4,                -
 1,2,4               8
-&lt;&#x2F;pre&gt;&lt;h3 id=&quot;maybe-volume&quot;&gt;Maybe volume&lt;&#x2F;h3&gt;
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;h3 id=&quot;maybe-volume&quot;&gt;Maybe volume&lt;&#x2F;h3&gt;
 &lt;p&gt;We&#x27;ll work towards a function to calculate volume - something with a signature like this:&lt;&#x2F;p&gt;
-&lt;pre style=&quot;background-color:#282828;&quot;&gt;
-&lt;span style=&quot;color:#8ec07c;&quot;&gt;maybeVolume &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fa5c4b;&quot;&gt;:: Maybe Length -&amp;gt; Maybe Breadth -&amp;gt; Maybe Height -&amp;gt; Maybe Volume
-&lt;&#x2F;span&gt;&lt;&#x2F;pre&gt;
+&lt;pre data-lang=&quot;haskell&quot; class=&quot;language-haskell &quot;&gt;&lt;code class=&quot;language-haskell&quot; data-lang=&quot;haskell&quot;&gt;maybeVolume :: Maybe Length -&amp;gt; Maybe Breadth -&amp;gt; Maybe Height -&amp;gt; Maybe Volume
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
 &lt;p&gt;To illustrate the patterns at play in this example let&#x27;s start with something a bit simpler.
 Let&#x27;s work with Area before we get to Volume.&lt;&#x2F;p&gt;
 &lt;p&gt;A great place to start is with some data types.&lt;&#x2F;p&gt;
-&lt;pre style=&quot;background-color:#282828;&quot;&gt;
-&lt;span style=&quot;color:#fa5c4b;&quot;&gt;newtype &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdf4c1;&quot;&gt;Length &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fe8019;&quot;&gt;=
-  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdf4c1;&quot;&gt;Length&lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdf4c1aa;&quot;&gt; {
-    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#8ec07c;&quot;&gt;getLength &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fa5c4b;&quot;&gt;:: Int&lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdf4c1aa;&quot;&gt;
-  } &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdf4c1;&quot;&gt;deriving&lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdf4c1aa;&quot;&gt; (&lt;&#x2F;span&gt;&lt;span style=&quot;color:#fa5c4b;&quot;&gt;Eq&lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdf4c1aa;&quot;&gt;, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fa5c4b;&quot;&gt;Show&lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdf4c1aa;&quot;&gt;)
-&lt;&#x2F;span&gt;&lt;&#x2F;pre&gt;&lt;pre style=&quot;background-color:#282828;&quot;&gt;
-&lt;span style=&quot;color:#fa5c4b;&quot;&gt;newtype &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdf4c1;&quot;&gt;Width &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fe8019;&quot;&gt;=
-  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdf4c1;&quot;&gt;Width&lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdf4c1aa;&quot;&gt; {
-    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#8ec07c;&quot;&gt;getWidth &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fa5c4b;&quot;&gt;:: Int&lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdf4c1aa;&quot;&gt;
-  } &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdf4c1;&quot;&gt;deriving&lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdf4c1aa;&quot;&gt; (&lt;&#x2F;span&gt;&lt;span style=&quot;color:#fa5c4b;&quot;&gt;Eq&lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdf4c1aa;&quot;&gt;, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fa5c4b;&quot;&gt;Show&lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdf4c1aa;&quot;&gt;)
-&lt;&#x2F;span&gt;&lt;&#x2F;pre&gt;&lt;pre style=&quot;background-color:#282828;&quot;&gt;
-&lt;span style=&quot;color:#fa5c4b;&quot;&gt;newtype &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdf4c1;&quot;&gt;Area &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fe8019;&quot;&gt;=
-  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdf4c1;&quot;&gt;Area&lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdf4c1aa;&quot;&gt; {
-    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#8ec07c;&quot;&gt;getArea &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fa5c4b;&quot;&gt;:: Int&lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdf4c1aa;&quot;&gt;
-  } &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdf4c1;&quot;&gt;deriving&lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdf4c1aa;&quot;&gt; (&lt;&#x2F;span&gt;&lt;span style=&quot;color:#fa5c4b;&quot;&gt;Eq&lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdf4c1aa;&quot;&gt;, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fa5c4b;&quot;&gt;Show&lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdf4c1aa;&quot;&gt;)
-&lt;&#x2F;span&gt;&lt;&#x2F;pre&gt;
+&lt;pre data-lang=&quot;haskell&quot; class=&quot;language-haskell &quot;&gt;&lt;code class=&quot;language-haskell&quot; data-lang=&quot;haskell&quot;&gt;newtype Length =
+  Length {
+    getLength :: Int
+  } deriving (Eq, Show)
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;pre data-lang=&quot;haskell&quot; class=&quot;language-haskell &quot;&gt;&lt;code class=&quot;language-haskell&quot; data-lang=&quot;haskell&quot;&gt;newtype Width =
+  Width {
+    getWidth :: Int
+  } deriving (Eq, Show)
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;pre data-lang=&quot;haskell&quot; class=&quot;language-haskell &quot;&gt;&lt;code class=&quot;language-haskell&quot; data-lang=&quot;haskell&quot;&gt;newtype Area =
+  Area {
+    getArea :: Int
+  } deriving (Eq, Show)
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
 &lt;p&gt;So with these types our pure function for &lt;code&gt;area&lt;&#x2F;code&gt; is:&lt;&#x2F;p&gt;
-&lt;pre style=&quot;background-color:#282828;&quot;&gt;
-&lt;span style=&quot;color:#8ec07c;&quot;&gt;area &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fa5c4b;&quot;&gt;:: Length -&amp;gt; Width -&amp;gt; Area&lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdf4c1aa;&quot;&gt;
-area l w &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fe8019;&quot;&gt;=
-  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdf4c1;&quot;&gt;Area &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fe8019;&quot;&gt;$&lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdf4c1aa;&quot;&gt; (getLength l) * (getWidth w)
-&lt;&#x2F;span&gt;&lt;&#x2F;pre&gt;
+&lt;pre data-lang=&quot;haskell&quot; class=&quot;language-haskell &quot;&gt;&lt;code class=&quot;language-haskell&quot; data-lang=&quot;haskell&quot;&gt;area :: Length -&amp;gt; Width -&amp;gt; Area
+area l w =
+  Area $ (getLength l) * (getWidth w)
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
 &lt;p&gt;Working towards the problem at hand, let&#x27;s extend this to
 a function that handles missing values. &lt;a href=&quot;https:&#x2F;&#x2F;wiki.haskell.org&#x2F;Maybe&quot;&gt;&lt;code&gt;Maybe&lt;&#x2F;code&gt;&lt;&#x2F;a&gt;
 encodes the concept that a value may be missing. Following a simple pattern
 matching approach gets us:&lt;&#x2F;p&gt;
-&lt;pre style=&quot;background-color:#282828;&quot;&gt;
-&lt;span style=&quot;color:#8ec07c;&quot;&gt;marea &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fa5c4b;&quot;&gt;:: Maybe Length -&amp;gt; Maybe Width -&amp;gt; Maybe Area&lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdf4c1aa;&quot;&gt;
-marea ml mw &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fe8019;&quot;&gt;=
-  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fa5c4b;&quot;&gt;case&lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdf4c1aa;&quot;&gt; ml &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fa5c4b;&quot;&gt;of
-    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdf4c1;&quot;&gt;Nothing &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fe8019;&quot;&gt;-&amp;gt;
-      &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdf4c1;&quot;&gt;Nothing
-    Just&lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdf4c1aa;&quot;&gt; l &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fe8019;&quot;&gt;-&amp;gt;
-      &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fa5c4b;&quot;&gt;case&lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdf4c1aa;&quot;&gt; mw &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fa5c4b;&quot;&gt;of
-        &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdf4c1;&quot;&gt;Nothing &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fe8019;&quot;&gt;-&amp;gt;
-          &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdf4c1;&quot;&gt;Nothing
-        Just&lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdf4c1aa;&quot;&gt; w &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fe8019;&quot;&gt;-&amp;gt;
-          &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdf4c1;&quot;&gt;Just &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fe8019;&quot;&gt;$&lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdf4c1aa;&quot;&gt; area l w
-&lt;&#x2F;span&gt;&lt;&#x2F;pre&gt;
+&lt;pre data-lang=&quot;haskell&quot; class=&quot;language-haskell &quot;&gt;&lt;code class=&quot;language-haskell&quot; data-lang=&quot;haskell&quot;&gt;marea :: Maybe Length -&amp;gt; Maybe Width -&amp;gt; Maybe Area
+marea ml mw =
+  case ml of
+    Nothing -&amp;gt;
+      Nothing
+    Just l -&amp;gt;
+      case mw of
+        Nothing -&amp;gt;
+          Nothing
+        Just w -&amp;gt;
+          Just $ area l w
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
 &lt;p&gt;This is fine but it is a little verbose and is ripe for some simplification.&lt;&#x2F;p&gt;
 &lt;p&gt;Let&#x27;s use the fact that &lt;code&gt;Maybe&lt;&#x2F;code&gt; is a monad. The bind operation passes through Just,
 while Nothing will force the result to always be Nothing. Using &lt;code&gt;do&lt;&#x2F;code&gt; notation we
 can rewrite &lt;code&gt;marea&lt;&#x2F;code&gt; like so:&lt;&#x2F;p&gt;
-&lt;pre style=&quot;background-color:#282828;&quot;&gt;
-&lt;span style=&quot;color:#8ec07c;&quot;&gt;marea&amp;#39; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fa5c4b;&quot;&gt;:: Maybe Length -&amp;gt; Maybe Width -&amp;gt; Maybe Area&lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdf4c1aa;&quot;&gt;
-marea&amp;#39; ml mw &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fe8019;&quot;&gt;= &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fa5c4b;&quot;&gt;do&lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdf4c1aa;&quot;&gt;
-  l &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fe8019;&quot;&gt;&amp;lt;-&lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdf4c1aa;&quot;&gt; ml
-  w &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fe8019;&quot;&gt;&amp;lt;-&lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdf4c1aa;&quot;&gt; mw
-  pure &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fe8019;&quot;&gt;$&lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdf4c1aa;&quot;&gt; area l w
-&lt;&#x2F;span&gt;&lt;&#x2F;pre&gt;
+&lt;pre data-lang=&quot;haskell&quot; class=&quot;language-haskell &quot;&gt;&lt;code class=&quot;language-haskell&quot; data-lang=&quot;haskell&quot;&gt;marea&amp;#x27; :: Maybe Length -&amp;gt; Maybe Width -&amp;gt; Maybe Area
+marea&amp;#x27; ml mw = do
+  l &amp;lt;- ml
+  w &amp;lt;- mw
+  pure $ area l w
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
 &lt;p&gt;The shape of &lt;code&gt;marea&#x27;&lt;&#x2F;code&gt; is exactly the motivating example for introducing applicative in
 McBride and Patterson&#x27;s, &lt;a href=&quot;https:&#x2F;&#x2F;www.staff.city.ac.uk&#x2F;%7Eross&#x2F;papers&#x2F;Applicative.html&quot;&gt;Applicative Programming with Effects&lt;&#x2F;a&gt;.
 Using applicative notation gets us to a one-liner.&lt;&#x2F;p&gt;
-&lt;pre style=&quot;background-color:#282828;&quot;&gt;
-&lt;span style=&quot;color:#8ec07c;&quot;&gt;marea&amp;#39;&amp;#39; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fa5c4b;&quot;&gt;:: Maybe Length -&amp;gt; Maybe Width -&amp;gt; Maybe Area&lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdf4c1aa;&quot;&gt;
-marea&amp;#39;&amp;#39; ml mw &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fe8019;&quot;&gt;=
-&lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdf4c1aa;&quot;&gt;  area &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fe8019;&quot;&gt;&amp;lt;$&amp;gt;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdf4c1aa;&quot;&gt; ml &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fe8019;&quot;&gt;&amp;lt;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdf4c1aa;&quot;&gt;*&lt;&#x2F;span&gt;&lt;span style=&quot;color:#fe8019;&quot;&gt;&amp;gt;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdf4c1aa;&quot;&gt; mw
-&lt;&#x2F;span&gt;&lt;&#x2F;pre&gt;
+&lt;pre data-lang=&quot;haskell&quot; class=&quot;language-haskell &quot;&gt;&lt;code class=&quot;language-haskell&quot; data-lang=&quot;haskell&quot;&gt;marea&amp;#x27;&amp;#x27; :: Maybe Length -&amp;gt; Maybe Width -&amp;gt; Maybe Area
+marea&amp;#x27;&amp;#x27; ml mw =
+  area &amp;lt;$&amp;gt; ml &amp;lt;*&amp;gt; mw
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
 &lt;p&gt;Armed with these examples, let us return to &lt;code&gt;maybeVolume.&lt;&#x2F;code&gt; We will need a couple
 of extra data types.&lt;&#x2F;p&gt;
-&lt;pre style=&quot;background-color:#282828;&quot;&gt;
-&lt;span style=&quot;color:#fa5c4b;&quot;&gt;newtype &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdf4c1;&quot;&gt;Breadth &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fe8019;&quot;&gt;=
-  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdf4c1;&quot;&gt;Breadth&lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdf4c1aa;&quot;&gt; {
-    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#8ec07c;&quot;&gt;getBreadth &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fa5c4b;&quot;&gt;:: Int&lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdf4c1aa;&quot;&gt;
-  } &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdf4c1;&quot;&gt;deriving&lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdf4c1aa;&quot;&gt; (&lt;&#x2F;span&gt;&lt;span style=&quot;color:#fa5c4b;&quot;&gt;Eq&lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdf4c1aa;&quot;&gt;, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fa5c4b;&quot;&gt;Show&lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdf4c1aa;&quot;&gt;)
-&lt;&#x2F;span&gt;&lt;&#x2F;pre&gt;&lt;pre style=&quot;background-color:#282828;&quot;&gt;
-&lt;span style=&quot;color:#fa5c4b;&quot;&gt;newtype &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdf4c1;&quot;&gt;Volume &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fe8019;&quot;&gt;=
-  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdf4c1;&quot;&gt;Volume&lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdf4c1aa;&quot;&gt; {
-    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#8ec07c;&quot;&gt;getVolume &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fa5c4b;&quot;&gt;:: Int&lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdf4c1aa;&quot;&gt;
-  } &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdf4c1;&quot;&gt;deriving&lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdf4c1aa;&quot;&gt; (&lt;&#x2F;span&gt;&lt;span style=&quot;color:#fa5c4b;&quot;&gt;Eq&lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdf4c1aa;&quot;&gt;, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fa5c4b;&quot;&gt;Show&lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdf4c1aa;&quot;&gt;)
-&lt;&#x2F;span&gt;&lt;&#x2F;pre&gt;
+&lt;pre data-lang=&quot;haskell&quot; class=&quot;language-haskell &quot;&gt;&lt;code class=&quot;language-haskell&quot; data-lang=&quot;haskell&quot;&gt;newtype Breadth =
+  Breadth {
+    getBreadth :: Int
+  } deriving (Eq, Show)
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;pre data-lang=&quot;haskell&quot; class=&quot;language-haskell &quot;&gt;&lt;code class=&quot;language-haskell&quot; data-lang=&quot;haskell&quot;&gt;newtype Volume =
+  Volume {
+    getVolume :: Int
+  } deriving (Eq, Show)
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
 &lt;p&gt;And then our pure function for &lt;code&gt;volume&lt;&#x2F;code&gt; is simply:&lt;&#x2F;p&gt;
-&lt;pre style=&quot;background-color:#282828;&quot;&gt;
-&lt;span style=&quot;color:#8ec07c;&quot;&gt;volume &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fa5c4b;&quot;&gt;:: Length -&amp;gt; Width -&amp;gt; Breadth -&amp;gt; Volume&lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdf4c1aa;&quot;&gt;
-volume l w b &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fe8019;&quot;&gt;=
-  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdf4c1;&quot;&gt;Volume &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fe8019;&quot;&gt;$&lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdf4c1aa;&quot;&gt; (getLength l) * (getWidth w) * (getBreadth b)
-&lt;&#x2F;span&gt;&lt;&#x2F;pre&gt;
+&lt;pre data-lang=&quot;haskell&quot; class=&quot;language-haskell &quot;&gt;&lt;code class=&quot;language-haskell&quot; data-lang=&quot;haskell&quot;&gt;volume :: Length -&amp;gt; Width -&amp;gt; Breadth -&amp;gt; Volume
+volume l w b =
+  Volume $ (getLength l) * (getWidth w) * (getBreadth b)
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
 &lt;p&gt;Skipping over the simplest version of the function (that uses pattern matching),
 here are the monadic and applicative versions of &lt;code&gt;maybeVolume&lt;&#x2F;code&gt;&lt;&#x2F;p&gt;
-&lt;pre style=&quot;background-color:#282828;&quot;&gt;
-&lt;span style=&quot;font-style:italic;color:#928374;&quot;&gt;-- monadic approach
-&lt;&#x2F;span&gt;&lt;span style=&quot;color:#8ec07c;&quot;&gt;mvolume &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fa5c4b;&quot;&gt;:: Maybe Length -&amp;gt; Maybe Width -&amp;gt; Maybe Breadth -&amp;gt; Maybe Volume&lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdf4c1aa;&quot;&gt;
-mvolume ml mw mb &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fe8019;&quot;&gt;= &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fa5c4b;&quot;&gt;do&lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdf4c1aa;&quot;&gt;
-   l &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fe8019;&quot;&gt;&amp;lt;-&lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdf4c1aa;&quot;&gt; ml
-   w &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fe8019;&quot;&gt;&amp;lt;-&lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdf4c1aa;&quot;&gt; mw
-   b &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fe8019;&quot;&gt;&amp;lt;-&lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdf4c1aa;&quot;&gt; mb
-   pure &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fe8019;&quot;&gt;$&lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdf4c1aa;&quot;&gt; volume l w b
+&lt;pre data-lang=&quot;haskell&quot; class=&quot;language-haskell &quot;&gt;&lt;code class=&quot;language-haskell&quot; data-lang=&quot;haskell&quot;&gt;-- monadic approach
+mvolume :: Maybe Length -&amp;gt; Maybe Width -&amp;gt; Maybe Breadth -&amp;gt; Maybe Volume
+mvolume ml mw mb = do
+   l &amp;lt;- ml
+   w &amp;lt;- mw
+   b &amp;lt;- mb
+   pure $ volume l w b
 
-&lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#928374;&quot;&gt;-- and with applicative
-&lt;&#x2F;span&gt;&lt;span style=&quot;color:#8ec07c;&quot;&gt;mvolume&amp;#39; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fa5c4b;&quot;&gt;:: Maybe Length -&amp;gt; Maybe Width -&amp;gt; Maybe Breadth -&amp;gt; Maybe Volume&lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdf4c1aa;&quot;&gt;
-mvolume&amp;#39; ml mw mb &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fe8019;&quot;&gt;=
-&lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdf4c1aa;&quot;&gt;    volume &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fe8019;&quot;&gt;&amp;lt;$&amp;gt;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdf4c1aa;&quot;&gt; ml &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fe8019;&quot;&gt;&amp;lt;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdf4c1aa;&quot;&gt;*&lt;&#x2F;span&gt;&lt;span style=&quot;color:#fe8019;&quot;&gt;&amp;gt;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdf4c1aa;&quot;&gt; mw &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fe8019;&quot;&gt;&amp;lt;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdf4c1aa;&quot;&gt;*&lt;&#x2F;span&gt;&lt;span style=&quot;color:#fe8019;&quot;&gt;&amp;gt;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdf4c1aa;&quot;&gt; mb
-&lt;&#x2F;span&gt;&lt;&#x2F;pre&gt;
+-- and with applicative
+mvolume&amp;#x27; :: Maybe Length -&amp;gt; Maybe Width -&amp;gt; Maybe Breadth -&amp;gt; Maybe Volume
+mvolume&amp;#x27; ml mw mb =
+    volume &amp;lt;$&amp;gt; ml &amp;lt;*&amp;gt; mw &amp;lt;*&amp;gt; mb
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
 &lt;p&gt;To wrap up, we&#x27;ve seen how to take perfectly good code that uses
 pattern matching, to code that uses idiomatic Haskell patterns like
 monadic &lt;code&gt;do&lt;&#x2F;code&gt; notation, and composable applicative notation. It&#x27;s routine
@@ -214,20 +203,18 @@ simple examples like this one to help concretely connect with them.&lt;&#x2F;p&g
 &lt;p&gt;Highly recommend the McBride and Patterson &lt;a href=&quot;https:&#x2F;&#x2F;www.staff.city.ac.uk&#x2F;%7Eross&#x2F;papers&#x2F;Applicative.html&quot;&gt;paper&lt;&#x2F;a&gt;
 on applicatives by the way. Same goes for pretty much anything written by Conor McBride.&lt;&#x2F;p&gt;
 </description>
-            </item>
-        
-            <item>
-                <title>Postgres JSON Functions From Rails</title>
-                <pubDate>Sun, 25 May 2014 00:00:00 +0000</pubDate>
-                <link>https://novemberkilo.com/posts/json-finders/</link>
-                <guid>https://novemberkilo.com/posts/json-finders/</guid>
-                <description>&lt;p&gt;Say you are storing JSON in Postgres and need scopes to get records
+        </item>
+        <item>
+            <title>Postgres JSON Functions From Rails</title>
+            <pubDate>Sun, 25 May 2014 00:00:00 +0000</pubDate>
+            <link>https://novemberkilo.com/posts/json-finders/</link>
+            <guid>https://novemberkilo.com/posts/json-finders/</guid>
+            <description>&lt;p&gt;Say you are storing JSON in Postgres and need scopes to get records
 based on their JSON attributes. This post covers the use of JSON functions
 available in Postgres v9.3 to achieve this.&lt;&#x2F;p&gt;
 &lt;p&gt;Suppose you have an Order class, containing a JSON blob that describes
 the product that the order relates to:&lt;&#x2F;p&gt;
-&lt;pre style=&quot;background-color:#282828;&quot;&gt;
-&lt;span style=&quot;font-style:italic;color:#928374;&quot;&gt;# == Schema Information
+&lt;pre data-lang=&quot;ruby&quot; class=&quot;language-ruby &quot;&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;# == Schema Information
 #
 # Table name: orders
 #
@@ -237,120 +224,80 @@ the product that the order relates to:&lt;&#x2F;p&gt;
 #  created_at                            :datetime
 #  updated_at                            :datetime
 
-&lt;&#x2F;span&gt;&lt;span style=&quot;color:#fa5c4b;&quot;&gt;class &lt;&#x2F;span&gt;&lt;span style=&quot;color:#8ec07c;&quot;&gt;Order &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdf4c1aa;&quot;&gt;&amp;lt; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fabd2f;&quot;&gt;ActiveRecord&lt;&#x2F;span&gt;&lt;span style=&quot;color:#8ec07c;&quot;&gt;::Base
+class Order &amp;lt; ActiveRecord::Base
 
-&lt;&#x2F;span&gt;&lt;span style=&quot;color:#fa5c4b;&quot;&gt;end
-&lt;&#x2F;span&gt;&lt;&#x2F;pre&gt;
+end
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
 &lt;p&gt;Suppose &lt;code&gt;product&lt;&#x2F;code&gt; has the following structure:&lt;&#x2F;p&gt;
-&lt;pre style=&quot;background-color:#282828;&quot;&gt;
-&lt;span style=&quot;color:#fdf4c1aa;&quot;&gt;{
-  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b8bb26;&quot;&gt;&amp;quot;name&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdf4c1aa;&quot;&gt;: &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b8bb26;&quot;&gt;&amp;quot;Widget 01&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdf4c1aa;&quot;&gt;,
-  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b8bb26;&quot;&gt;&amp;quot;code&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdf4c1aa;&quot;&gt;: &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b8bb26;&quot;&gt;&amp;quot;W001&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdf4c1aa;&quot;&gt;,
-  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b8bb26;&quot;&gt;&amp;quot;plan&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdf4c1aa;&quot;&gt;: {
-    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b8bb26;&quot;&gt;&amp;quot;name&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdf4c1aa;&quot;&gt;: &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b8bb26;&quot;&gt;&amp;quot;Silver&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdf4c1aa;&quot;&gt;,
-     &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b8bb26;&quot;&gt;&amp;quot;terms&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdf4c1aa;&quot;&gt;: &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b8bb26;&quot;&gt;&amp;quot;12 months&amp;quot;
-   &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdf4c1aa;&quot;&gt;},
-  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b8bb26;&quot;&gt;&amp;quot;created_at&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdf4c1aa;&quot;&gt;: &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b8bb26;&quot;&gt;&amp;quot;2013-12-22 09:27:45 UTC&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdf4c1aa;&quot;&gt;,
-  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b8bb26;&quot;&gt;&amp;quot;updated_at&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdf4c1aa;&quot;&gt;: &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b8bb26;&quot;&gt;&amp;quot;2014-10-21 10:30:40 UTC&amp;quot;
-&lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdf4c1aa;&quot;&gt;}
-&lt;&#x2F;span&gt;&lt;&#x2F;pre&gt;
+&lt;pre data-lang=&quot;json&quot; class=&quot;language-json &quot;&gt;&lt;code class=&quot;language-json&quot; data-lang=&quot;json&quot;&gt;{
+  &amp;quot;name&amp;quot;: &amp;quot;Widget 01&amp;quot;,
+  &amp;quot;code&amp;quot;: &amp;quot;W001&amp;quot;,
+  &amp;quot;plan&amp;quot;: {
+    &amp;quot;name&amp;quot;: &amp;quot;Silver&amp;quot;,
+     &amp;quot;terms&amp;quot;: &amp;quot;12 months&amp;quot;
+   },
+  &amp;quot;created_at&amp;quot;: &amp;quot;2013-12-22 09:27:45 UTC&amp;quot;,
+  &amp;quot;updated_at&amp;quot;: &amp;quot;2014-10-21 10:30:40 UTC&amp;quot;
+}
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
 &lt;p&gt;And you want a scope on &lt;code&gt;Order&lt;&#x2F;code&gt; to find all orders with a particular
 code - something like &lt;code&gt;Order.with_code(&amp;quot;W001&amp;quot;)&lt;&#x2F;code&gt;&lt;&#x2F;p&gt;
 &lt;p&gt;If you are using version 9.3 of Postgres, you can get it to do the heavy
 lifting for you using its &lt;a href=&quot;http:&#x2F;&#x2F;www.postgresql.org&#x2F;docs&#x2F;9.3&#x2F;static&#x2F;functions-json.html&quot;&gt;JSON functions&lt;&#x2F;a&gt;
 like so:&lt;&#x2F;p&gt;
-&lt;pre style=&quot;background-color:#282828;&quot;&gt;
-&lt;span style=&quot;color:#fdf4c1aa;&quot;&gt;scope &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdf4c1;&quot;&gt;:with_code&lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdf4c1aa;&quot;&gt;, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fe8019;&quot;&gt;-&amp;gt;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdf4c1aa;&quot;&gt;(code) { where(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b8bb26;&quot;&gt;&amp;quot;product -&amp;gt;&amp;gt; &amp;#39;code&amp;#39; = ?&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdf4c1aa;&quot;&gt;, code) }
-&lt;&#x2F;span&gt;&lt;&#x2F;pre&gt;
+&lt;pre data-lang=&quot;ruby&quot; class=&quot;language-ruby &quot;&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;scope :with_code, -&amp;gt;(code) { where(&amp;quot;product -&amp;gt;&amp;gt; &amp;#x27;code&amp;#x27; = ?&amp;quot;, code) }
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
 &lt;p&gt;Getting to nested JSON attributes is a bit trickier. Say you want a
 scope for all orders with a particular plan name - something like
 &lt;code&gt;Order.with_plan_name(&amp;quot;Silver&amp;quot;)&lt;&#x2F;code&gt;&lt;&#x2F;p&gt;
-&lt;pre style=&quot;background-color:#282828;&quot;&gt;
-&lt;span style=&quot;color:#fdf4c1aa;&quot;&gt;scope &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdf4c1;&quot;&gt;:with_plan_name&lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdf4c1aa;&quot;&gt;, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fe8019;&quot;&gt;-&amp;gt;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdf4c1aa;&quot;&gt;(plan_name) { where(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b8bb26;&quot;&gt;&amp;quot;product::json #&amp;gt;&amp;gt; &amp;#39;{ plan,name }&amp;#39; = ?&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdf4c1aa;&quot;&gt;, plan_name) }
-&lt;&#x2F;span&gt;&lt;&#x2F;pre&gt;
+&lt;pre data-lang=&quot;ruby&quot; class=&quot;language-ruby &quot;&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;scope :with_plan_name, -&amp;gt;(plan_name) { where(&amp;quot;product::json #&amp;gt;&amp;gt; &amp;#x27;{ plan,name }&amp;#x27; = ?&amp;quot;, plan_name) }
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
 &lt;p&gt;I got to these by looking through Stack Overflow posts, grokking the Postgres
 docs on JSON functions and &lt;a href=&quot;http:&#x2F;&#x2F;devblog.avdi.org&#x2F;2014&#x2F;01&#x2F;31&#x2F;playing-with-json-in-postgres&#x2F;&quot;&gt;this post&lt;&#x2F;a&gt;
 of Avdi Grimm&#x27;s. As usual, you can&#x27;t comment here but if you see an error or
 want to offer a suggestion for improvement, please get in touch via email.&lt;&#x2F;p&gt;
 </description>
-            </item>
-        
-            <item>
-                <title>Handy scopes for associations</title>
-                <pubDate>Sun, 29 Sep 2013 00:00:00 +0000</pubDate>
-                <link>https://novemberkilo.com/posts/scopes-for-empty-relationships/</link>
-                <guid>https://novemberkilo.com/posts/scopes-for-empty-relationships/</guid>
-                <description>&lt;p&gt;If your Rails project has a has-many association and you want a way of finding records that have no associated records, or,
+        </item>
+        <item>
+            <title>Handy scopes for associations</title>
+            <pubDate>Sun, 29 Sep 2013 00:00:00 +0000</pubDate>
+            <link>https://novemberkilo.com/posts/scopes-for-empty-relationships/</link>
+            <guid>https://novemberkilo.com/posts/scopes-for-empty-relationships/</guid>
+            <description>&lt;p&gt;If your Rails project has a has-many association and you want a way of finding records that have no associated records, or,
 records that have at least one associated record, you might find this post useful.&lt;&#x2F;p&gt;
 &lt;p&gt;Suppose you have classes &lt;code&gt;Person&lt;&#x2F;code&gt; and &lt;code&gt;Friend&lt;&#x2F;code&gt; that are associated via a &lt;code&gt;has_many&lt;&#x2F;code&gt; relationship:&lt;&#x2F;p&gt;
-&lt;pre style=&quot;background-color:#282828;&quot;&gt;
-&lt;span style=&quot;color:#fa5c4b;&quot;&gt;class &lt;&#x2F;span&gt;&lt;span style=&quot;color:#8ec07c;&quot;&gt;Person &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdf4c1aa;&quot;&gt;&amp;lt; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fabd2f;&quot;&gt;ActiveRecord&lt;&#x2F;span&gt;&lt;span style=&quot;color:#8ec07c;&quot;&gt;::Base&lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdf4c1aa;&quot;&gt;
-  has_many &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdf4c1;&quot;&gt;:friends
-&lt;&#x2F;span&gt;&lt;span style=&quot;color:#fa5c4b;&quot;&gt;end
+&lt;pre data-lang=&quot;ruby&quot; class=&quot;language-ruby &quot;&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;class Person &amp;lt; ActiveRecord::Base
+  has_many :friends
+end
 
-class &lt;&#x2F;span&gt;&lt;span style=&quot;color:#8ec07c;&quot;&gt;Friend &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdf4c1aa;&quot;&gt;&amp;lt; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fabd2f;&quot;&gt;ActiveRecord&lt;&#x2F;span&gt;&lt;span style=&quot;color:#8ec07c;&quot;&gt;::Base&lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdf4c1aa;&quot;&gt;
-  belongs_to &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdf4c1;&quot;&gt;:person
-&lt;&#x2F;span&gt;&lt;span style=&quot;color:#fa5c4b;&quot;&gt;end
-&lt;&#x2F;span&gt;&lt;&#x2F;pre&gt;
+class Friend &amp;lt; ActiveRecord::Base
+  belongs_to :person
+end
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
 &lt;p&gt;How do you find &lt;code&gt;persons&lt;&#x2F;code&gt; that have no &lt;code&gt;friends&lt;&#x2F;code&gt;?&lt;&#x2F;p&gt;
-&lt;pre style=&quot;background-color:#282828;&quot;&gt;
-&lt;span style=&quot;color:#fdf4c1aa;&quot;&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#8ec07c;&quot;&gt;Person&lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdf4c1aa;&quot;&gt;.includes(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdf4c1;&quot;&gt;:friends&lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdf4c1aa;&quot;&gt;).where(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b8bb26;&quot;&gt;&amp;quot;friends.person_id IS NULL&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdf4c1aa;&quot;&gt;)
-&lt;&#x2F;span&gt;&lt;&#x2F;pre&gt;
+&lt;pre data-lang=&quot;ruby&quot; class=&quot;language-ruby &quot;&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;    Person.includes(:friends).where(&amp;quot;friends.person_id IS NULL&amp;quot;)
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
 &lt;p&gt;Or that have at least one &lt;code&gt;friend&lt;&#x2F;code&gt;&lt;&#x2F;p&gt;
-&lt;pre style=&quot;background-color:#282828;&quot;&gt;
-&lt;span style=&quot;color:#fdf4c1aa;&quot;&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#8ec07c;&quot;&gt;Person&lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdf4c1aa;&quot;&gt;.includes(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdf4c1;&quot;&gt;:friends&lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdf4c1aa;&quot;&gt;).where(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b8bb26;&quot;&gt;&amp;quot;friends.person_id IS NOT NULL&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdf4c1aa;&quot;&gt;)
-&lt;&#x2F;span&gt;&lt;&#x2F;pre&gt;&lt;h4 id=&quot;using-arel&quot;&gt;Using Arel&lt;&#x2F;h4&gt;
+&lt;pre data-lang=&quot;ruby&quot; class=&quot;language-ruby &quot;&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;    Person.includes(:friends).where(&amp;quot;friends.person_id IS NOT NULL&amp;quot;)
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;h4 id=&quot;using-arel&quot;&gt;Using Arel&lt;&#x2F;h4&gt;
 &lt;p&gt;To accomplish this with Arel
 set up the following scopes on &lt;code&gt;Friend&lt;&#x2F;code&gt; (thanks to &lt;a href=&quot;http:&#x2F;&#x2F;twitter.com&#x2F;macfanatic&quot;&gt;@macfanatic&lt;&#x2F;a&gt; for the tip),&lt;&#x2F;p&gt;
-&lt;pre style=&quot;background-color:#282828;&quot;&gt;
-&lt;span style=&quot;color:#fa5c4b;&quot;&gt;class &lt;&#x2F;span&gt;&lt;span style=&quot;color:#8ec07c;&quot;&gt;Friend
-  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdf4c1aa;&quot;&gt;belongs_to &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdf4c1;&quot;&gt;:person&lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdf4c1aa;&quot;&gt;
+&lt;pre data-lang=&quot;ruby&quot; class=&quot;language-ruby &quot;&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;class Friend
+  belongs_to :person
 
-  scope &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdf4c1;&quot;&gt;:to_somebody&lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdf4c1aa;&quot;&gt;, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fe8019;&quot;&gt;-&amp;gt;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdf4c1aa;&quot;&gt;{ where arel_table[&lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdf4c1;&quot;&gt;:person_id&lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdf4c1aa;&quot;&gt;].not_eq(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#d3869b;&quot;&gt;nil&lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdf4c1aa;&quot;&gt;) }
-  scope &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdf4c1;&quot;&gt;:to_nobody&lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdf4c1aa;&quot;&gt;,   &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fe8019;&quot;&gt;-&amp;gt;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdf4c1aa;&quot;&gt;{ where arel_table[&lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdf4c1;&quot;&gt;:person_id&lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdf4c1aa;&quot;&gt;].eq(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#d3869b;&quot;&gt;nil&lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdf4c1aa;&quot;&gt;) }
-&lt;&#x2F;span&gt;&lt;span style=&quot;color:#fa5c4b;&quot;&gt;end
-&lt;&#x2F;span&gt;&lt;&#x2F;pre&gt;
+  scope :to_somebody, -&amp;gt;{ where arel_table[:person_id].not_eq(nil) }
+  scope :to_nobody,   -&amp;gt;{ where arel_table[:person_id].eq(nil) }
+end
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
 &lt;p&gt;And then, Persons who have at least one friend:&lt;&#x2F;p&gt;
-&lt;pre style=&quot;background-color:#282828;&quot;&gt;
-&lt;span style=&quot;color:#fdf4c1aa;&quot;&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#8ec07c;&quot;&gt;Person&lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdf4c1aa;&quot;&gt;.includes(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdf4c1;&quot;&gt;:friends&lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdf4c1aa;&quot;&gt;).merge(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#8ec07c;&quot;&gt;Friend&lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdf4c1aa;&quot;&gt;.to_somebody)
-&lt;&#x2F;span&gt;&lt;&#x2F;pre&gt;
+&lt;pre data-lang=&quot;ruby&quot; class=&quot;language-ruby &quot;&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;    Person.includes(:friends).merge(Friend.to_somebody)
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
 &lt;p&gt;The friendless:&lt;&#x2F;p&gt;
-&lt;pre style=&quot;background-color:#282828;&quot;&gt;
-&lt;span style=&quot;color:#fdf4c1aa;&quot;&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#8ec07c;&quot;&gt;Person&lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdf4c1aa;&quot;&gt;.includes(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdf4c1;&quot;&gt;:friends&lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdf4c1aa;&quot;&gt;).merge(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#8ec07c;&quot;&gt;Friend&lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdf4c1aa;&quot;&gt;.to_nobody)
-&lt;&#x2F;span&gt;&lt;&#x2F;pre&gt;
+&lt;pre data-lang=&quot;ruby&quot; class=&quot;language-ruby &quot;&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;    Person.includes(:friends).merge(Friend.to_nobody)
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
 &lt;p&gt;&lt;em&gt;Note:&lt;&#x2F;em&gt; If you are on Rails 4 don&#x27;t forget to append &lt;code&gt;references(:friends)&lt;&#x2F;code&gt; to these.&lt;&#x2F;p&gt;
 </description>
-            </item>
-        
-            <item>
-                <title>Simple Design</title>
-                <pubDate>Sun, 04 Dec 2011 00:00:00 +0000</pubDate>
-                <link>https://novemberkilo.com/posts/simple-design/</link>
-                <guid>https://novemberkilo.com/posts/simple-design/</guid>
-                <description>&lt;p&gt;Yesterday I attended the &lt;a href=&quot;http:&#x2F;&#x2F;coderetreat.org&#x2F;events&#x2F;global-day-of-coderetreat-2011&quot;&gt;&lt;em&gt;Global Day of Code Retreat, 2011&lt;&#x2F;em&gt;&lt;&#x2F;a&gt; in Sydney. We were incredibly
-privileged to have the creator of Code Retreat, &lt;a href=&quot;http:&#x2F;&#x2F;twitter.com&#x2F;coreyhaines&quot;&gt;Corey Haines&lt;&#x2F;a&gt;
-facilitating.&lt;&#x2F;p&gt;
-&lt;p&gt;I found the experience to be really very profound and recommend it without reserve to developers of all levels.&lt;&#x2F;p&gt;
-&lt;p&gt;Here are some of the things I took from the day:&lt;&#x2F;p&gt;
-&lt;ul&gt;
-&lt;li&gt;My C++&#x2F;RUP based thinking of OO really needs a makeover&lt;&#x2F;li&gt;
-&lt;li&gt;I thought I was practising Test Driven Development (TDD) but I now see how narrow my understanding of TDD was.
-The &lt;em&gt;evil coder&lt;&#x2F;em&gt; or &lt;em&gt;Mute with Find the Loophole&lt;&#x2F;em&gt; session of the retreat was simultaneously hilarious, frustrating and enlightening on how well tests actually serve as a specification for code&lt;&#x2F;li&gt;
-&lt;li&gt;The principles of &lt;em&gt;Simple Design&lt;&#x2F;em&gt; (attributed to the best of my knowledge to Kent Beck and Ron Jeffries in the Extreme Programming book)&lt;&#x2F;li&gt;
-&lt;&#x2F;ul&gt;
-&lt;p&gt;I&#x27;ve come across each of the 4 principles of simple design but when I heard Corey talk through them in sequence, it really made a difference
-to the way I understand them.  I know that this understanding will change as I practice with them and I will not remember them as well when I am in the thick of the work day,
-so I&#x27;m writing them down here as a note to self:&lt;&#x2F;p&gt;
-&lt;ol&gt;
-&lt;li&gt;Runs all the tests&lt;&#x2F;li&gt;
-&lt;li&gt;Expresses every idea that we need to express&lt;&#x2F;li&gt;
-&lt;li&gt;Says everything once and only once&lt;&#x2F;li&gt;
-&lt;li&gt;Has no superfluous parts&lt;&#x2F;li&gt;
-&lt;&#x2F;ol&gt;
-&lt;p&gt;I look forward to practicing the principles I learned at code retreat.  I have no doubt that I have had a step change in my perspective as a programmer - more power to
-Corey&#x27;s efforts at &lt;a href=&quot;http:&#x2F;&#x2F;coderetreat.org&quot;&gt;coderetreat.org&lt;&#x2F;a&gt; I say!&lt;&#x2F;p&gt;
-</description>
-            </item>
-        
+        </item>
     </channel>
 </rss>

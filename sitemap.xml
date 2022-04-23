@@ -1,74 +1,40 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-    
-        <url>
-            <loc>https://novemberkilo.com/</loc>
-            
-        </url>
-    
-        <url>
-            <loc>https://novemberkilo.com/about/</loc>
-            
-        </url>
-    
-        <url>
-            <loc>https://novemberkilo.com/posts/</loc>
-            
-        </url>
-    
-        <url>
-            <loc>https://novemberkilo.com/posts/data-engineering-principles/</loc>
-            
-                <lastmod>2020-05-25</lastmod>
-            
-        </url>
-    
-        <url>
-            <loc>https://novemberkilo.com/posts/json-finders/</loc>
-            
-                <lastmod>2014-05-25</lastmod>
-            
-        </url>
-    
-        <url>
-            <loc>https://novemberkilo.com/posts/refactoring-with-applicative/</loc>
-            
-                <lastmod>2018-05-27</lastmod>
-            
-        </url>
-    
-        <url>
-            <loc>https://novemberkilo.com/posts/scopes-for-empty-relationships/</loc>
-            
-                <lastmod>2013-09-29</lastmod>
-            
-        </url>
-    
-        <url>
-            <loc>https://novemberkilo.com/posts/simple-design/</loc>
-            
-                <lastmod>2011-12-04</lastmod>
-            
-        </url>
-    
-        <url>
-            <loc>https://novemberkilo.com/tags/</loc>
-            
-        </url>
-    
-        <url>
-            <loc>https://novemberkilo.com/tags/blog/</loc>
-            
-        </url>
-    
-        <url>
-            <loc>https://novemberkilo.com/tags/haskell/</loc>
-            
-        </url>
-    
-        <url>
-            <loc>https://novemberkilo.com/tags/refactoring/</loc>
-            
-        </url>
-    
+    <url>
+        <loc>https://novemberkilo.com/</loc>
+    </url>
+    <url>
+        <loc>https://novemberkilo.com/about/</loc>
+    </url>
+    <url>
+        <loc>https://novemberkilo.com/posts/</loc>
+    </url>
+    <url>
+        <loc>https://novemberkilo.com/posts/data-engineering-principles/</loc>
+        <lastmod>2020-05-25</lastmod>
+    </url>
+    <url>
+        <loc>https://novemberkilo.com/posts/json-finders/</loc>
+        <lastmod>2014-05-25</lastmod>
+    </url>
+    <url>
+        <loc>https://novemberkilo.com/posts/refactoring-with-applicative/</loc>
+        <lastmod>2018-05-27</lastmod>
+    </url>
+    <url>
+        <loc>https://novemberkilo.com/posts/scopes-for-empty-relationships/</loc>
+        <lastmod>2013-09-29</lastmod>
+    </url>
+    <url>
+        <loc>https://novemberkilo.com/tags/</loc>
+    </url>
+    <url>
+        <loc>https://novemberkilo.com/tags/blog/</loc>
+    </url>
+    <url>
+        <loc>https://novemberkilo.com/tags/haskell/</loc>
+    </url>
+    <url>
+        <loc>https://novemberkilo.com/tags/refactoring/</loc>
+    </url>
 </urlset>
