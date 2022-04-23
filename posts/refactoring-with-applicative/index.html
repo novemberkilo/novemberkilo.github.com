@@ -123,105 +123,105 @@ to represent the length, breadth and height of a box. Our task is to calculate
 the volume of each box. Simple, right? Well, like in real life, the data is not
 complete and sometimes values are missing. We want to handle these cases by
 simply not calculating a volume if any of the dimensions of the box are missing.</p>
-<pre><code>l,b,h (inputs)      v (our output)
----------------------------------
-4,5,1               20
-1,,                 -
-3,4,                -
-1,2,4               8
-</code></pre>
+<pre style="background-color:#282828;color:#fdf4c1aa;"><code><span>l,b,h (inputs)      v (our output)
+</span><span>---------------------------------
+</span><span>4,5,1               20
+</span><span>1,,                 -
+</span><span>3,4,                -
+</span><span>1,2,4               8
+</span></code></pre>
 <h3 id="maybe-volume">Maybe volume</h3>
 <p>We'll work towards a function to calculate volume - something with a signature like this:</p>
-<pre data-lang="haskell" class="language-haskell "><code class="language-haskell" data-lang="haskell">maybeVolume :: Maybe Length -&gt; Maybe Breadth -&gt; Maybe Height -&gt; Maybe Volume
-</code></pre>
+<pre data-lang="hs" style="background-color:#282828;color:#fdf4c1aa;" class="language-hs "><code class="language-hs" data-lang="hs"><span style="color:#8ec07c;">maybeVolume </span><span style="color:#fa5c4b;">:: Maybe Length -&gt; Maybe Breadth -&gt; Maybe Height -&gt; Maybe Volume
+</span></code></pre>
 <p>To illustrate the patterns at play in this example let's start with something a bit simpler.
 Let's work with Area before we get to Volume.</p>
 <p>A great place to start is with some data types.</p>
-<pre data-lang="haskell" class="language-haskell "><code class="language-haskell" data-lang="haskell">newtype Length =
-  Length {
-    getLength :: Int
-  } deriving (Eq, Show)
-</code></pre>
-<pre data-lang="haskell" class="language-haskell "><code class="language-haskell" data-lang="haskell">newtype Width =
-  Width {
-    getWidth :: Int
-  } deriving (Eq, Show)
-</code></pre>
-<pre data-lang="haskell" class="language-haskell "><code class="language-haskell" data-lang="haskell">newtype Area =
-  Area {
-    getArea :: Int
-  } deriving (Eq, Show)
-</code></pre>
+<pre data-lang="hs" style="background-color:#282828;color:#fdf4c1aa;" class="language-hs "><code class="language-hs" data-lang="hs"><span style="color:#fa5c4b;">newtype </span><span style="color:#fdf4c1;">Length </span><span style="color:#fe8019;">=
+</span><span>  </span><span style="color:#fdf4c1;">Length</span><span> {
+</span><span>    </span><span style="color:#8ec07c;">getLength </span><span style="color:#fa5c4b;">:: Int
+</span><span>  } </span><span style="color:#fa5c4b;">deriving</span><span> (</span><span style="color:#8ec07c;">Eq</span><span>, </span><span style="color:#8ec07c;">Show</span><span>)
+</span></code></pre>
+<pre data-lang="hs" style="background-color:#282828;color:#fdf4c1aa;" class="language-hs "><code class="language-hs" data-lang="hs"><span style="color:#fa5c4b;">newtype </span><span style="color:#fdf4c1;">Width </span><span style="color:#fe8019;">=
+</span><span>  </span><span style="color:#fdf4c1;">Width</span><span> {
+</span><span>    </span><span style="color:#8ec07c;">getWidth </span><span style="color:#fa5c4b;">:: Int
+</span><span>  } </span><span style="color:#fa5c4b;">deriving</span><span> (</span><span style="color:#8ec07c;">Eq</span><span>, </span><span style="color:#8ec07c;">Show</span><span>)
+</span></code></pre>
+<pre data-lang="hs" style="background-color:#282828;color:#fdf4c1aa;" class="language-hs "><code class="language-hs" data-lang="hs"><span style="color:#fa5c4b;">newtype </span><span style="color:#fdf4c1;">Area </span><span style="color:#fe8019;">=
+</span><span>  </span><span style="color:#fdf4c1;">Area</span><span> {
+</span><span>    </span><span style="color:#8ec07c;">getArea </span><span style="color:#fa5c4b;">:: Int
+</span><span>  } </span><span style="color:#fa5c4b;">deriving</span><span> (</span><span style="color:#8ec07c;">Eq</span><span>, </span><span style="color:#8ec07c;">Show</span><span>)
+</span></code></pre>
 <p>So with these types our pure function for <code>area</code> is:</p>
-<pre data-lang="haskell" class="language-haskell "><code class="language-haskell" data-lang="haskell">area :: Length -&gt; Width -&gt; Area
-area l w =
-  Area $ (getLength l) * (getWidth w)
-</code></pre>
+<pre data-lang="hs" style="background-color:#282828;color:#fdf4c1aa;" class="language-hs "><code class="language-hs" data-lang="hs"><span style="color:#8ec07c;">area </span><span style="color:#fa5c4b;">:: Length -&gt; Width -&gt; Area
+</span><span>area l w </span><span style="color:#fe8019;">=
+</span><span>  </span><span style="color:#fdf4c1;">Area </span><span style="color:#fe8019;">$</span><span> (getLength l) * (getWidth w)
+</span></code></pre>
 <p>Working towards the problem at hand, let's extend this to
 a function that handles missing values. <a href="https://wiki.haskell.org/Maybe"><code>Maybe</code></a>
 encodes the concept that a value may be missing. Following a simple pattern
 matching approach gets us:</p>
-<pre data-lang="haskell" class="language-haskell "><code class="language-haskell" data-lang="haskell">marea :: Maybe Length -&gt; Maybe Width -&gt; Maybe Area
-marea ml mw =
-  case ml of
-    Nothing -&gt;
-      Nothing
-    Just l -&gt;
-      case mw of
-        Nothing -&gt;
-          Nothing
-        Just w -&gt;
-          Just $ area l w
-</code></pre>
+<pre data-lang="hs" style="background-color:#282828;color:#fdf4c1aa;" class="language-hs "><code class="language-hs" data-lang="hs"><span style="color:#8ec07c;">marea </span><span style="color:#fa5c4b;">:: Maybe Length -&gt; Maybe Width -&gt; Maybe Area
+</span><span>marea ml mw </span><span style="color:#fe8019;">=
+</span><span>  </span><span style="color:#fa5c4b;">case</span><span> ml </span><span style="color:#fa5c4b;">of
+</span><span>    </span><span style="color:#fdf4c1;">Nothing </span><span style="color:#fe8019;">-&gt;
+</span><span>      </span><span style="color:#fdf4c1;">Nothing
+</span><span>    </span><span style="color:#fdf4c1;">Just</span><span> l </span><span style="color:#fe8019;">-&gt;
+</span><span>      </span><span style="color:#fa5c4b;">case</span><span> mw </span><span style="color:#fa5c4b;">of
+</span><span>        </span><span style="color:#fdf4c1;">Nothing </span><span style="color:#fe8019;">-&gt;
+</span><span>          </span><span style="color:#fdf4c1;">Nothing
+</span><span>        </span><span style="color:#fdf4c1;">Just</span><span> w </span><span style="color:#fe8019;">-&gt;
+</span><span>          </span><span style="color:#fdf4c1;">Just </span><span style="color:#fe8019;">$</span><span> area l w
+</span></code></pre>
 <p>This is fine but it is a little verbose and is ripe for some simplification.</p>
 <p>Let's use the fact that <code>Maybe</code> is a monad. The bind operation passes through Just,
 while Nothing will force the result to always be Nothing. Using <code>do</code> notation we
 can rewrite <code>marea</code> like so:</p>
-<pre data-lang="haskell" class="language-haskell "><code class="language-haskell" data-lang="haskell">marea&#x27; :: Maybe Length -&gt; Maybe Width -&gt; Maybe Area
-marea&#x27; ml mw = do
-  l &lt;- ml
-  w &lt;- mw
-  pure $ area l w
-</code></pre>
+<pre data-lang="hs" style="background-color:#282828;color:#fdf4c1aa;" class="language-hs "><code class="language-hs" data-lang="hs"><span style="color:#8ec07c;">marea&#39; </span><span style="color:#fa5c4b;">:: Maybe Length -&gt; Maybe Width -&gt; Maybe Area
+</span><span>marea&#39; ml mw </span><span style="color:#fe8019;">= </span><span style="color:#fa5c4b;">do
+</span><span>  l </span><span style="color:#fe8019;">&lt;-</span><span> ml
+</span><span>  w </span><span style="color:#fe8019;">&lt;-</span><span> mw
+</span><span>  pure </span><span style="color:#fe8019;">$</span><span> area l w
+</span></code></pre>
 <p>The shape of <code>marea'</code> is exactly the motivating example for introducing applicative in
 McBride and Patterson's, <a href="https://www.staff.city.ac.uk/%7Eross/papers/Applicative.html">Applicative Programming with Effects</a>.
 Using applicative notation gets us to a one-liner.</p>
-<pre data-lang="haskell" class="language-haskell "><code class="language-haskell" data-lang="haskell">marea&#x27;&#x27; :: Maybe Length -&gt; Maybe Width -&gt; Maybe Area
-marea&#x27;&#x27; ml mw =
-  area &lt;$&gt; ml &lt;*&gt; mw
-</code></pre>
+<pre data-lang="hs" style="background-color:#282828;color:#fdf4c1aa;" class="language-hs "><code class="language-hs" data-lang="hs"><span style="color:#8ec07c;">marea&#39;&#39; </span><span style="color:#fa5c4b;">:: Maybe Length -&gt; Maybe Width -&gt; Maybe Area
+</span><span>marea&#39;&#39; ml mw </span><span style="color:#fe8019;">=
+</span><span>  area </span><span style="color:#fe8019;">&lt;$&gt;</span><span> ml </span><span style="color:#fe8019;">&lt;</span><span>*</span><span style="color:#fe8019;">&gt;</span><span> mw
+</span></code></pre>
 <p>Armed with these examples, let us return to <code>maybeVolume.</code> We will need a couple
 of extra data types.</p>
-<pre data-lang="haskell" class="language-haskell "><code class="language-haskell" data-lang="haskell">newtype Breadth =
-  Breadth {
-    getBreadth :: Int
-  } deriving (Eq, Show)
-</code></pre>
-<pre data-lang="haskell" class="language-haskell "><code class="language-haskell" data-lang="haskell">newtype Volume =
-  Volume {
-    getVolume :: Int
-  } deriving (Eq, Show)
-</code></pre>
+<pre data-lang="hs" style="background-color:#282828;color:#fdf4c1aa;" class="language-hs "><code class="language-hs" data-lang="hs"><span style="color:#fa5c4b;">newtype </span><span style="color:#fdf4c1;">Breadth </span><span style="color:#fe8019;">=
+</span><span>  </span><span style="color:#fdf4c1;">Breadth</span><span> {
+</span><span>    </span><span style="color:#8ec07c;">getBreadth </span><span style="color:#fa5c4b;">:: Int
+</span><span>  } </span><span style="color:#fa5c4b;">deriving</span><span> (</span><span style="color:#8ec07c;">Eq</span><span>, </span><span style="color:#8ec07c;">Show</span><span>)
+</span></code></pre>
+<pre data-lang="hs" style="background-color:#282828;color:#fdf4c1aa;" class="language-hs "><code class="language-hs" data-lang="hs"><span style="color:#fa5c4b;">newtype </span><span style="color:#fdf4c1;">Volume </span><span style="color:#fe8019;">=
+</span><span>  </span><span style="color:#fdf4c1;">Volume</span><span> {
+</span><span>    </span><span style="color:#8ec07c;">getVolume </span><span style="color:#fa5c4b;">:: Int
+</span><span>  } </span><span style="color:#fa5c4b;">deriving</span><span> (</span><span style="color:#8ec07c;">Eq</span><span>, </span><span style="color:#8ec07c;">Show</span><span>)
+</span></code></pre>
 <p>And then our pure function for <code>volume</code> is simply:</p>
-<pre data-lang="haskell" class="language-haskell "><code class="language-haskell" data-lang="haskell">volume :: Length -&gt; Width -&gt; Breadth -&gt; Volume
-volume l w b =
-  Volume $ (getLength l) * (getWidth w) * (getBreadth b)
-</code></pre>
+<pre data-lang="hs" style="background-color:#282828;color:#fdf4c1aa;" class="language-hs "><code class="language-hs" data-lang="hs"><span style="color:#8ec07c;">volume </span><span style="color:#fa5c4b;">:: Length -&gt; Width -&gt; Breadth -&gt; Volume
+</span><span>volume l w b </span><span style="color:#fe8019;">=
+</span><span>  </span><span style="color:#fdf4c1;">Volume </span><span style="color:#fe8019;">$</span><span> (getLength l) * (getWidth w) * (getBreadth b)
+</span></code></pre>
 <p>Skipping over the simplest version of the function (that uses pattern matching),
 here are the monadic and applicative versions of <code>maybeVolume</code></p>
-<pre data-lang="haskell" class="language-haskell "><code class="language-haskell" data-lang="haskell">-- monadic approach
-mvolume :: Maybe Length -&gt; Maybe Width -&gt; Maybe Breadth -&gt; Maybe Volume
-mvolume ml mw mb = do
-   l &lt;- ml
-   w &lt;- mw
-   b &lt;- mb
-   pure $ volume l w b
-
--- and with applicative
-mvolume&#x27; :: Maybe Length -&gt; Maybe Width -&gt; Maybe Breadth -&gt; Maybe Volume
-mvolume&#x27; ml mw mb =
-    volume &lt;$&gt; ml &lt;*&gt; mw &lt;*&gt; mb
-</code></pre>
+<pre data-lang="hs" style="background-color:#282828;color:#fdf4c1aa;" class="language-hs "><code class="language-hs" data-lang="hs"><span style="font-style:italic;color:#928374;">-- monadic approach
+</span><span style="color:#8ec07c;">mvolume </span><span style="color:#fa5c4b;">:: Maybe Length -&gt; Maybe Width -&gt; Maybe Breadth -&gt; Maybe Volume
+</span><span>mvolume ml mw mb </span><span style="color:#fe8019;">= </span><span style="color:#fa5c4b;">do
+</span><span>   l </span><span style="color:#fe8019;">&lt;-</span><span> ml
+</span><span>   w </span><span style="color:#fe8019;">&lt;-</span><span> mw
+</span><span>   b </span><span style="color:#fe8019;">&lt;-</span><span> mb
+</span><span>   pure </span><span style="color:#fe8019;">$</span><span> volume l w b
+</span><span>
+</span><span style="font-style:italic;color:#928374;">-- and with applicative
+</span><span style="color:#8ec07c;">mvolume&#39; </span><span style="color:#fa5c4b;">:: Maybe Length -&gt; Maybe Width -&gt; Maybe Breadth -&gt; Maybe Volume
+</span><span>mvolume&#39; ml mw mb </span><span style="color:#fe8019;">=
+</span><span>    volume </span><span style="color:#fe8019;">&lt;$&gt;</span><span> ml </span><span style="color:#fe8019;">&lt;</span><span>*</span><span style="color:#fe8019;">&gt;</span><span> mw </span><span style="color:#fe8019;">&lt;</span><span>*</span><span style="color:#fe8019;">&gt;</span><span> mb
+</span></code></pre>
 <p>To wrap up, we've seen how to take perfectly good code that uses
 pattern matching, to code that uses idiomatic Haskell patterns like
 monadic <code>do</code> notation, and composable applicative notation. It's routine

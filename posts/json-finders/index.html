@@ -120,44 +120,44 @@ based on their JSON attributes. This post covers the use of JSON functions
 available in Postgres v9.3 to achieve this.</p>
 <p>Suppose you have an Order class, containing a JSON blob that describes
 the product that the order relates to:</p>
-<pre data-lang="ruby" class="language-ruby "><code class="language-ruby" data-lang="ruby"># == Schema Information
-#
-# Table name: orders
-#
-#  id                                    :integer  not null, primary key
-#  customer_id                           :integer
-#  product                               :json
-#  created_at                            :datetime
-#  updated_at                            :datetime
-
-class Order &lt; ActiveRecord::Base
-
-end
-</code></pre>
+<pre data-lang="ruby" style="background-color:#282828;color:#fdf4c1aa;" class="language-ruby "><code class="language-ruby" data-lang="ruby"><span style="font-style:italic;color:#928374;"># == Schema Information
+</span><span style="font-style:italic;color:#928374;">#
+</span><span style="font-style:italic;color:#928374;"># Table name: orders
+</span><span style="font-style:italic;color:#928374;">#
+</span><span style="font-style:italic;color:#928374;">#  id                                    :integer  not null, primary key
+</span><span style="font-style:italic;color:#928374;">#  customer_id                           :integer
+</span><span style="font-style:italic;color:#928374;">#  product                               :json
+</span><span style="font-style:italic;color:#928374;">#  created_at                            :datetime
+</span><span style="font-style:italic;color:#928374;">#  updated_at                            :datetime
+</span><span>
+</span><span style="color:#fa5c4b;">class </span><span style="color:#8ec07c;">Order </span><span>&lt; </span><span style="color:#fabd2f;">ActiveRecord</span><span style="color:#8ec07c;">::Base
+</span><span>
+</span><span style="color:#fa5c4b;">end
+</span></code></pre>
 <p>Suppose <code>product</code> has the following structure:</p>
-<pre data-lang="json" class="language-json "><code class="language-json" data-lang="json">{
-  &quot;name&quot;: &quot;Widget 01&quot;,
-  &quot;code&quot;: &quot;W001&quot;,
-  &quot;plan&quot;: {
-    &quot;name&quot;: &quot;Silver&quot;,
-     &quot;terms&quot;: &quot;12 months&quot;
-   },
-  &quot;created_at&quot;: &quot;2013-12-22 09:27:45 UTC&quot;,
-  &quot;updated_at&quot;: &quot;2014-10-21 10:30:40 UTC&quot;
-}
-</code></pre>
+<pre data-lang="json" style="background-color:#282828;color:#fdf4c1aa;" class="language-json "><code class="language-json" data-lang="json"><span>{
+</span><span>  </span><span style="color:#b8bb26;">&quot;name&quot;</span><span>: </span><span style="color:#b8bb26;">&quot;Widget 01&quot;</span><span>,
+</span><span>  </span><span style="color:#b8bb26;">&quot;code&quot;</span><span>: </span><span style="color:#b8bb26;">&quot;W001&quot;</span><span>,
+</span><span>  </span><span style="color:#b8bb26;">&quot;plan&quot;</span><span>: {
+</span><span>    </span><span style="color:#b8bb26;">&quot;name&quot;</span><span>: </span><span style="color:#b8bb26;">&quot;Silver&quot;</span><span>,
+</span><span>     </span><span style="color:#b8bb26;">&quot;terms&quot;</span><span>: </span><span style="color:#b8bb26;">&quot;12 months&quot;
+</span><span>   },
+</span><span>  </span><span style="color:#b8bb26;">&quot;created_at&quot;</span><span>: </span><span style="color:#b8bb26;">&quot;2013-12-22 09:27:45 UTC&quot;</span><span>,
+</span><span>  </span><span style="color:#b8bb26;">&quot;updated_at&quot;</span><span>: </span><span style="color:#b8bb26;">&quot;2014-10-21 10:30:40 UTC&quot;
+</span><span>}
+</span></code></pre>
 <p>And you want a scope on <code>Order</code> to find all orders with a particular
 code - something like <code>Order.with_code(&quot;W001&quot;)</code></p>
 <p>If you are using version 9.3 of Postgres, you can get it to do the heavy
 lifting for you using its <a href="http://www.postgresql.org/docs/9.3/static/functions-json.html">JSON functions</a>
 like so:</p>
-<pre data-lang="ruby" class="language-ruby "><code class="language-ruby" data-lang="ruby">scope :with_code, -&gt;(code) { where(&quot;product -&gt;&gt; &#x27;code&#x27; = ?&quot;, code) }
-</code></pre>
+<pre data-lang="ruby" style="background-color:#282828;color:#fdf4c1aa;" class="language-ruby "><code class="language-ruby" data-lang="ruby"><span>scope </span><span style="color:#fdf4c1;">:with_code</span><span>, </span><span style="color:#fe8019;">-&gt;</span><span>(code) { where(</span><span style="color:#b8bb26;">&quot;product -&gt;&gt; &#39;code&#39; = ?&quot;</span><span>, code) }
+</span></code></pre>
 <p>Getting to nested JSON attributes is a bit trickier. Say you want a
 scope for all orders with a particular plan name - something like
 <code>Order.with_plan_name(&quot;Silver&quot;)</code></p>
-<pre data-lang="ruby" class="language-ruby "><code class="language-ruby" data-lang="ruby">scope :with_plan_name, -&gt;(plan_name) { where(&quot;product::json #&gt;&gt; &#x27;{ plan,name }&#x27; = ?&quot;, plan_name) }
-</code></pre>
+<pre data-lang="ruby" style="background-color:#282828;color:#fdf4c1aa;" class="language-ruby "><code class="language-ruby" data-lang="ruby"><span>scope </span><span style="color:#fdf4c1;">:with_plan_name</span><span>, </span><span style="color:#fe8019;">-&gt;</span><span>(plan_name) { where(</span><span style="color:#b8bb26;">&quot;product::json #&gt;&gt; &#39;{ plan,name }&#39; = ?&quot;</span><span>, plan_name) }
+</span></code></pre>
 <p>I got to these by looking through Stack Overflow posts, grokking the Postgres
 docs on JSON functions and <a href="http://devblog.avdi.org/2014/01/31/playing-with-json-in-postgres/">this post</a>
 of Avdi Grimm's. As usual, you can't comment here but if you see an error or

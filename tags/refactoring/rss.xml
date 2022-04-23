@@ -21,105 +21,105 @@ to represent the length, breadth and height of a box. Our task is to calculate
 the volume of each box. Simple, right? Well, like in real life, the data is not
 complete and sometimes values are missing. We want to handle these cases by
 simply not calculating a volume if any of the dimensions of the box are missing.&lt;&#x2F;p&gt;
-&lt;pre&gt;&lt;code&gt;l,b,h (inputs)      v (our output)
----------------------------------
-4,5,1               20
-1,,                 -
-3,4,                -
-1,2,4               8
-&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;pre style=&quot;background-color:#282828;color:#fdf4c1aa;&quot;&gt;&lt;code&gt;&lt;span&gt;l,b,h (inputs)      v (our output)
+&lt;&#x2F;span&gt;&lt;span&gt;---------------------------------
+&lt;&#x2F;span&gt;&lt;span&gt;4,5,1               20
+&lt;&#x2F;span&gt;&lt;span&gt;1,,                 -
+&lt;&#x2F;span&gt;&lt;span&gt;3,4,                -
+&lt;&#x2F;span&gt;&lt;span&gt;1,2,4               8
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
 &lt;h3 id=&quot;maybe-volume&quot;&gt;Maybe volume&lt;&#x2F;h3&gt;
 &lt;p&gt;We&#x27;ll work towards a function to calculate volume - something with a signature like this:&lt;&#x2F;p&gt;
-&lt;pre data-lang=&quot;haskell&quot; class=&quot;language-haskell &quot;&gt;&lt;code class=&quot;language-haskell&quot; data-lang=&quot;haskell&quot;&gt;maybeVolume :: Maybe Length -&amp;gt; Maybe Breadth -&amp;gt; Maybe Height -&amp;gt; Maybe Volume
-&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;pre data-lang=&quot;hs&quot; style=&quot;background-color:#282828;color:#fdf4c1aa;&quot; class=&quot;language-hs &quot;&gt;&lt;code class=&quot;language-hs&quot; data-lang=&quot;hs&quot;&gt;&lt;span style=&quot;color:#8ec07c;&quot;&gt;maybeVolume &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fa5c4b;&quot;&gt;:: Maybe Length -&amp;gt; Maybe Breadth -&amp;gt; Maybe Height -&amp;gt; Maybe Volume
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
 &lt;p&gt;To illustrate the patterns at play in this example let&#x27;s start with something a bit simpler.
 Let&#x27;s work with Area before we get to Volume.&lt;&#x2F;p&gt;
 &lt;p&gt;A great place to start is with some data types.&lt;&#x2F;p&gt;
-&lt;pre data-lang=&quot;haskell&quot; class=&quot;language-haskell &quot;&gt;&lt;code class=&quot;language-haskell&quot; data-lang=&quot;haskell&quot;&gt;newtype Length =
-  Length {
-    getLength :: Int
-  } deriving (Eq, Show)
-&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
-&lt;pre data-lang=&quot;haskell&quot; class=&quot;language-haskell &quot;&gt;&lt;code class=&quot;language-haskell&quot; data-lang=&quot;haskell&quot;&gt;newtype Width =
-  Width {
-    getWidth :: Int
-  } deriving (Eq, Show)
-&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
-&lt;pre data-lang=&quot;haskell&quot; class=&quot;language-haskell &quot;&gt;&lt;code class=&quot;language-haskell&quot; data-lang=&quot;haskell&quot;&gt;newtype Area =
-  Area {
-    getArea :: Int
-  } deriving (Eq, Show)
-&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;pre data-lang=&quot;hs&quot; style=&quot;background-color:#282828;color:#fdf4c1aa;&quot; class=&quot;language-hs &quot;&gt;&lt;code class=&quot;language-hs&quot; data-lang=&quot;hs&quot;&gt;&lt;span style=&quot;color:#fa5c4b;&quot;&gt;newtype &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdf4c1;&quot;&gt;Length &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fe8019;&quot;&gt;=
+&lt;&#x2F;span&gt;&lt;span&gt;  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdf4c1;&quot;&gt;Length&lt;&#x2F;span&gt;&lt;span&gt; {
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#8ec07c;&quot;&gt;getLength &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fa5c4b;&quot;&gt;:: Int
+&lt;&#x2F;span&gt;&lt;span&gt;  } &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fa5c4b;&quot;&gt;deriving&lt;&#x2F;span&gt;&lt;span&gt; (&lt;&#x2F;span&gt;&lt;span style=&quot;color:#8ec07c;&quot;&gt;Eq&lt;&#x2F;span&gt;&lt;span&gt;, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#8ec07c;&quot;&gt;Show&lt;&#x2F;span&gt;&lt;span&gt;)
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;pre data-lang=&quot;hs&quot; style=&quot;background-color:#282828;color:#fdf4c1aa;&quot; class=&quot;language-hs &quot;&gt;&lt;code class=&quot;language-hs&quot; data-lang=&quot;hs&quot;&gt;&lt;span style=&quot;color:#fa5c4b;&quot;&gt;newtype &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdf4c1;&quot;&gt;Width &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fe8019;&quot;&gt;=
+&lt;&#x2F;span&gt;&lt;span&gt;  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdf4c1;&quot;&gt;Width&lt;&#x2F;span&gt;&lt;span&gt; {
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#8ec07c;&quot;&gt;getWidth &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fa5c4b;&quot;&gt;:: Int
+&lt;&#x2F;span&gt;&lt;span&gt;  } &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fa5c4b;&quot;&gt;deriving&lt;&#x2F;span&gt;&lt;span&gt; (&lt;&#x2F;span&gt;&lt;span style=&quot;color:#8ec07c;&quot;&gt;Eq&lt;&#x2F;span&gt;&lt;span&gt;, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#8ec07c;&quot;&gt;Show&lt;&#x2F;span&gt;&lt;span&gt;)
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;pre data-lang=&quot;hs&quot; style=&quot;background-color:#282828;color:#fdf4c1aa;&quot; class=&quot;language-hs &quot;&gt;&lt;code class=&quot;language-hs&quot; data-lang=&quot;hs&quot;&gt;&lt;span style=&quot;color:#fa5c4b;&quot;&gt;newtype &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdf4c1;&quot;&gt;Area &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fe8019;&quot;&gt;=
+&lt;&#x2F;span&gt;&lt;span&gt;  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdf4c1;&quot;&gt;Area&lt;&#x2F;span&gt;&lt;span&gt; {
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#8ec07c;&quot;&gt;getArea &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fa5c4b;&quot;&gt;:: Int
+&lt;&#x2F;span&gt;&lt;span&gt;  } &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fa5c4b;&quot;&gt;deriving&lt;&#x2F;span&gt;&lt;span&gt; (&lt;&#x2F;span&gt;&lt;span style=&quot;color:#8ec07c;&quot;&gt;Eq&lt;&#x2F;span&gt;&lt;span&gt;, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#8ec07c;&quot;&gt;Show&lt;&#x2F;span&gt;&lt;span&gt;)
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
 &lt;p&gt;So with these types our pure function for &lt;code&gt;area&lt;&#x2F;code&gt; is:&lt;&#x2F;p&gt;
-&lt;pre data-lang=&quot;haskell&quot; class=&quot;language-haskell &quot;&gt;&lt;code class=&quot;language-haskell&quot; data-lang=&quot;haskell&quot;&gt;area :: Length -&amp;gt; Width -&amp;gt; Area
-area l w =
-  Area $ (getLength l) * (getWidth w)
-&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;pre data-lang=&quot;hs&quot; style=&quot;background-color:#282828;color:#fdf4c1aa;&quot; class=&quot;language-hs &quot;&gt;&lt;code class=&quot;language-hs&quot; data-lang=&quot;hs&quot;&gt;&lt;span style=&quot;color:#8ec07c;&quot;&gt;area &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fa5c4b;&quot;&gt;:: Length -&amp;gt; Width -&amp;gt; Area
+&lt;&#x2F;span&gt;&lt;span&gt;area l w &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fe8019;&quot;&gt;=
+&lt;&#x2F;span&gt;&lt;span&gt;  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdf4c1;&quot;&gt;Area &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fe8019;&quot;&gt;$&lt;&#x2F;span&gt;&lt;span&gt; (getLength l) * (getWidth w)
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
 &lt;p&gt;Working towards the problem at hand, let&#x27;s extend this to
 a function that handles missing values. &lt;a href=&quot;https:&#x2F;&#x2F;wiki.haskell.org&#x2F;Maybe&quot;&gt;&lt;code&gt;Maybe&lt;&#x2F;code&gt;&lt;&#x2F;a&gt;
 encodes the concept that a value may be missing. Following a simple pattern
 matching approach gets us:&lt;&#x2F;p&gt;
-&lt;pre data-lang=&quot;haskell&quot; class=&quot;language-haskell &quot;&gt;&lt;code class=&quot;language-haskell&quot; data-lang=&quot;haskell&quot;&gt;marea :: Maybe Length -&amp;gt; Maybe Width -&amp;gt; Maybe Area
-marea ml mw =
-  case ml of
-    Nothing -&amp;gt;
-      Nothing
-    Just l -&amp;gt;
-      case mw of
-        Nothing -&amp;gt;
-          Nothing
-        Just w -&amp;gt;
-          Just $ area l w
-&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;pre data-lang=&quot;hs&quot; style=&quot;background-color:#282828;color:#fdf4c1aa;&quot; class=&quot;language-hs &quot;&gt;&lt;code class=&quot;language-hs&quot; data-lang=&quot;hs&quot;&gt;&lt;span style=&quot;color:#8ec07c;&quot;&gt;marea &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fa5c4b;&quot;&gt;:: Maybe Length -&amp;gt; Maybe Width -&amp;gt; Maybe Area
+&lt;&#x2F;span&gt;&lt;span&gt;marea ml mw &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fe8019;&quot;&gt;=
+&lt;&#x2F;span&gt;&lt;span&gt;  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fa5c4b;&quot;&gt;case&lt;&#x2F;span&gt;&lt;span&gt; ml &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fa5c4b;&quot;&gt;of
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdf4c1;&quot;&gt;Nothing &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fe8019;&quot;&gt;-&amp;gt;
+&lt;&#x2F;span&gt;&lt;span&gt;      &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdf4c1;&quot;&gt;Nothing
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdf4c1;&quot;&gt;Just&lt;&#x2F;span&gt;&lt;span&gt; l &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fe8019;&quot;&gt;-&amp;gt;
+&lt;&#x2F;span&gt;&lt;span&gt;      &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fa5c4b;&quot;&gt;case&lt;&#x2F;span&gt;&lt;span&gt; mw &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fa5c4b;&quot;&gt;of
+&lt;&#x2F;span&gt;&lt;span&gt;        &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdf4c1;&quot;&gt;Nothing &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fe8019;&quot;&gt;-&amp;gt;
+&lt;&#x2F;span&gt;&lt;span&gt;          &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdf4c1;&quot;&gt;Nothing
+&lt;&#x2F;span&gt;&lt;span&gt;        &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdf4c1;&quot;&gt;Just&lt;&#x2F;span&gt;&lt;span&gt; w &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fe8019;&quot;&gt;-&amp;gt;
+&lt;&#x2F;span&gt;&lt;span&gt;          &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdf4c1;&quot;&gt;Just &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fe8019;&quot;&gt;$&lt;&#x2F;span&gt;&lt;span&gt; area l w
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
 &lt;p&gt;This is fine but it is a little verbose and is ripe for some simplification.&lt;&#x2F;p&gt;
 &lt;p&gt;Let&#x27;s use the fact that &lt;code&gt;Maybe&lt;&#x2F;code&gt; is a monad. The bind operation passes through Just,
 while Nothing will force the result to always be Nothing. Using &lt;code&gt;do&lt;&#x2F;code&gt; notation we
 can rewrite &lt;code&gt;marea&lt;&#x2F;code&gt; like so:&lt;&#x2F;p&gt;
-&lt;pre data-lang=&quot;haskell&quot; class=&quot;language-haskell &quot;&gt;&lt;code class=&quot;language-haskell&quot; data-lang=&quot;haskell&quot;&gt;marea&amp;#x27; :: Maybe Length -&amp;gt; Maybe Width -&amp;gt; Maybe Area
-marea&amp;#x27; ml mw = do
-  l &amp;lt;- ml
-  w &amp;lt;- mw
-  pure $ area l w
-&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;pre data-lang=&quot;hs&quot; style=&quot;background-color:#282828;color:#fdf4c1aa;&quot; class=&quot;language-hs &quot;&gt;&lt;code class=&quot;language-hs&quot; data-lang=&quot;hs&quot;&gt;&lt;span style=&quot;color:#8ec07c;&quot;&gt;marea&amp;#39; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fa5c4b;&quot;&gt;:: Maybe Length -&amp;gt; Maybe Width -&amp;gt; Maybe Area
+&lt;&#x2F;span&gt;&lt;span&gt;marea&amp;#39; ml mw &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fe8019;&quot;&gt;= &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fa5c4b;&quot;&gt;do
+&lt;&#x2F;span&gt;&lt;span&gt;  l &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fe8019;&quot;&gt;&amp;lt;-&lt;&#x2F;span&gt;&lt;span&gt; ml
+&lt;&#x2F;span&gt;&lt;span&gt;  w &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fe8019;&quot;&gt;&amp;lt;-&lt;&#x2F;span&gt;&lt;span&gt; mw
+&lt;&#x2F;span&gt;&lt;span&gt;  pure &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fe8019;&quot;&gt;$&lt;&#x2F;span&gt;&lt;span&gt; area l w
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
 &lt;p&gt;The shape of &lt;code&gt;marea&#x27;&lt;&#x2F;code&gt; is exactly the motivating example for introducing applicative in
 McBride and Patterson&#x27;s, &lt;a href=&quot;https:&#x2F;&#x2F;www.staff.city.ac.uk&#x2F;%7Eross&#x2F;papers&#x2F;Applicative.html&quot;&gt;Applicative Programming with Effects&lt;&#x2F;a&gt;.
 Using applicative notation gets us to a one-liner.&lt;&#x2F;p&gt;
-&lt;pre data-lang=&quot;haskell&quot; class=&quot;language-haskell &quot;&gt;&lt;code class=&quot;language-haskell&quot; data-lang=&quot;haskell&quot;&gt;marea&amp;#x27;&amp;#x27; :: Maybe Length -&amp;gt; Maybe Width -&amp;gt; Maybe Area
-marea&amp;#x27;&amp;#x27; ml mw =
-  area &amp;lt;$&amp;gt; ml &amp;lt;*&amp;gt; mw
-&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;pre data-lang=&quot;hs&quot; style=&quot;background-color:#282828;color:#fdf4c1aa;&quot; class=&quot;language-hs &quot;&gt;&lt;code class=&quot;language-hs&quot; data-lang=&quot;hs&quot;&gt;&lt;span style=&quot;color:#8ec07c;&quot;&gt;marea&amp;#39;&amp;#39; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fa5c4b;&quot;&gt;:: Maybe Length -&amp;gt; Maybe Width -&amp;gt; Maybe Area
+&lt;&#x2F;span&gt;&lt;span&gt;marea&amp;#39;&amp;#39; ml mw &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fe8019;&quot;&gt;=
+&lt;&#x2F;span&gt;&lt;span&gt;  area &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fe8019;&quot;&gt;&amp;lt;$&amp;gt;&lt;&#x2F;span&gt;&lt;span&gt; ml &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fe8019;&quot;&gt;&amp;lt;&lt;&#x2F;span&gt;&lt;span&gt;*&lt;&#x2F;span&gt;&lt;span style=&quot;color:#fe8019;&quot;&gt;&amp;gt;&lt;&#x2F;span&gt;&lt;span&gt; mw
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
 &lt;p&gt;Armed with these examples, let us return to &lt;code&gt;maybeVolume.&lt;&#x2F;code&gt; We will need a couple
 of extra data types.&lt;&#x2F;p&gt;
-&lt;pre data-lang=&quot;haskell&quot; class=&quot;language-haskell &quot;&gt;&lt;code class=&quot;language-haskell&quot; data-lang=&quot;haskell&quot;&gt;newtype Breadth =
-  Breadth {
-    getBreadth :: Int
-  } deriving (Eq, Show)
-&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
-&lt;pre data-lang=&quot;haskell&quot; class=&quot;language-haskell &quot;&gt;&lt;code class=&quot;language-haskell&quot; data-lang=&quot;haskell&quot;&gt;newtype Volume =
-  Volume {
-    getVolume :: Int
-  } deriving (Eq, Show)
-&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;pre data-lang=&quot;hs&quot; style=&quot;background-color:#282828;color:#fdf4c1aa;&quot; class=&quot;language-hs &quot;&gt;&lt;code class=&quot;language-hs&quot; data-lang=&quot;hs&quot;&gt;&lt;span style=&quot;color:#fa5c4b;&quot;&gt;newtype &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdf4c1;&quot;&gt;Breadth &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fe8019;&quot;&gt;=
+&lt;&#x2F;span&gt;&lt;span&gt;  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdf4c1;&quot;&gt;Breadth&lt;&#x2F;span&gt;&lt;span&gt; {
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#8ec07c;&quot;&gt;getBreadth &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fa5c4b;&quot;&gt;:: Int
+&lt;&#x2F;span&gt;&lt;span&gt;  } &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fa5c4b;&quot;&gt;deriving&lt;&#x2F;span&gt;&lt;span&gt; (&lt;&#x2F;span&gt;&lt;span style=&quot;color:#8ec07c;&quot;&gt;Eq&lt;&#x2F;span&gt;&lt;span&gt;, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#8ec07c;&quot;&gt;Show&lt;&#x2F;span&gt;&lt;span&gt;)
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;pre data-lang=&quot;hs&quot; style=&quot;background-color:#282828;color:#fdf4c1aa;&quot; class=&quot;language-hs &quot;&gt;&lt;code class=&quot;language-hs&quot; data-lang=&quot;hs&quot;&gt;&lt;span style=&quot;color:#fa5c4b;&quot;&gt;newtype &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdf4c1;&quot;&gt;Volume &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fe8019;&quot;&gt;=
+&lt;&#x2F;span&gt;&lt;span&gt;  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdf4c1;&quot;&gt;Volume&lt;&#x2F;span&gt;&lt;span&gt; {
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#8ec07c;&quot;&gt;getVolume &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fa5c4b;&quot;&gt;:: Int
+&lt;&#x2F;span&gt;&lt;span&gt;  } &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fa5c4b;&quot;&gt;deriving&lt;&#x2F;span&gt;&lt;span&gt; (&lt;&#x2F;span&gt;&lt;span style=&quot;color:#8ec07c;&quot;&gt;Eq&lt;&#x2F;span&gt;&lt;span&gt;, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#8ec07c;&quot;&gt;Show&lt;&#x2F;span&gt;&lt;span&gt;)
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
 &lt;p&gt;And then our pure function for &lt;code&gt;volume&lt;&#x2F;code&gt; is simply:&lt;&#x2F;p&gt;
-&lt;pre data-lang=&quot;haskell&quot; class=&quot;language-haskell &quot;&gt;&lt;code class=&quot;language-haskell&quot; data-lang=&quot;haskell&quot;&gt;volume :: Length -&amp;gt; Width -&amp;gt; Breadth -&amp;gt; Volume
-volume l w b =
-  Volume $ (getLength l) * (getWidth w) * (getBreadth b)
-&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;pre data-lang=&quot;hs&quot; style=&quot;background-color:#282828;color:#fdf4c1aa;&quot; class=&quot;language-hs &quot;&gt;&lt;code class=&quot;language-hs&quot; data-lang=&quot;hs&quot;&gt;&lt;span style=&quot;color:#8ec07c;&quot;&gt;volume &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fa5c4b;&quot;&gt;:: Length -&amp;gt; Width -&amp;gt; Breadth -&amp;gt; Volume
+&lt;&#x2F;span&gt;&lt;span&gt;volume l w b &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fe8019;&quot;&gt;=
+&lt;&#x2F;span&gt;&lt;span&gt;  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdf4c1;&quot;&gt;Volume &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fe8019;&quot;&gt;$&lt;&#x2F;span&gt;&lt;span&gt; (getLength l) * (getWidth w) * (getBreadth b)
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
 &lt;p&gt;Skipping over the simplest version of the function (that uses pattern matching),
 here are the monadic and applicative versions of &lt;code&gt;maybeVolume&lt;&#x2F;code&gt;&lt;&#x2F;p&gt;
-&lt;pre data-lang=&quot;haskell&quot; class=&quot;language-haskell &quot;&gt;&lt;code class=&quot;language-haskell&quot; data-lang=&quot;haskell&quot;&gt;-- monadic approach
-mvolume :: Maybe Length -&amp;gt; Maybe Width -&amp;gt; Maybe Breadth -&amp;gt; Maybe Volume
-mvolume ml mw mb = do
-   l &amp;lt;- ml
-   w &amp;lt;- mw
-   b &amp;lt;- mb
-   pure $ volume l w b
-
--- and with applicative
-mvolume&amp;#x27; :: Maybe Length -&amp;gt; Maybe Width -&amp;gt; Maybe Breadth -&amp;gt; Maybe Volume
-mvolume&amp;#x27; ml mw mb =
-    volume &amp;lt;$&amp;gt; ml &amp;lt;*&amp;gt; mw &amp;lt;*&amp;gt; mb
-&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;pre data-lang=&quot;hs&quot; style=&quot;background-color:#282828;color:#fdf4c1aa;&quot; class=&quot;language-hs &quot;&gt;&lt;code class=&quot;language-hs&quot; data-lang=&quot;hs&quot;&gt;&lt;span style=&quot;font-style:italic;color:#928374;&quot;&gt;-- monadic approach
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#8ec07c;&quot;&gt;mvolume &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fa5c4b;&quot;&gt;:: Maybe Length -&amp;gt; Maybe Width -&amp;gt; Maybe Breadth -&amp;gt; Maybe Volume
+&lt;&#x2F;span&gt;&lt;span&gt;mvolume ml mw mb &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fe8019;&quot;&gt;= &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fa5c4b;&quot;&gt;do
+&lt;&#x2F;span&gt;&lt;span&gt;   l &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fe8019;&quot;&gt;&amp;lt;-&lt;&#x2F;span&gt;&lt;span&gt; ml
+&lt;&#x2F;span&gt;&lt;span&gt;   w &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fe8019;&quot;&gt;&amp;lt;-&lt;&#x2F;span&gt;&lt;span&gt; mw
+&lt;&#x2F;span&gt;&lt;span&gt;   b &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fe8019;&quot;&gt;&amp;lt;-&lt;&#x2F;span&gt;&lt;span&gt; mb
+&lt;&#x2F;span&gt;&lt;span&gt;   pure &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fe8019;&quot;&gt;$&lt;&#x2F;span&gt;&lt;span&gt; volume l w b
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#928374;&quot;&gt;-- and with applicative
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#8ec07c;&quot;&gt;mvolume&amp;#39; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fa5c4b;&quot;&gt;:: Maybe Length -&amp;gt; Maybe Width -&amp;gt; Maybe Breadth -&amp;gt; Maybe Volume
+&lt;&#x2F;span&gt;&lt;span&gt;mvolume&amp;#39; ml mw mb &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fe8019;&quot;&gt;=
+&lt;&#x2F;span&gt;&lt;span&gt;    volume &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fe8019;&quot;&gt;&amp;lt;$&amp;gt;&lt;&#x2F;span&gt;&lt;span&gt; ml &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fe8019;&quot;&gt;&amp;lt;&lt;&#x2F;span&gt;&lt;span&gt;*&lt;&#x2F;span&gt;&lt;span style=&quot;color:#fe8019;&quot;&gt;&amp;gt;&lt;&#x2F;span&gt;&lt;span&gt; mw &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fe8019;&quot;&gt;&amp;lt;&lt;&#x2F;span&gt;&lt;span&gt;*&lt;&#x2F;span&gt;&lt;span style=&quot;color:#fe8019;&quot;&gt;&amp;gt;&lt;&#x2F;span&gt;&lt;span&gt; mb
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
 &lt;p&gt;To wrap up, we&#x27;ve seen how to take perfectly good code that uses
 pattern matching, to code that uses idiomatic Haskell patterns like
 monadic &lt;code&gt;do&lt;&#x2F;code&gt; notation, and composable applicative notation. It&#x27;s routine
